@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { getOrCreateDaily } from '../lib/daily';
 import { CardVisual } from './CardVisual';
 import type { DeckId } from '../types';
+import { aspectOfDrawn } from '../lib/fortune';
 
 interface Props {
   speak: (text: string, onEnd?: () => void) => void;
@@ -22,6 +23,7 @@ export function DailyTransmission({
 }: Props) {
   const data = useMemo(() => getOrCreateDaily(), []);
   const spokenRef = useRef(false);
+  const aspect = aspectOfDrawn(data.drawn);
 
   useEffect(() => {
     if (spokenRef.current) return;
@@ -34,10 +36,11 @@ export function DailyTransmission({
     <div className="stage reading-stage fade-in">
       <h2
         className="title-oracle"
-        style={{ fontSize: '0.8rem', marginBottom: '0.5rem', letterSpacing: '0.3em' }}
+        style={{ fontSize: '0.8rem', marginBottom: '0.35rem', letterSpacing: '0.3em' }}
       >
         Daily Transmission
       </h2>
+      <p className="teller-credit">The Fortune Teller · Elder of the Crossroads</p>
       <p className="caption" style={{ marginBottom: '1.25rem', fontSize: '0.95rem', opacity: 0.65 }}>
         {data.date} · one card for this device today
       </p>
@@ -53,10 +56,29 @@ export function DailyTransmission({
         />
       </div>
 
-      <div className="synthesis" style={{ marginTop: '1.5rem' }}>
-        <h3>Messenger Line</h3>
-        <p>{data.fortune}</p>
-      </div>
+      <article className="reading-detail" style={{ marginTop: '1.5rem' }}>
+        <h3>
+          {data.drawn.card.name}
+          {data.drawn.reversed ? ' · Shadow' : ''}
+        </h3>
+        <p className="kw-line">
+          {data.drawn.card.keywords[0]} · {data.drawn.card.keywords[1]}
+        </p>
+        <div className="fortune-sections">
+          <div className="fortune-block">
+            <h4>What&apos;s coming</h4>
+            <p>{aspect.coming}</p>
+          </div>
+          <div className="fortune-block">
+            <h4>Work on this</h4>
+            <p>{aspect.workOn}</p>
+          </div>
+          <div className="fortune-block">
+            <h4>Watch out for</h4>
+            <p>{aspect.watchFor}</p>
+          </div>
+        </div>
+      </article>
 
       <div className="reading-actions">
         <button type="button" className="btn-primary" onClick={onRitual}>

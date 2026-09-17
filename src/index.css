@@ -1400,3 +1400,38 @@ button {
     radial-gradient(ellipse at center, transparent 40%, rgba(0, 10, 30, 0.75) 100%),
     linear-gradient(180deg, rgba(20,40,60,0.2) 0%, transparent 30%, rgba(0,0,0,0.8) 100%);
 }
+
+
+/* Fortune Teller branding */
+.teller-credit {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--gold-dim);
+  opacity: 0.8;
+  text-align: center;
+  margin: 0 0 0.85rem;
+}
+
+/* Structured fortune sections */
+.fortune-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.35rem;
+}
+.fortune-block h4 {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+.fortune-block p {
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--bone);
+  margin: 0;
+}

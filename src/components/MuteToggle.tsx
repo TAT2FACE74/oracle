@@ -9,8 +9,8 @@ export function MuteToggle({ muted, onToggle }: Props) {
       type="button"
       className="mute-btn"
       onClick={onToggle}
-      aria-label={muted ? 'Unmute narration' : 'Mute narration'}
-      title={muted ? 'Unmute' : 'Mute'}
+      aria-label={muted ? 'Unmute the Fortune Teller' : 'Mute the Fortune Teller'}
+      title={muted ? 'Unmute — Elder of the Crossroads' : 'Mute — The Fortune Teller'}
     >
       {muted ? '🔇' : '🔊'}
     </button>

@@ -60,6 +60,7 @@ export function Intro({ onComplete, speak, stop }: Props) {
       <div className="intro-orb" aria-hidden />
       <h1 className="title-oracle">Oracle</h1>
       <p className="deck-subtitle">Veil of the Ash Realms</p>
+      <p className="teller-credit">The Fortune Teller · Elder of the Crossroads</p>
       {!entered ? (
         <p className="tap-enter">Tap to enter</p>
       ) : (

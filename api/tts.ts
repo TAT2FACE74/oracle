@@ -2,12 +2,14 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createHash } from 'node:crypto';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
-const VOICE = process.env.TTS_VOICE || 'en-US-ChristopherNeural';
-const RATE = process.env.TTS_RATE || '-12%';
+/** Mature / elder female storyteller — mystical Fortune Teller voice. */
+const VOICE = process.env.TTS_VOICE || 'en-GB-SoniaNeural';
+const RATE = process.env.TTS_RATE || '-10%';
+const PITCH = process.env.TTS_PITCH || '-2Hz';
 const mem = new Map<string, Buffer>();
 
 function hashText(text: string) {
-  return createHash('sha256').update(`${VOICE}|${RATE}|${text}`).digest('hex');
+  return createHash('sha256').update(`${VOICE}|${RATE}|${PITCH}|${text}`).digest('hex');
 }
 
 async function streamToBuffer(stream: NodeJS.ReadableStream): Promise<Buffer> {
@@ -24,7 +26,7 @@ async function synthesize(text: string): Promise<Buffer> {
 
   const tts = new MsEdgeTTS();
   await tts.setMetadata(VOICE, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
-  const { audioStream } = tts.toStream(text, { rate: RATE });
+  const { audioStream } = tts.toStream(text, { rate: RATE, pitch: PITCH });
   const buf = await streamToBuffer(audioStream as NodeJS.ReadableStream);
 
   if (mem.size > 120) mem.delete(mem.keys().next().value!);
@@ -38,7 +40,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method === 'GET') {
-    return res.status(200).json({ ok: true, voice: VOICE, rate: RATE });
+    return res.status(200).json({
+      ok: true,
+      voice: VOICE,
+      rate: RATE,
+      pitch: PITCH,
+      persona: 'The Fortune Teller — Elder of the Crossroads',
+    });
   }
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 

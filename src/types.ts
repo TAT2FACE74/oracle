@@ -17,14 +17,21 @@ export type DeckId = 'veil' | 'shadow' | 'gilded' | 'abyss';
 /** Realm flavor for original oracle messengers (not tarot suits). */
 export type Realm = 'ash' | 'bone' | 'blood' | 'ember' | 'veil';
 
+/** Structured fortune body — clear, concrete reading sections. */
+export interface FortuneAspect {
+  coming: string;
+  workOn: string;
+  watchFor: string;
+}
+
 export interface OracleCard {
   id: string;
   name: string;
   number: number;
   realm: Realm;
   keywords: [string, string];
-  upright: string;
-  reversed: string;
+  upright: FortuneAspect;
+  reversed: FortuneAspect;
   glyph: string;
   image: string;
 }
@@ -96,3 +103,7 @@ export const DECK_META: Record<
 };
 
 export const DECK_NAME = 'Veil of the Ash Realms';
+
+/** Soft voice / oracle branding — mystical elder woman, not a caricature. */
+export const FORTUNE_TELLER_TITLE = 'The Fortune Teller';
+export const FORTUNE_TELLER_EPITHET = 'Elder of the Crossroads';

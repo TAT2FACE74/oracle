@@ -3,13 +3,14 @@ import http from 'node:http';
 import { createHash } from 'node:crypto';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
-const VOICE = process.env.TTS_VOICE || 'en-US-ChristopherNeural';
-const RATE = process.env.TTS_RATE || '-12%';
+const VOICE = process.env.TTS_VOICE || 'en-GB-SoniaNeural';
+const RATE = process.env.TTS_RATE || '-10%';
+const PITCH = process.env.TTS_PITCH || '-2Hz';
 const PORT = Number(process.env.PORT || 8787);
 const cache = new Map();
 
 function hashText(text) {
-  return createHash('sha256').update(`${VOICE}|${RATE}|${text}`).digest('hex');
+  return createHash('sha256').update(`${VOICE}|${RATE}|${PITCH}|${text}`).digest('hex');
 }
 
 async function streamToBuffer(stream) {
@@ -25,7 +26,7 @@ async function synthesize(text) {
   if (cache.has(key)) return cache.get(key);
   const tts = new MsEdgeTTS();
   await tts.setMetadata(VOICE, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
-  const { audioStream } = tts.toStream(text, { rate: RATE });
+  const { audioStream } = tts.toStream(text, { rate: RATE, pitch: PITCH });
   const buf = await streamToBuffer(audioStream);
   if (cache.size > 200) cache.delete(cache.keys().next().value);
   cache.set(key, buf);
@@ -47,7 +48,15 @@ const server = http.createServer(async (req, res) => {
   }
   if (req.url === '/health' || (req.url === '/api/tts' && req.method === 'GET')) {
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ ok: true, voice: VOICE, rate: RATE }));
+    res.end(
+      JSON.stringify({
+        ok: true,
+        voice: VOICE,
+        rate: RATE,
+        pitch: PITCH,
+        persona: 'The Fortune Teller — Elder of the Crossroads',
+      }),
+    );
     return;
   }
   if (!(req.url === '/api/tts' || req.url === '/tts') || req.method !== 'POST') {
@@ -79,5 +88,5 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Oracle TTS on :${PORT} voice=${VOICE} rate=${RATE}`);
+  console.log(`Oracle TTS on :${PORT} voice=${VOICE} rate=${RATE} pitch=${PITCH}`);
 });

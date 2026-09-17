@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { FORTUNE_TELLER_EPITHET, FORTUNE_TELLER_TITLE } from '../types';
 
 interface Props {
   onRitual: () => void;
@@ -20,6 +21,9 @@ export function Hub({ onRitual, onDaily, onPlus, plusUnlocked, speak }: Props) {
       <div className="intro-orb hub-orb" aria-hidden />
       <h1 className="title-oracle">Oracle</h1>
       <p className="deck-subtitle">Veil of the Ash Realms</p>
+      <p className="teller-credit">
+        {FORTUNE_TELLER_TITLE} · {FORTUNE_TELLER_EPITHET}
+      </p>
       <p className="caption" style={{ marginBottom: '1.75rem', opacity: 0.75 }}>
         {TAGLINE}
       </p>

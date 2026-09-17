@@ -8,6 +8,7 @@ import {
 import { saveReading } from '../hooks/useOraclePlus';
 import { CardVisual } from './CardVisual';
 import type { DeckId } from '../types';
+import { aspectOfDrawn, speakFortune } from '../lib/fortune';
 
 interface Props {
   drawn: DrawnCard[];
@@ -21,8 +22,23 @@ interface Props {
   onHome?: () => void;
 }
 
-function meaningOf(d: DrawnCard): string {
-  return d.reversed ? d.card.reversed : d.card.upright;
+function FortuneSections({ coming, workOn, watchFor }: { coming: string; workOn: string; watchFor: string }) {
+  return (
+    <div className="fortune-sections">
+      <div className="fortune-block">
+        <h4>What&apos;s coming</h4>
+        <p>{coming}</p>
+      </div>
+      <div className="fortune-block">
+        <h4>Work on this</h4>
+        <p>{workOn}</p>
+      </div>
+      <div className="fortune-block">
+        <h4>Watch out for</h4>
+        <p>{watchFor}</p>
+      </div>
+    </div>
+  );
 }
 
 function buildSynthesis(drawn: DrawnCard[]): string {
@@ -44,7 +60,7 @@ function buildSynthesis(drawn: DrawnCard[]): string {
     ascension.reversed ? ', in shadow' : ''
   }) names the harder trajectory. Between them — ${names[1]}, ${names[2]}, and ${
     names[3]
-  } — the near work is mercilessly clear: name what stalks you, choose at the crossroads, follow the hidden thread, and walk the timeline without soft lies. The Oracle does not rescue you. It reveals the current. You steer — or you are steered.`;
+  } — the near work is mercilessly clear: name what stalks you, choose at the crossroads, follow the hidden thread, and walk the timeline without soft lies. The Fortune Teller does not rescue you. She reveals the current. You steer — or you are steered.`;
 }
 
 export function Reading({
@@ -63,13 +79,16 @@ export function Reading({
 
   useEffect(() => {
     saveReading({
-      cards: drawn.map((d) => ({
-        id: d.card.id,
-        name: d.card.name,
-        reversed: d.reversed,
-        position: SPREAD_POSITIONS[d.position],
-        meaning: meaningOf(d),
-      })),
+      cards: drawn.map((d) => {
+        const a = aspectOfDrawn(d);
+        return {
+          id: d.card.id,
+          name: d.card.name,
+          reversed: d.reversed,
+          position: SPREAD_POSITIONS[d.position],
+          meaning: speakFortune(a),
+        };
+      }),
       synthesis,
     });
   }, [drawn, synthesis]);
@@ -84,7 +103,10 @@ export function Reading({
     drawn.forEach((d, i) => {
       const pos = SPREAD_POSITIONS[i] as SpreadPosition;
       const orient = d.reversed ? 'in shadow aspect' : 'upright';
-      lines.push(`${pos}. ${d.card.name}, ${orient}. ${meaningOf(d)}`);
+      const a = aspectOfDrawn(d);
+      lines.push(
+        speakFortune(a, `${pos}. ${d.card.name}, ${orient}.`),
+      );
     });
     lines.push(`Synthesis. ${synthesis}`);
 
@@ -104,10 +126,11 @@ export function Reading({
     <div className="stage reading-stage fade-in">
       <h2
         className="title-oracle"
-        style={{ fontSize: '0.85rem', marginBottom: '1.25rem', letterSpacing: '0.35em' }}
+        style={{ fontSize: '0.85rem', marginBottom: '0.35rem', letterSpacing: '0.35em' }}
       >
         The Reading
       </h2>
+      <p className="teller-credit">The Fortune Teller · Elder of the Crossroads</p>
 
       <div className="spread-grid">
         {drawn.map((d, i) => (
@@ -127,6 +150,7 @@ export function Reading({
 
       {drawn.map((d, i) => {
         const pos = SPREAD_POSITIONS[i] as SpreadPosition;
+        const a = aspectOfDrawn(d);
         return (
           <article key={d.card.id} className="reading-detail">
             <h3>
@@ -139,7 +163,7 @@ export function Reading({
             <p className="kw-line">
               {d.card.keywords[0]} · {d.card.keywords[1]}
             </p>
-            <p>{meaningOf(d)}</p>
+            <FortuneSections coming={a.coming} workOn={a.workOn} watchFor={a.watchFor} />
           </article>
         );
       })}

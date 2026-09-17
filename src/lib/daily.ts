@@ -1,5 +1,6 @@
 import { DECK } from '../data/deck';
 import type { DrawnCard, OracleCard } from '../types';
+import { aspectOf, speakFortune } from './fortune';
 
 /** Deterministic hash of a string → unsigned 32-bit. */
 export function hashString(s: string): number {
@@ -55,13 +56,15 @@ export function drawDailyCard(date = todayKey()): { card: OracleCard; reversed: 
 }
 
 export function buildDailyFortune(card: OracleCard, reversed: boolean): string {
-  const meaning = reversed ? card.reversed : card.upright;
   const orient = reversed ? 'reversed' : 'upright';
   const punch = reversed
     ? 'Today the messenger leans into shadow — do not flinch.'
     : 'Today the messenger favors conscious motion — claim the cost.';
-  const short = meaning.split('.').slice(0, 2).join('.').trim();
-  return `Daily Transmission: ${card.name} (${orient}). ${punch} ${short}. Carry this transmission until midnight. The Ash Realms do not repeat themselves lightly.`;
+  const aspect = aspectOf(card, reversed);
+  return speakFortune(
+    aspect,
+    `Daily Transmission: ${card.name} (${orient}). ${punch}`,
+  ) + ' Carry this transmission until midnight. The Ash Realms do not repeat themselves lightly.';
 }
 
 export function getOrCreateDaily(): {
@@ -74,9 +77,11 @@ export function getOrCreateDaily(): {
   const existing = loadDaily(date);
   if (existing) {
     const card = DECK.find((c) => c.id === existing.cardId) || DECK[0];
+    // Rebuild fortune from current structured deck so TTS/UI stay in sync after upgrades
+    const fortune = buildDailyFortune(card, existing.reversed);
     return {
       drawn: { card, reversed: existing.reversed, position: 0 },
-      fortune: existing.fortune,
+      fortune,
       date,
       fresh: false,
     };
