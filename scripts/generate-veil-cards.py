@@ -169,7 +169,7 @@ def scene_geometry(draw: ImageDraw.ImageDraw, n: int, realm: str, box: tuple[int
         "veil": (140, 110, 180),
     }[realm]
 
-    kind = n % 11
+    kind = (n - 1) % 11
 
     if kind == 0:  # herald flame / vertical rays
         for i in range(12):
