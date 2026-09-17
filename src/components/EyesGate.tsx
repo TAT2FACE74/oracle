@@ -6,7 +6,8 @@ interface Props {
 
 /**
  * Black-screen stare gate: center orb red → green.
- * At ~5s a barely-visible shadowed face fades in behind the orb (creepy, subtle).
+ * At ~5s a shadowed face fades in behind the orb (creepy, visible on phones).
+ * Green at 10s; complete ~11.2s.
  */
 export function EyesGate({ onComplete }: Props) {
   const [showFace, setShowFace] = useState(false);
@@ -26,7 +27,6 @@ export function EyesGate({ onComplete }: Props) {
   return (
     <div className="stage eyes-stage">
       <div className={`shadow-face ${showFace ? 'visible' : ''}`} aria-hidden>
-        {/* Soft photoreal-ish silhouette — not a cartoon face */}
         <div className="shadow-face-inner">
           <div className="sf-skull" />
           <div className="sf-eye sf-eye-l">
@@ -43,7 +43,9 @@ export function EyesGate({ onComplete }: Props) {
           <div className="sf-mouth" />
         </div>
       </div>
-      <div className={`eyes-orb ${green ? 'green' : 'red'}`} />
+      <div
+        className={`eyes-orb ${green ? 'green' : 'red'}${showFace ? ' with-presence' : ''}`}
+      />
       <p className="eyes-copy">
         Eyes are windows into the soul.
         <br />

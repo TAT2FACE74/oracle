@@ -318,7 +318,7 @@ button {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  transition: background 0.8s ease, box-shadow 0.8s ease;
+  transition: background 0.8s ease, box-shadow 0.8s ease, opacity 1.2s ease, filter 1.2s ease;
   z-index: 2;
 }
 
@@ -336,6 +336,21 @@ button {
     0 0 70px rgba(46, 204, 113, 0.5);
 }
 
+/* Dim orb glow when face is present so eyes aren't washed out */
+.eyes-orb.with-presence {
+  opacity: 0.72;
+  filter: brightness(0.85);
+  box-shadow:
+    0 0 18px rgba(255, 58, 90, 0.4),
+    0 0 40px rgba(196, 43, 66, 0.28);
+}
+
+.eyes-orb.with-presence.green {
+  box-shadow:
+    0 0 18px rgba(61, 255, 154, 0.4),
+    0 0 40px rgba(46, 204, 113, 0.28);
+}
+
 .shadow-face {
   position: absolute;
   inset: 0;
@@ -349,15 +364,17 @@ button {
 }
 
 .shadow-face.visible {
-  opacity: 0.11;
+  /* 0.48 — eerie but readable on phone screens */
+  opacity: 0.48;
   animation: face-drift 7s ease-in-out infinite;
 }
 
 .shadow-face-inner {
   position: relative;
-  width: min(62vw, 260px);
-  height: min(78vw, 320px);
-  filter: blur(1.4px) contrast(1.05);
+  /* Larger face so eyes sit left/right of the center orb */
+  width: min(78vw, 340px);
+  height: min(96vw, 420px);
+  filter: blur(0.55px) contrast(1.22);
 }
 
 .sf-skull {
@@ -365,58 +382,64 @@ button {
   inset: 8% 12% 6%;
   border-radius: 48% 48% 42% 42%;
   background:
-    radial-gradient(ellipse 55% 50% at 50% 38%, rgba(28, 22, 24, 0.55), transparent 70%),
-    radial-gradient(ellipse 70% 80% at 50% 55%, rgba(10, 8, 9, 0.75), transparent 72%);
+    radial-gradient(ellipse 55% 50% at 50% 38%, rgba(36, 28, 30, 0.7), transparent 70%),
+    radial-gradient(ellipse 70% 80% at 50% 55%, rgba(14, 10, 12, 0.85), transparent 72%);
   box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.85);
 }
 
 .sf-eye {
   position: absolute;
-  top: 38%;
-  width: 18%;
-  height: 7%;
+  top: 36%;
+  width: 22%;
+  height: 10%;
   border-radius: 50%;
-  background: radial-gradient(ellipse at 50% 45%, rgba(18, 6, 8, 0.95), rgba(4, 2, 3, 0.9));
+  background: radial-gradient(ellipse at 50% 45%, rgba(22, 6, 8, 0.98), rgba(4, 2, 3, 0.95));
   box-shadow:
-    0 0 6px rgba(40, 8, 12, 0.35),
+    0 0 10px rgba(120, 20, 28, 0.45),
+    0 0 4px rgba(180, 60, 40, 0.25),
     inset 0 0 4px rgba(0, 0, 0, 0.9);
   animation: micro-eye 5.5s ease-in-out infinite;
 }
 
-.sf-eye-l { left: 24%; }
-.sf-eye-r { right: 24%; animation-delay: -1.8s; }
+.sf-eye-l { left: 18%; }
+.sf-eye-r { right: 18%; animation-delay: -1.8s; }
 
 .sf-iris {
   position: absolute;
   left: 50%;
   top: 48%;
-  width: 38%;
-  height: 55%;
+  width: 44%;
+  height: 62%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #2a0a10, #0a0204 70%);
+  /* Faint red/amber iris so eyes read in the dark */
+  background:
+    radial-gradient(circle at 40% 35%, rgba(180, 70, 40, 0.55), transparent 45%),
+    radial-gradient(circle at 50% 50%, #3a0c10, #0a0204 72%);
+  box-shadow: 0 0 6px rgba(160, 40, 30, 0.35);
 }
 
 .sf-glint {
   position: absolute;
-  left: 58%;
-  top: 32%;
-  width: 18%;
-  height: 22%;
+  left: 56%;
+  top: 28%;
+  width: 22%;
+  height: 26%;
   border-radius: 50%;
-  background: rgba(90, 40, 48, 0.35);
+  background: rgba(220, 120, 70, 0.55);
+  box-shadow: 0 0 5px rgba(255, 140, 60, 0.35);
 }
 
 .sf-brow {
   position: absolute;
-  top: 33%;
-  width: 22%;
+  top: 30%;
+  width: 24%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(30, 22, 24, 0.5), transparent);
-  opacity: 0.7;
+  background: linear-gradient(90deg, transparent, rgba(40, 28, 30, 0.65), transparent);
+  opacity: 0.85;
 }
-.sf-brow-l { left: 22%; transform: rotate(-8deg); }
-.sf-brow-r { right: 22%; transform: rotate(8deg); }
+.sf-brow-l { left: 18%; transform: rotate(-8deg); }
+.sf-brow-r { right: 18%; transform: rotate(8deg); }
 
 .sf-nose {
   position: absolute;
@@ -425,7 +448,7 @@ button {
   width: 8%;
   height: 12%;
   transform: translateX(-50%);
-  background: linear-gradient(180deg, transparent, rgba(20, 14, 16, 0.35));
+  background: linear-gradient(180deg, transparent, rgba(24, 16, 18, 0.45));
   border-radius: 40%;
 }
 
@@ -437,7 +460,7 @@ button {
   height: 3px;
   transform: translateX(-50%);
   border-radius: 40%;
-  background: rgba(12, 6, 8, 0.45);
+  background: rgba(12, 6, 8, 0.55);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -538,13 +561,13 @@ button {
 
 .carousel-nav {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   border: 1px solid var(--gold-dim);
   background: rgba(12, 8, 10, 0.85);
   color: var(--gold);
-  font-size: 1.6rem;
+  font-size: 1.85rem;
   line-height: 1;
   cursor: pointer;
   z-index: 8;
@@ -572,6 +595,12 @@ button {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.carousel-wrap.is-dragging .card-slot,
+.carousel-wrap.is-dragging .card-slot * {
+  pointer-events: none !important;
 }
 
 .carousel-track {
@@ -582,12 +611,14 @@ button {
   height: 100%;
   position: relative;
   perspective: 1200px;
+  touch-action: none;
 }
 
 .card-slot {
   position: absolute;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s;
   cursor: grab;
+  touch-action: none;
 }
 
 .card-slot:active {
