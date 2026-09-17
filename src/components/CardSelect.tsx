@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { shuffleDeck } from '../data/deck';
-import type { DeckId, DrawnCard, TarotCard } from '../types';
+import type { DeckId, DrawnCard, OracleCard } from '../types';
 import { CardVisual } from './CardVisual';
 
 interface Props {
@@ -11,11 +11,11 @@ interface Props {
 
 const MAX = 5;
 
-export function CardSelect({ onComplete, deckId = 'rws', premiumArt = false }: Props) {
+export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: Props) {
   const deck = useMemo(() => shuffleDeck(), []);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<DrawnCard[]>([]);
-  const [pending, setPending] = useState<{ card: TarotCard; reversed: boolean } | null>(
+  const [pending, setPending] = useState<{ card: OracleCard; reversed: boolean } | null>(
     null,
   );
   const dragRef = useRef<{ x: number; active: boolean }>({ x: 0, active: false });
@@ -94,7 +94,7 @@ export function CardSelect({ onComplete, deckId = 'rws', premiumArt = false }: P
     }
   };
 
-  const visible: { card: TarotCard; offset: number }[] = [];
+  const visible: { card: OracleCard; offset: number }[] = [];
   for (let o = -2; o <= 2; o++) {
     if (!carouselCards.length) break;
     const i = (safeIndex + o + carouselCards.length * 10) % carouselCards.length;

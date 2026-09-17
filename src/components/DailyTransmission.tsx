@@ -54,7 +54,7 @@ export function DailyTransmission({
       </div>
 
       <div className="synthesis" style={{ marginTop: '1.5rem' }}>
-        <h3>Oracle Line</h3>
+        <h3>Messenger Line</h3>
         <p>{data.fortune}</p>
       </div>
 

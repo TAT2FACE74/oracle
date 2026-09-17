@@ -1,1032 +1,494 @@
-import type { TarotCard } from '../types';
-
-export const DECK: TarotCard[] = [
-  // —— MAJOR ARCANA ——
+import type { OracleCard } from '../types';
+/** Veil of the Ash Realms — original 44-card dark oracle. */
+export const DECK_TITLE = 'Veil of the Ash Realms';
+export const DECK: OracleCard[] = [
   {
-    id: 'major-0',
-    image: 'cards/major-0.jpg',
-    name: 'The Fool',
-    suit: 'major',
-    number: 0,
-    glyph: '✦',
-    keywords: ['beginnings', 'faith', 'leap', 'innocence'],
-    upright:
-      'A sacred threshold opens. You stand at the edge of the known, asked to trust the fall. The Fool does not stumble blindly — they leap because the void itself has whispered permission. Begin before you feel ready.',
-    reversed:
-      'Recklessness disguised as freedom, or fear dressed as caution. You cling to the cliff while destiny waits below. Either you refuse the leap, or you leap without listening. Reclaim discernment.',
-  },
-  {
-    id: 'major-1',
-    image: 'cards/major-1.jpg',
-    name: 'The Magician',
-    suit: 'major',
+    id: 'veil-01',
+    image: 'cards/veil-01.jpg',
+    name: 'The Cinder Herald',
     number: 1,
-    glyph: '☿',
-    keywords: ['will', 'manifestation', 'focus', 'channel'],
-    upright:
-      'All tools are already in your hands. Above and below align through your focused will. Speak your intention clearly — the Magician reminds you that energy follows attention, and attention follows choice.',
-    reversed:
-      'Scattered power, manipulative intent, or unused gifts. Talent without discipline becomes noise. Stop performing magic for an audience and return to the quiet work of true creation.',
+    realm: 'ash',
+    glyph: '⟐',
+    keywords: ['Summons', 'Warning'],
+    upright: 'I am the Cinder Herald. I arrive when the air already smells of what you refuse to name. You have delayed a message that will not wait; ash gathers at your door because silence has become a kind of treason against your own path. Speak the hard word. Deliver what burns. The fire you fear is already lit — your only power left is to carry it honestly.',
+    reversed: 'In shadow I find you choking on smoke you will not admit is yours. You bury the warning, rewrite the omen, and call it peace. That peace is a lie with soft edges. Until you carry the cinder into the open, every room you enter will taste of unfinished fire.',
   },
   {
-    id: 'major-2',
-    image: 'cards/major-2.jpg',
-    name: 'The High Priestess',
-    suit: 'major',
+    id: 'veil-02',
+    image: 'cards/veil-02.jpg',
+    name: 'The Bone Abbess',
     number: 2,
-    glyph: '☽',
-    keywords: ['intuition', 'mystery', 'veil', 'inner knowing'],
-    upright:
-      'The veil parts for those who listen in stillness. What cannot be explained by logic is already known by your deeper self. Trust the dream, the omen, the pause between thoughts.',
-    reversed:
-      'Secrets withheld — from others or from yourself. You drown intuition in noise, or weaponize mystery to avoid truth. Sit with what you do not want to know.',
-  },
-  {
-    id: 'major-3',
-    image: 'cards/major-3.jpg',
-    name: 'The Empress',
-    suit: 'major',
-    number: 3,
-    glyph: '♀',
-    keywords: ['abundance', 'creation', 'nurture', 'embodiment'],
-    upright:
-      'Life wants to bloom through you. Creativity, fertility of ideas, sensual presence — the Empress blesses what you tend with patience and love. Receive as well as give.',
-    reversed:
-      'Creative drought, overgiving until empty, or clinging to comfort that softens the soul. Nurture yourself first, or the garden withers from neglect of the gardener.',
-  },
-  {
-    id: 'major-4',
-    image: 'cards/major-4.jpg',
-    name: 'The Emperor',
-    suit: 'major',
-    number: 4,
-    glyph: '♂',
-    keywords: ['structure', 'authority', 'boundaries', 'order'],
-    upright:
-      'Sovereignty requires structure. Build the frame that protects your vision. Leadership, discipline, and clear boundaries are not cages — they are the architecture of lasting power.',
-    reversed:
-      'Tyranny or abdication. Control that crushes, or chaos from refusing to claim authority. Soften the iron fist, or stand up and take the throne you have been avoiding.',
-  },
-  {
-    id: 'major-5',
-    image: 'cards/major-5.jpg',
-    name: 'The Hierophant',
-    suit: 'major',
-    number: 5,
+    realm: 'bone',
     glyph: '✝',
-    keywords: ['tradition', 'teaching', 'initiation', 'lineage'],
-    upright:
-      'Sacred knowledge passed through lineage. Seek a teacher, honor a tradition, or become the bridge yourself. Initiation is not conformity — it is entering a current larger than ego.',
-    reversed:
-      'Blind dogma or rebellious rejection of all structure. Question the temple without burning it. Find your own rite of passage beyond inherited scripts.',
+    keywords: ['Silence', 'Relic'],
+    upright: 'I am the Bone Abbess. I keep what survives when flesh forgets its vows. You are being asked to enter a monastery of quiet — not as escape, but as excavation. Something sacred in you has been handled too casually. Kneel. Strip the noise. Recover the relic of your word before the world claims another piece of you.',
+    reversed: 'Reversed, I am the hush that calcifies into avoidance. You call it sacred solitude while you hide from accountability. Bones without oath are just furniture for the grave. Return to discipline, or the silence will eat the last of your integrity.',
   },
   {
-    id: 'major-6',
-    image: 'cards/major-6.jpg',
-    name: 'The Lovers',
-    suit: 'major',
+    id: 'veil-03',
+    image: 'cards/veil-03.jpg',
+    name: 'The Hollow Crown',
+    number: 3,
+    realm: 'veil',
+    glyph: '♛',
+    keywords: ['Dominion', 'Emptiness'],
+    upright: 'I am the Hollow Crown. I fit only those who know rule is a wound as much as a prize. Authority is being pressed into your hands — or torn from them. Either way, the throne is empty of comfort. Lead without theater. Claim the seat if it is yours; refuse it if it is flattery. Hollow power still cuts.',
+    reversed: 'In shadow the crown wears you. You chase titles, applause, and the costume of control while the center stays vacant. Put down the performance. Dominion without substance is a beautiful cage — and you are already rattling the bars.',
+  },
+  {
+    id: 'veil-04',
+    image: 'cards/veil-04.jpg',
+    name: 'The Ash Widow',
+    number: 4,
+    realm: 'ash',
+    glyph: '☽',
+    keywords: ['Grief', 'Remembrance'],
+    upright: 'I am the Ash Widow. I do not come to soothe; I come to make mourning useful. A loss — person, identity, timeline — has left soot on your hands. Do not scrub it off with distraction. Name what died. Keep one ember of what mattered. Then walk forward carrying both the grief and the vow it forged.',
+    reversed: 'Reversed, grief becomes a shrine you refuse to leave. You polish the ashes instead of living. Remembering is holy; rotting in remembrance is not. Close the chapter with a clean cut, or the widowhood will claim more years than the loss ever did.',
+  },
+  {
+    id: 'veil-05',
+    image: 'cards/veil-05.jpg',
+    name: 'The Ember Warden',
+    number: 5,
+    realm: 'ember',
+    glyph: '🜂',
+    keywords: ['Vigil', 'Heat'],
+    upright: 'I am the Ember Warden. I keep the last heat when the feast has gone cold. You are the guardian of a fragile fire — a project, a love, a truth — that others would let die for convenience. Stay awake. Feed it carefully. Do not confuse frenzy with vigilance. Steady heat outlasts spectacle.',
+    reversed: 'In shadow your vigil turns to obsession or neglect. Either you smother the ember with control, or you abandon the watch and blame the wind. Choose stewardship over drama. Heat without wisdom is arson wearing a saint’s cloak.',
+  },
+  {
+    id: 'veil-06',
+    image: 'cards/veil-06.jpg',
+    name: 'The Veil Reaper',
     number: 6,
-    glyph: '♡',
-    keywords: ['union', 'choice', 'alignment', 'values'],
-    upright:
-      'A sacred choice of the heart. Not merely romance — the alignment of values, the union of inner opposites. Choose what your soul recognizes as true, even when it costs comfort.',
-    reversed:
-      'Misalignment, temptation without integrity, or avoidance of a necessary choice. Harmony cannot be forced. Examine where desire and truth diverge.',
-  },
-  {
-    id: 'major-7',
-    image: 'cards/major-7.jpg',
-    name: 'The Chariot',
-    suit: 'major',
-    number: 7,
-    glyph: '⚔',
-    keywords: ['drive', 'victory', 'willpower', 'direction'],
-    upright:
-      'Opposed forces harnessed toward one destination. Discipline your wild horses. Momentum is yours if intention stays sharp. Victory belongs to those who steer through chaos.',
-    reversed:
-      'Scattered drive, aggression without aim, or stalled progress from conflicting desires. Reclaim the reins. Direction matters more than speed.',
-  },
-  {
-    id: 'major-8',
-    image: 'cards/major-8.jpg',
-    name: 'Strength',
-    suit: 'major',
-    number: 8,
-    glyph: '∞',
-    keywords: ['courage', 'compassion', 'inner fire', 'gentle power'],
-    upright:
-      'True strength tames the beast with tenderness, not force. Your courage is quiet and enduring. Meet fear with presence; meet rage with understanding. The lion yields to love.',
-    reversed:
-      'Self-doubt, suppressed emotion, or brute force where softness is needed. Your power is not gone — it is misdirected. Soften, then stand.',
-  },
-  {
-    id: 'major-9',
-    image: 'cards/major-9.jpg',
-    name: 'The Hermit',
-    suit: 'major',
-    number: 9,
-    glyph: '⟁',
-    keywords: ['solitude', 'wisdom', 'inner light', 'withdrawal'],
-    upright:
-      'Retreat is not escape — it is pilgrimage inward. Carry your lantern into the mountain silence. Answers arrive when noise falls away. Be alone with what is real.',
-    reversed:
-      'Isolation that calcifies, or refusal to seek solitude when the soul demands it. Balance the cave and the world. Do not hide from your own light.',
-  },
-  {
-    id: 'major-10',
-    image: 'cards/major-10.jpg',
-    name: 'Wheel of Fortune',
-    suit: 'major',
-    number: 10,
-    glyph: '☸',
-    keywords: ['cycles', 'fate', 'turning point', 'destiny'],
-    upright:
-      'The wheel turns. What rises will fall; what falls will rise. Synchronicity thickens around you. Cooperate with the turn rather than gripping the spokes. Destiny is motion.',
-    reversed:
-      'Resistance to change, bad timing, or clinging to a cycle that has ended. Stop fighting the turn. Release what no longer belongs to this revolution.',
-  },
-  {
-    id: 'major-11',
-    image: 'cards/major-11.jpg',
-    name: 'Justice',
-    suit: 'major',
-    number: 11,
-    glyph: '⚖',
-    keywords: ['truth', 'balance', 'karma', 'accountability'],
-    upright:
-      'Cause and effect stand naked before you. Truth cuts clean. Own what is yours; release what is not. Fairness is not softness — it is precise alignment with reality.',
-    reversed:
-      'Injustice, denial of consequences, or harsh self-judgment. The scales tip. Correct the imbalance — in the world or within — with honesty, not vengeance.',
-  },
-  {
-    id: 'major-12',
-    image: 'cards/major-12.jpg',
-    name: 'The Hanged Man',
-    suit: 'major',
-    number: 12,
-    glyph: '∇',
-    keywords: ['surrender', 'perspective', 'pause', 'sacrifice'],
-    upright:
-      'Hang voluntarily between worlds. Surrender the old view so a new one can arrive. This pause is sacred. What feels like suspension is initiation into deeper sight.',
-    reversed:
-      'Stalling that has become avoidance, or martyrdom without meaning. Release the rope or commit to the hanging. Half-measures waste the sacrifice.',
-  },
-  {
-    id: 'major-13',
-    image: 'cards/major-13.jpg',
-    name: 'Death',
-    suit: 'major',
-    number: 13,
+    realm: 'veil',
     glyph: '☠',
-    keywords: ['ending', 'transformation', 'release', 'rebirth'],
-    upright:
-      'An ending that clears the field for rebirth. Do not romanticize what must die. Mourn cleanly, then walk through the gate. Transformation requires the corpse of the old self.',
-    reversed:
-      'Resistance to necessary endings. You drag a dead thing because familiarity feels safer than the void. Let go. The new life cannot enter a occupied tomb.',
+    keywords: ['Threshold', 'Harvest'],
+    upright: 'I am the Veil Reaper. I harvest what is finished so the living can move. A season ends now — role, relationship, illusion. Do not cling to the stem after the fruit is cut. Let me take what is done. The threshold ahead requires empty hands and a spine that does not bargain with corpses.',
+    reversed: 'Reversed, you force harvest too early or refuse it entirely. You pick green fruit, or you let rot sweeten into poison. Timing is the blade. Ask what is truly finished — then cut once, cleanly, without apology theater.',
   },
   {
-    id: 'major-14',
-    image: 'cards/major-14.jpg',
-    name: 'Temperance',
-    suit: 'major',
+    id: 'veil-07',
+    image: 'cards/veil-07.jpg',
+    name: 'The Iron Confessor',
+    number: 7,
+    realm: 'bone',
+    glyph: '⚖',
+    keywords: ['Truth', 'Weight'],
+    upright: 'I am the Iron Confessor. I do not want your pretty story; I want the sentence that costs you. Confession is due — to yourself first, then to whoever your silence has injured. Speak the weight. Iron truth will bruise, then set the bone. Delay only multiplies the fracture.',
+    reversed: 'In shadow confession becomes spectacle or weapon. You dump guilt to punish, or you perform vulnerability to avoid change. Real confession alters behavior. Until your actions match your mouth, I remain unmoved.',
+  },
+  {
+    id: 'veil-08',
+    image: 'cards/veil-08.jpg',
+    name: 'The Blood Geometer',
+    number: 8,
+    realm: 'blood',
+    glyph: '◈',
+    keywords: ['Pattern', 'Sacrifice'],
+    upright: 'I am the Blood Geometer. I draw the pattern your sacrifices have already written. Look at where you spend yourself — time, loyalty, body, reputation. The angles reveal your true altar. Align the next offering with what you actually serve, or the geometry will keep bleeding you for someone else’s design.',
+    reversed: 'Reversed, your sacrifices are chaotic, theatrical, or extracted under false math. You bleed for patterns that do not love you back. Recalculate. Stop funding a design that treats you as ink.',
+  },
+  {
+    id: 'veil-09',
+    image: 'cards/veil-09.jpg',
+    name: 'The Night Orchard',
+    number: 9,
+    realm: 'ember',
+    glyph: '❧',
+    keywords: ['Temptation', 'Fruit'],
+    upright: 'I am the Night Orchard. My fruit glows because it is ripe with consequence. Desire is not your enemy — denial dressed as virtue is. Take what is offered only if you can carry the aftertaste. Sweetness without contract is how soft people disappear.',
+    reversed: 'In shadow you gorge or starve. Either you chase every luminous bait, or you refuse nourishment and call it purity. Choose one true fruit. Pay its price. Leave the rest hanging for those who still confuse hunger with destiny.',
+  },
+  {
+    id: 'veil-10',
+    image: 'cards/veil-10.jpg',
+    name: 'The Pale Cartographer',
+    number: 10,
+    realm: 'veil',
+    glyph: '⟡',
+    keywords: ['Map', 'Exile'],
+    upright: 'I am the Pale Cartographer. I ink the roads that polite maps erase. You are off the approved path — by choice or by shove. Stop apologizing for the terrain. Chart what is real: allies, traps, exits. Exile can be a sentence or a strategy. Draw it as strategy.',
+    reversed: 'Reversed, you wander without a legend, or you clutch an outdated map while the land has moved. Update your coordinates. Nostalgia is not navigation. If you will not draw the new road, you will keep circling the same soft hell.',
+  },
+  {
+    id: 'veil-11',
+    image: 'cards/veil-11.jpg',
+    name: 'The Thorn Consul',
+    number: 11,
+    realm: 'blood',
+    glyph: '⚜',
+    keywords: ['Pact', 'Boundary'],
+    upright: 'I am the Thorn Consul. I negotiate with barbs visible. A pact is forming — business, love, oath, alliance. Do not sign in perfume. Name the thorns. Demand reciprocal cost. Boundaries are not cruelty; they are the only diplomacy that survives contact with hungry people.',
+    reversed: 'In shadow you either puncture everyone or let yourself be pierced for peace. Both are failed statesmanship. Renegotiate. Soften where loyalty is proven; harden where charm has been a blade.',
+  },
+  {
+    id: 'veil-12',
+    image: 'cards/veil-12.jpg',
+    name: 'The Grave Choir',
+    number: 12,
+    realm: 'bone',
+    glyph: '♫',
+    keywords: ['Echo', 'Consensus'],
+    upright: 'I am the Grave Choir. We sing what the living pretend not to hear. A consensus of the dead — ancestors, old selves, finished versions of you — is voting on your next move. Listen for the harmony beneath opinion. You are not alone in this choice; you are crowded with witnesses.',
+    reversed: 'Reversed, the choir becomes noise: inherited guilt, other people’s unfinished business wearing your name. Separate their song from yours. You owe remembrance, not possession. Sing your line, not their entire requiem.',
+  },
+  {
+    id: 'veil-13',
+    image: 'cards/veil-13.jpg',
+    name: 'The Salt Mercenary',
+    number: 13,
+    realm: 'ash',
+    glyph: '⚔',
+    keywords: ['Debt', 'Blade'],
+    upright: 'I am the Salt Mercenary. I fight for what is owed — and I salt the earth where loyalty was fake. Someone owes you, or you owe them, and politeness has become a delaying tactic. Collect or settle. Bring the blade of clarity. Salt cleans and stings; both are medicine.',
+    reversed: 'In shadow debt becomes endless war. You keep swinging for principle long after the point is paid, or you pretend no blade is needed while interest compounds. Close the ledger. Mercenaries who never finish contracts die poor and bitter.',
+  },
+  {
+    id: 'veil-14',
+    image: 'cards/veil-14.jpg',
+    name: 'The Mirror Saint',
     number: 14,
-    glyph: '⚗',
-    keywords: ['alchemy', 'balance', 'patience', 'integration'],
-    upright:
-      'Alchemy of opposites. Blend fire and water with patience. Healing is gradual, sacred, and precise. You are the vessel where extremes become medicine.',
-    reversed:
-      'Imbalance, impatience, or forcing synthesis before readiness. Excess in any direction poisons the brew. Return to the middle path and stir slowly.',
+    realm: 'veil',
+    glyph: '◉',
+    keywords: ['Reflection', 'Judgment'],
+    upright: 'I am the Mirror Saint. I am holy only because I refuse flattery. Look. The face looking back is the architect of your current weather. Judgment here is not damnation — it is accurate seeing. Correct what the glass shows. Sanctity without self-honesty is costume jewelry.',
+    reversed: 'Reversed, you smash mirrors or worship them. Either you refuse feedback, or you drown in self-surveillance. Use one clear glance. Act. Then put the glass down before vanity or shame becomes your religion.',
   },
   {
-    id: 'major-15',
-    image: 'cards/major-15.jpg',
-    name: 'The Devil',
-    suit: 'major',
+    id: 'veil-15',
+    image: 'cards/veil-15.jpg',
+    name: 'The Smoke Ambassador',
     number: 15,
-    glyph: '⛧',
-    keywords: ['bondage', 'shadow', 'temptation', 'material chains'],
-    upright:
-      'Chains you can unlock — if you admit you hold the key. Attachment, addiction, or the seductive lie that you are powerless. Look at the shadow without flinching. Freedom begins with naming the chain.',
-    reversed:
-      'Breaking free, or deeper entanglement denied. Liberation is near, but only if you stop romanticizing the cage. Sever the cord with clarity.',
+    realm: 'ash',
+    glyph: '〰',
+    keywords: ['Diplomacy', 'Obscurity'],
+    upright: 'I am the Smoke Ambassador. I move between rooms that hate each other. You are being sent to negotiate in fog — half-truths, politics, family theaters. Keep your center. Speak enough to open doors, not enough to sell your spine. Obscurity is a tool; do not let it become your personality.',
+    reversed: 'In shadow you hide behind vagueness until no one trusts you, including yourself. Or you force brutal clarity in a room that needed tact first. Master both registers. Ambassadors who only know one language start wars.',
   },
   {
-    id: 'major-16',
-    image: 'cards/major-16.jpg',
-    name: 'The Tower',
-    suit: 'major',
+    id: 'veil-16',
+    image: 'cards/veil-16.jpg',
+    name: 'The Ruin Midwife',
     number: 16,
-    glyph: '⚡',
-    keywords: ['upheaval', 'revelation', 'collapse', 'truth strike'],
-    upright:
-      'Lightning strikes the false structure. What was built on illusion cannot stand. Shocking, yes — and liberating. After the rubble, the sky is visible again. Rebuild on bedrock.',
-    reversed:
-      'Delayed collapse, fear of upheaval, or clinging to ruins. The strike may be internal rather than external. Soften into the necessary demolition before it is forced.',
+    realm: 'bone',
+    glyph: '⎈',
+    keywords: ['Birth', 'Collapse'],
+    upright: 'I am the Ruin Midwife. I deliver what can only be born through breaking. Something in your life must collapse for the next form to arrive. Do not romanticize the rubble, and do not anesthetize the labor. Push through the ugly middle. What survives the ruin is the real child.',
+    reversed: 'Reversed, you cling to the dying structure or force premature birth. Both kill potential. Attend the timing. Collapse is not failure when it is midwifery — but panic midwifery is just vandalism with a story.',
   },
   {
-    id: 'major-17',
-    image: 'cards/major-17.jpg',
-    name: 'The Star',
-    suit: 'major',
+    id: 'veil-17',
+    image: 'cards/veil-17.jpg',
+    name: 'The Obsidian Scribe',
     number: 17,
-    glyph: '★',
-    keywords: ['hope', 'healing', 'guidance', 'renewal'],
-    upright:
-      'After the storm, starlight. Quiet hope returns. You are being guided — not with thunder, but with a soft, persistent light. Heal. Trust. Pour water back into the earth of your life.',
-    reversed:
-      'Disconnection from hope, cynicism, or spiritual drought. The stars have not left — your eyes have closed. Look up again. Allow yourself to believe in renewal.',
+    realm: 'ember',
+    glyph: '✎',
+    keywords: ['Record', 'Permanence'],
+    upright: 'I am the Obsidian Scribe. What I write does not wash off. Document the vow, the boundary, the evidence, the intention. Make it black and permanent. Memory alone is a soft liar. Carve the truth where future-you cannot renegotiate it into comfort.',
+    reversed: 'In shadow you over-archive to avoid living, or you refuse to write anything so you can stay slippery. Choose one binding line. Ink it. Live by it. Permanence is terrifying because it ends the escape hatch.',
   },
   {
-    id: 'major-18',
-    image: 'cards/major-18.jpg',
-    name: 'The Moon',
-    suit: 'major',
+    id: 'veil-18',
+    image: 'cards/veil-18.jpg',
+    name: 'The Fever Prophet',
     number: 18,
-    glyph: '☾',
-    keywords: ['illusion', 'dreams', 'fear', 'unconscious'],
-    upright:
-      'The path through fog and dream. Not everything you see is true — and not everything true is visible. Honor intuition while testing illusion. The unconscious speaks in symbols; listen carefully.',
-    reversed:
-      'Confusion lifting, or deeper deception. Paranoia versus genuine intuition. Clarify what is fear and what is omen. Seek solid ground beneath the mist.',
+    realm: 'blood',
+    glyph: '⟐',
+    keywords: ['Vision', 'Illness'],
+    upright: 'I am the Fever Prophet. My revelations arrive with a cost to the body. A vision is pressing through — creative, spiritual, strategic — and it will not be polite about your sleep or your plans. Receive it. Then ground it before the heat cooks your judgment. Prophecy without cool hands becomes mania.',
+    reversed: 'Reversed, you pathologize the vision or weaponize the fever. Either you dismiss the message as sickness, or you use intensity to dominate others. Cool the system. Extract the signal. Discard the delirium.',
   },
   {
-    id: 'major-19',
-    image: 'cards/major-19.jpg',
-    name: 'The Sun',
-    suit: 'major',
+    id: 'veil-19',
+    image: 'cards/veil-19.jpg',
+    name: 'The Chain Alchemist',
     number: 19,
-    glyph: '☀',
-    keywords: ['vitality', 'clarity', 'joy', 'success'],
-    upright:
-      'Radiance without apology. Clarity, vitality, childlike truth. What was hidden is illuminated. Celebrate without guilt. Your light is not arrogance — it is life expressing itself.',
-    reversed:
-      'Temporary clouding of joy, delayed success, or forced positivity. The sun still burns behind the cloud. Rest, then return to your warmth without performing happiness.',
+    realm: 'bone',
+    glyph: '⛓',
+    keywords: ['Binding', 'Transmutation'],
+    upright: 'I am the Chain Alchemist. I turn bondage into alloy. What restricts you can be remade — habit, contract, trauma pattern — into structure that serves. Do not pretend you are free if you are only loose. Study the chain. Transmute it. Freedom is forged, not wished.',
+    reversed: 'In shadow you collect chains as identity, or you shatter every bond and call it enlightenment. Both are incomplete alchemy. Keep the links that hold your integrity. Melt the rest. Half-done transmutation leaves you rattling.',
   },
   {
-    id: 'major-20',
-    image: 'cards/major-20.jpg',
-    name: 'Judgement',
-    suit: 'major',
+    id: 'veil-20',
+    image: 'cards/veil-20.jpg',
+    name: 'The Dust Sovereign',
     number: 20,
-    glyph: '📯',
-    keywords: ['awakening', 'reckoning', 'calling', 'absolution'],
-    upright:
-      'The horn sounds. Rise from the old life. This is reckoning and absolution together — answer the call of your higher purpose. What you have been is forgiven; what you will be awaits.',
-    reversed:
-      'Self-doubt blocking the call, harsh inner judgment, or refusal to rise. You hear the horn but stay in the coffin. Forgive yourself and stand.',
+    realm: 'ash',
+    glyph: '♔',
+    keywords: ['Rule', 'Decay'],
+    upright: 'I am the Dust Sovereign. Empires end as powder, and still someone must govern the ending well. You are in a late season — of a job, a myth about yourself, a dynasty of habits. Rule the decay with dignity. Harvest wisdom from what is falling apart. Do not pretend spring while autumn is speaking.',
+    reversed: 'Reversed, you deny decline and spend your last coins on cosmetics for a corpse. Or you collapse into nihilism and refuse any stewardship. Sovereigns of dust still set order. End cleanly. Leave a usable inheritance, even if it is only a lesson.',
   },
   {
-    id: 'major-21',
-    image: 'cards/major-21.jpg',
-    name: 'The World',
-    suit: 'major',
+    id: 'veil-21',
+    image: 'cards/veil-21.jpg',
+    name: 'The Mourning Bell',
     number: 21,
-    glyph: '◎',
-    keywords: ['completion', 'wholeness', 'integration', 'mastery'],
-    upright:
-      'A cycle completes. Wholeness achieved — not perfection, but integration. Dance within the wreath of accomplishment, then prepare for the next spiral. You have arrived, and the journey continues.',
-    reversed:
-      'Near-completion stalled, unfinished business, or fear of the next beginning. Close the circle cleanly. Do not leave loose threads binding you to an ended chapter.',
-  },
-
-  // —— WANDS ——
-  {
-    id: 'wands-1',
-    image: 'cards/wands-1.jpg',
-    name: 'Ace of Wands',
-    suit: 'wands',
-    number: 1,
-    glyph: '🜂',
-    keywords: ['spark', 'inspiration', 'new fire', 'potential'],
-    upright:
-      'A pure spark of creative fire arrives. Seize it before it cools. This is raw potential — a project, passion, or awakening. Act while the flame is white-hot.',
-    reversed:
-      'False starts, blocked passion, or inspiration ignored. The spark exists but lacks fuel or courage. Clear the damp wood and try again.',
+    realm: 'bone',
+    glyph: '🔔',
+    keywords: ['Call', 'Ending'],
+    upright: 'I am the Mourning Bell. I ring once for what must be marked. An ending needs ceremony, not doomscrolling and quiet erasure. Sound it. Gather the witnesses who matter. Let the vibration move through the body so the psyche stops ghosting its own goodbye.',
+    reversed: 'In shadow the bell never stops, or never starts. Endless mourning performance, or silent amputations that haunt the house. One clear ring. Then silence that is chosen, not stuffed.',
   },
   {
-    id: 'wands-2',
-    image: 'cards/wands-2.jpg',
-    name: 'Two of Wands',
-    suit: 'wands',
-    number: 2,
-    glyph: '🜂',
-    keywords: ['planning', 'vision', 'worldview', 'decision'],
-    upright:
-      'You hold the world in contemplation. Vision expands beyond current borders. Plan boldly, but remember: maps are not territory. Choose a direction and step.',
-    reversed:
-      'Fear of the unknown, narrow vision, or analysis paralysis. You grip the wand but will not walk. Expand or stagnate — the choice is yours.',
+    id: 'veil-22',
+    image: 'cards/veil-22.jpg',
+    name: 'The Fang Archivist',
+    number: 22,
+    realm: 'blood',
+    glyph: '⚜',
+    keywords: ['Memory', 'Bite'],
+    upright: 'I am the Fang Archivist. I keep the memories that still have teeth. Something from your history is not done with you — and you are not done using it. Retrieve the precise file, not the whole haunted attic. Let it bite once into clarity, then shelve it under mastery instead of victimhood.',
+    reversed: 'Reversed, nostalgia becomes venom, or amnesia becomes policy. You either chew old wounds for flavor, or you delete evidence that would free you. Archive with fangs means precision, not perpetual bleeding.',
   },
   {
-    id: 'wands-3',
-    image: 'cards/wands-3.jpg',
-    name: 'Three of Wands',
-    suit: 'wands',
-    number: 3,
-    glyph: '🜂',
-    keywords: ['expansion', 'foresight', 'waiting ships', 'progress'],
-    upright:
-      'Ships you launched return with news. Expansion is underway. Stand on the cliff and watch your efforts reach distant shores. Patience paired with vision.',
-    reversed:
-      'Delays, limited horizons, or frustration with slow returns. Trust the voyage. Recalibrate if needed, but do not abandon ships already at sea.',
+    id: 'veil-23',
+    image: 'cards/veil-23.jpg',
+    name: 'The Cobalt Hangman',
+    number: 23,
+    realm: 'veil',
+    glyph: '†',
+    keywords: ['Consequence', 'Justice'],
+    upright: 'I am the Cobalt Hangman. I am not cruelty; I am the last equation. Cause has found effect. A consequence is due — yours or another’s — and mercy without structure would only breed more harm. Face the scaffold of accountability. Justice that flinches becomes theater.',
+    reversed: 'In shadow you hunt punishment for sport, or you sabotage justice to protect comfort. Neither is righteous. Aim the consequence at the true cause. Then step back. Hangmen who enjoy the work become the next problem.',
   },
   {
-    id: 'wands-4',
-    image: 'cards/wands-4.jpg',
-    name: 'Four of Wands',
-    suit: 'wands',
-    number: 4,
-    glyph: '🜂',
-    keywords: ['celebration', 'homecoming', 'stability', 'joy'],
-    upright:
-      'A threshold of celebration. Home, community, milestone achieved. Pause to honor what has been built. Joy is not a distraction from the path — it is fuel.',
-    reversed:
-      'Unstable foundations, delayed celebration, or tension in what should feel like home. Repair the structure before the feast. Harmony requires honesty.',
+    id: 'veil-24',
+    image: 'cards/veil-24.jpg',
+    name: 'The Lantern Betrayer',
+    number: 24,
+    realm: 'ember',
+    glyph: '⚑',
+    keywords: ['Guide', 'Treachery'],
+    upright: 'I am the Lantern Betrayer. I lit the path — and I may be the one who sold the map. Trust is under audit. A guide, mentor, lover, or inner voice has mixed light with bait. Keep walking, but verify every glow. Discernment is not cynicism; it is survival with eyes open.',
+    reversed: 'Reversed, you betray your own lantern — abandon guidance that was true because fear made you suspicious of everything. Or you cling to a false light from loneliness. Test the flame. Keep what warms without lying.',
   },
   {
-    id: 'wands-5',
-    image: 'cards/wands-5.jpg',
-    name: 'Five of Wands',
-    suit: 'wands',
-    number: 5,
-    glyph: '🜂',
-    keywords: ['conflict', 'competition', 'chaos', 'sparring'],
-    upright:
-      'Creative conflict — sticks clashing, egos testing. Not all struggle is destruction; some is sharpening. Engage fairly. Growth often arrives dressed as rivalry.',
-    reversed:
-      'Conflict avoided or escalating past usefulness. Either step into the sparring ring or walk away cleanly. Passive aggression solves nothing.',
+    id: 'veil-25',
+    image: 'cards/veil-25.jpg',
+    name: 'The Marble Hunger',
+    number: 25,
+    realm: 'bone',
+    glyph: '◉',
+    keywords: ['Appetite', 'Stone'],
+    upright: 'I am the Marble Hunger. I am desire carved into something that does not soften. You want — status, body, art, revenge, belonging — with a cold intensity that will not be shamed away. Name the appetite. Feed it cleanly or starve it on purpose. Marble hunger ignored becomes a statue that crushes rooms.',
+    reversed: 'In shadow appetite turns to stone: addiction, numbness, or aestheticized craving that never touches real life. Break the pose. Either satisfy the need ethically or end the fantasy. Stone hunger that never chooses becomes a tomb.',
   },
   {
-    id: 'wands-6',
-    image: 'cards/wands-6.jpg',
-    name: 'Six of Wands',
-    suit: 'wands',
-    number: 6,
-    glyph: '🜂',
-    keywords: ['victory', 'recognition', 'confidence', 'progress'],
-    upright:
-      'Public recognition of private labor. Ride the victory with humility. You have earned this moment — let it strengthen your resolve for the next ascent.',
-    reversed:
-      'Ego inflation, unrecognized effort, or fear of visibility. Success delayed is not success denied. Keep moving; applause is not the destination.',
+    id: 'veil-26',
+    image: 'cards/veil-26.jpg',
+    name: 'The Wraith Gardener',
+    number: 26,
+    realm: 'veil',
+    glyph: '❦',
+    keywords: ['Cultivate', 'Haunt'],
+    upright: 'I am the Wraith Gardener. I tend what grows in haunted soil. Your past is compost if you work it — otherwise it is only a ghost farm. Plant deliberately in the places that scare you. Water the living. Pull the vines that feed on unfinished stories. Haunting can be agriculture.',
+    reversed: 'Reversed, you cultivate ghosts for company, or you salt every field so nothing grows — including you. Choose one plot. Tend it. Leave the rest of the cemetery alone tonight.',
   },
   {
-    id: 'wands-7',
-    image: 'cards/wands-7.jpg',
-    name: 'Seven of Wands',
-    suit: 'wands',
-    number: 7,
-    glyph: '🜂',
-    keywords: ['defense', 'perseverance', 'conviction', 'stand'],
-    upright:
-      'Hold the high ground. Challenges rise from below — defend what you know is true. Perseverance under pressure reveals the metal of your conviction.',
-    reversed:
-      'Overwhelm, giving ground too soon, or defending the wrong hill. Choose your battles. Not every challenge deserves your fire.',
+    id: 'veil-27',
+    image: 'cards/veil-27.jpg',
+    name: 'The Amber Inquisitor',
+    number: 27,
+    realm: 'ember',
+    glyph: '◈',
+    keywords: ['Question', 'Preserve'],
+    upright: 'I am the Amber Inquisitor. I trap the moment in gold resin and ask it hard questions. Interrogate a situation before you preserve it as ‘just how things are.’ What are you fossilizing out of fear? Ask until the amber cracks. Truth prefers living argument to pretty permanence.',
+    reversed: 'In shadow your questions become torture, or your preservation becomes denial sealed in luxury. Soften the interrogation. Toughen the honesty. Not everything deserves to be kept in amber — including your excuses.',
   },
   {
-    id: 'wands-8',
-    image: 'cards/wands-8.jpg',
-    name: 'Eight of Wands',
-    suit: 'wands',
-    number: 8,
-    glyph: '🜂',
-    keywords: ['swiftness', 'messages', 'acceleration', 'alignment'],
-    upright:
-      'Events accelerate. Messages fly. What was stalled now moves with purpose. Align with the current — hesitation now costs more than action.',
-    reversed:
-      'Delays, miscommunication, or scattered energy. Slow the rush enough to aim. Speed without direction multiplies error.',
+    id: 'veil-28',
+    image: 'cards/veil-28.jpg',
+    name: 'The Scarlet Ledger',
+    number: 28,
+    realm: 'blood',
+    glyph: '≣',
+    keywords: ['Account', 'Blood-debt'],
+    upright: 'I am the Scarlet Ledger. Every kindness, betrayal, and borrowed favor is written in a ink that smells like iron. Balance is due. Look at who you bleed for, and who bleeds you as hobby. Close accounts that keep you anemic. Open only those that honor mutual cost.',
+    reversed: 'Reversed, you cook the books — inflate martyrdom, erase your own extractions debts, or demand payment from people who already paid. Audit without self-mythology. The ledger does not care about your brand.',
   },
   {
-    id: 'wands-9',
-    image: 'cards/wands-9.jpg',
-    name: 'Nine of Wands',
-    suit: 'wands',
-    number: 9,
-    glyph: '🜂',
-    keywords: ['resilience', 'guard', 'last stand', 'wounded warrior'],
-    upright:
-      'Battle-worn but standing. One more push. Your resilience is proven — protect your boundaries and finish what you began. Strength remains even in exhaustion.',
-    reversed:
-      'Paranoia, burnout, or walls so high nothing enters. Rest is not surrender. Lay down the wand long enough to heal, then rise.',
+    id: 'veil-29',
+    image: 'cards/veil-29.jpg',
+    name: 'The Frost Hierophant',
+    number: 29,
+    realm: 'bone',
+    glyph: '❄',
+    keywords: ['Cold rite', 'Authority'],
+    upright: 'I am the Frost Hierophant. My teachings arrive without warmth because warmth has been used to seduce you away from standards. A cold rite is required: discipline, tradition, or a hard initiation into competence. Submit to the structure that forges you — not the one that flatters you.',
+    reversed: 'In shadow dogma freezes living wisdom, or you reject all teachers and call chaos authenticity. Take the useful cold. Leave the cruelty. Authority that cannot thaw when mercy is due is only ice with a title.',
   },
   {
-    id: 'wands-10',
-    image: 'cards/wands-10.jpg',
-    name: 'Ten of Wands',
-    suit: 'wands',
-    number: 10,
-    glyph: '🜂',
-    keywords: ['burden', 'responsibility', 'overload', 'duty'],
-    upright:
-      'You carry too much. Some of these wands are not yours. Set down what was never your duty. Completion approaches — but only if the load is honest.',
-    reversed:
-      'Release of burdens, or collapse under them. Delegate. Say no. Martyrdom is not nobility. Lighten the pack before the spine breaks.',
+    id: 'veil-30',
+    image: 'cards/veil-30.jpg',
+    name: 'The Gallows Dove',
+    number: 30,
+    realm: 'ash',
+    glyph: '🕊',
+    keywords: ['Peace', 'Execution'],
+    upright: 'I am the Gallows Dove. I bring peace that requires an ending sharp enough to stop the war. Reconciliation is possible — after the false peace is executed. Kill the performance of harmony. Then offer the real olive branch with clean hands. Soft peace built on lies is just delayed violence.',
+    reversed: 'In shadow you either hang every chance at peace, or you release doves over a battlefield you refuse to leave. Choose: end the war honestly, or admit you still want the fight. Do not decorate the scaffold with feathers and call it healing.',
   },
   {
-    id: 'wands-11',
-    image: 'cards/wands-11.jpg',
-    name: 'Page of Wands',
-    suit: 'wands',
-    number: 11,
-    glyph: '🜂',
-    keywords: ['messenger', 'curiosity', 'spark', 'adventure'],
-    upright:
-      'A youthful messenger of fire. News of adventure, creative impulse, or a daring invitation. Stay curious. The Page carries the first word of a larger story.',
-    reversed:
-      'Scattered enthusiasm, bad news, or immature impulsivity. Ground the spark before it burns the map. Curiosity needs direction.',
+    id: 'veil-31',
+    image: 'cards/veil-31.jpg',
+    name: 'The Pitch Ambassador',
+    number: 31,
+    realm: 'ash',
+    glyph: '●',
+    keywords: ['Bargain', 'Blackness'],
+    upright: 'I am the Pitch Ambassador. I negotiate in absolute dark so no costume can save you. A bargain is on the table — with a person, a system, or your own shadow. Enter the blackness deliberately. Name terms. Refuse deals that require you to disappear. Pitch is honest; spotlight often is not.',
+    reversed: 'Reversed, you make pacts blind, or you flee every bargain and starve. Learn to see in the dark without becoming it. Ambassadors of pitch who fear their own medium get eaten by louder darkness.',
   },
   {
-    id: 'wands-12',
-    image: 'cards/wands-12.jpg',
-    name: 'Knight of Wands',
-    suit: 'wands',
-    number: 12,
-    glyph: '🜂',
-    keywords: ['passion', 'action', 'boldness', 'pursuit'],
-    upright:
-      'Charge forward with passionate certainty. The Knight of Wands does not wait for perfect conditions. Bold action opens doors caution never finds.',
-    reversed:
-      'Reckless haste, abandoned projects, or anger without aim. Rein in the horse. Passion without patience leaves scorched earth.',
+    id: 'veil-32',
+    image: 'cards/veil-32.jpg',
+    name: 'The Ivory Executioner',
+    number: 32,
+    realm: 'bone',
+    glyph: '✝',
+    keywords: ['Clean death', 'Mercy'],
+    upright: 'I am the Ivory Executioner. My blade is pale because it is precise. Something must die cleanly: a habit, a hope, a role, a cruelty you keep feeding. Mercy here is the sharp cut, not the prolonged bleed. Do it without spectacle. Clean death honors what lived.',
+    reversed: 'In shadow ‘mercy’ becomes endless half-kills — soft endings that never end — or sterile cruelty that enjoys the pose of righteousness. Finish it. Wipe the blade. Do not collect trophies from necessary endings.',
   },
   {
-    id: 'wands-13',
-    image: 'cards/wands-13.jpg',
-    name: 'Queen of Wands',
-    suit: 'wands',
-    number: 13,
-    glyph: '🜂',
-    keywords: ['charisma', 'confidence', 'magnetism', 'warmth'],
-    upright:
-      'Radiant confidence that draws others to the flame. Lead with warmth and self-possession. Your presence is a hearth — tend it consciously.',
-    reversed:
-      'Insecurity masked as dominance, jealousy, or dimmed fire. Reclaim your warmth without needing to burn brighter than everyone else.',
+    id: 'veil-33',
+    image: 'cards/veil-33.jpg',
+    name: 'The Bramble Queen',
+    number: 33,
+    realm: 'blood',
+    glyph: '♛',
+    keywords: ['Entanglement', 'Rule'],
+    upright: 'I am the Bramble Queen. My kingdom is the knot you keep calling fate. Relationships, obligations, and stories have grown thorns around your ankles. Rule the tangle: cut corridors, crown what deserves loyalty, burn what only feeds on your blood. Entanglement is not love by default.',
+    reversed: 'Reversed, you either become the thorn-tyrant or the bleeding subject of every vine. Reclaim sovereignty. Queens of bramble who refuse pruning inherit only scars and subjects who hate them.',
   },
   {
-    id: 'wands-14',
-    image: 'cards/wands-14.jpg',
-    name: 'King of Wands',
-    suit: 'wands',
-    number: 14,
-    glyph: '🜂',
-    keywords: ['visionary', 'leadership', 'enterprise', 'mastery'],
-    upright:
-      'Visionary leadership. You see the empire before the first stone is laid. Inspire through bold direction. Rule the fire — do not let it rule you.',
-    reversed:
-      'Tyrannical vision, arrogance, or leadership without empathy. Temper the blaze. True kings serve the flame, not their own reflection in it.',
-  },
-
-  // —— CUPS ——
-  {
-    id: 'cups-1',
-    image: 'cards/cups-1.jpg',
-    name: 'Ace of Cups',
-    suit: 'cups',
-    number: 1,
-    glyph: '🜄',
-    keywords: ['love', 'overflow', 'emotion', 'spiritual gift'],
-    upright:
-      'The heart\'s chalice overflows. New love, deep feeling, or spiritual opening. Receive. Allow the waters to fill what was dry. This is grace arriving as emotion.',
-    reversed:
-      'Emotional blockage, emptied cup, or love withheld. The spring is not gone — the channel is clogged. Soften the armor around the heart.',
+    id: 'veil-34',
+    image: 'cards/veil-34.jpg',
+    name: 'The Coffin Merchant',
+    number: 34,
+    realm: 'veil',
+    glyph: '⚰',
+    keywords: ['Trade', 'Rest'],
+    upright: 'I am the Coffin Merchant. I sell rest to those still walking. You are trading pieces of your peace for status, caretaking, or unfinished wars. Price your rest correctly. Buy back sleep, silence, and unavailability. The living need coffins for their exhausted identities — metaphorical, chosen, temporary.',
+    reversed: 'In shadow you bury yourself to avoid life, or you sell rest to everyone except yourself. Renegotiate the inventory. Rest is not death when it is chosen; endless self-burial while ‘helping’ is.',
   },
   {
-    id: 'cups-2',
-    image: 'cards/cups-2.jpg',
-    name: 'Two of Cups',
-    suit: 'cups',
-    number: 2,
-    glyph: '🜄',
-    keywords: ['partnership', 'union', 'mutuality', 'attraction'],
-    upright:
-      'Sacred exchange between two. Partnership, mutual recognition, the chemistry of equals. What you offer is mirrored. Honor the bond with honesty.',
-    reversed:
-      'Imbalance, broken connection, or one-sided giving. Repair or release. Forced union creates bitterness. Seek reciprocity or walk alone with dignity.',
+    id: 'veil-35',
+    image: 'cards/veil-35.jpg',
+    name: 'The Eclipse Child',
+    number: 35,
+    realm: 'ember',
+    glyph: '◐',
+    keywords: ['Innocence', 'Omen'],
+    upright: 'I am the Eclipse Child. I am the omen that looks like innocence. A new beginning is arriving shadowed — tender, strange, and disruptive to adult plans. Protect what is nascent without infantilizing it. Do not force the light early. Eclipses teach by temporary dark.',
+    reversed: 'In shadow you either crush the new thing with cynicism, or you worship naivety and refuse adult responsibility. Hold both: wonder and spine. Children of eclipse who never grow become perpetual omens with no landing.',
   },
   {
-    id: 'cups-3',
-    image: 'cards/cups-3.jpg',
-    name: 'Three of Cups',
-    suit: 'cups',
-    number: 3,
-    glyph: '🜄',
-    keywords: ['friendship', 'celebration', 'community', 'joy'],
-    upright:
-      'Gather with your circle. Celebration, sisterhood, found family. Joy multiplies when shared. Let belonging replenish you.',
-    reversed:
-      'Gossip, exclusion, or isolation from community. Reconnect with those who raise your frequency. Toxic circles drain — choose wisely.',
+    id: 'veil-36',
+    image: 'cards/veil-36.jpg',
+    name: 'The Rust Cardinal',
+    number: 36,
+    realm: 'ash',
+    glyph: '✝',
+    keywords: ['Faith', 'Corrosion'],
+    upright: 'I am the Rust Cardinal. My faith has oxidized in weather, and still I keep the office. Believe again — not in the shiny doctrine, but in the weathered vow that survived corrosion. Your spirituality, ethics, or craft needs a mature creed: less glitter, more iron oxide honesty.',
+    reversed: 'In shadow faith corrodes into bitterness, or you polish rust into fake gold and call it revival. Scrape to metal. Rebuild the rite that still holds. Cardinals of rust who deny weathering become liars in vestments.',
   },
   {
-    id: 'cups-4',
-    image: 'cards/cups-4.jpg',
-    name: 'Four of Cups',
-    suit: 'cups',
-    number: 4,
-    glyph: '🜄',
-    keywords: ['apathy', 'reassessment', 'withdrawal', 'missed offer'],
-    upright:
-      'Discontent with what is offered. A fourth cup approaches while you stare at three. Look up. Opportunity may wear unfamiliar clothes.',
-    reversed:
-      'Emerging from stagnation, or deeper withdrawal. Motivation returns if you choose it. Do not romanticize the sulk.',
+    id: 'veil-37',
+    image: 'cards/veil-37.jpg',
+    name: 'The Whisper Foundry',
+    number: 37,
+    realm: 'ember',
+    glyph: '⚒',
+    keywords: ['Forge', 'Secrets'],
+    upright: 'I am the Whisper Foundry. I heat secrets until they become tools. What you have been muttering in private is ready to be forged — idea, confession, strategy. Bring it to the anvil. Strike while the hush still holds charge. Secrets unused become carbon monoxide in the psyche.',
+    reversed: 'In shadow you hoard whispers as currency, or you dump molten secrets onto people who cannot hold them. Forge responsibly. Foundries that only gossip produce slag, not blades.',
   },
   {
-    id: 'cups-5',
-    image: 'cards/cups-5.jpg',
-    name: 'Five of Cups',
-    suit: 'cups',
-    number: 5,
-    glyph: '🜄',
-    keywords: ['grief', 'loss', 'regret', 'remaining hope'],
-    upright:
-      'Mourn what spilled — but turn. Two cups still stand behind you. Grief is sacred; despair is optional. Honor the loss, then claim what remains.',
-    reversed:
-      'Acceptance beginning, or clinging to sorrow past its season. Forgiveness — of self or other — unlocks the remaining cups.',
+    id: 'veil-38',
+    image: 'cards/veil-38.jpg',
+    name: 'The Blackthorn Nurse',
+    number: 38,
+    realm: 'blood',
+    glyph: '✚',
+    keywords: ['Care', 'Poison'],
+    upright: 'I am the Blackthorn Nurse. My care has thorns because soft care has failed you. Tend the wound with honesty: medicine, boundary, rest, confrontation. Some poisons are doses; some are murders. Know which you are administering — to yourself and to others.',
+    reversed: 'In shadow caregiving becomes control, or you withhold care and call it tough love while people bleed. Dose correctly. Nurses of blackthorn who enjoy the sting have left the vocation.',
   },
   {
-    id: 'cups-6',
-    image: 'cards/cups-6.jpg',
-    name: 'Six of Cups',
-    suit: 'cups',
-    number: 6,
-    glyph: '🜄',
-    keywords: ['nostalgia', 'innocence', 'memory', 'reunion'],
-    upright:
-      'Past kindness returns. Nostalgia, childhood gifts, reunion with innocence. Let memory soften you without trapping you. The past offers medicine, not a cage.',
-    reversed:
-      'Stuck in the past, or healing from it. Idealized memories distort. Take the gift of nostalgia and leave the chains.',
+    id: 'veil-39',
+    image: 'cards/veil-39.jpg',
+    name: 'The Pyre Scholar',
+    number: 39,
+    realm: 'ember',
+    glyph: '✧',
+    keywords: ['Study', 'Burning'],
+    upright: 'I am the Pyre Scholar. I learn by what survives fire. Study the pattern of your burnouts, rages, and illuminations. Knowledge without ordeal is tourism. Take the exam the flame offers. Graduate with fewer illusions and a mind that can hold heat.',
+    reversed: 'In shadow you romanticize burning out as depth, or you refuse any trial and stay permanently untested. Calibrate. Scholars of the pyre who never leave the fire become ash with opinions.',
   },
   {
-    id: 'cups-7',
-    image: 'cards/cups-7.jpg',
-    name: 'Seven of Cups',
-    suit: 'cups',
-    number: 7,
-    glyph: '🜄',
-    keywords: ['illusion', 'choices', 'fantasy', 'discernment'],
-    upright:
-      'Many visions float before you — not all are real. Fantasy can inspire or deceive. Discern the golden cup from the mist. Choose substance over shimmer.',
-    reversed:
-      'Clarity emerging from confusion, or drowning deeper in delusion. Ground your dreams in action. One real step beats seven fantasies.',
+    id: 'veil-40',
+    image: 'cards/veil-40.jpg',
+    name: 'The Crypt Diplomat',
+    number: 40,
+    realm: 'bone',
+    glyph: '⚖',
+    keywords: ['Negotiation', 'Dead'],
+    upright: 'I am the Crypt Diplomat. I negotiate with what is buried — family secrets, institutional corpses, your own dead ambitions. Sit at the table underground. Make terms with history so it stops ambushing the living. Diplomacy with the dead is how dynasties stop repeating.',
+    reversed: 'In shadow you either dig up every corpse for drama, or you cement the crypt and pretend nothing happened. Negotiate. Some graves need flowers; some need locks; some need reburial with truer names.',
   },
   {
-    id: 'cups-8',
-    image: 'cards/cups-8.jpg',
-    name: 'Eight of Cups',
-    suit: 'cups',
-    number: 8,
-    glyph: '🜄',
-    keywords: ['departure', 'seeking', 'abandonment', 'soul quest'],
-    upright:
-      'Walk away from what no longer nourishes. The cups are stacked but empty of meaning. Seek higher ground. Leaving is sometimes the deepest loyalty to self.',
-    reversed:
-      'Fear of leaving, or aimless wandering. Either commit to the departure or recommit to staying with eyes open. Drift serves neither.',
+    id: 'veil-41',
+    image: 'cards/veil-41.jpg',
+    name: 'The Severed Compass',
+    number: 41,
+    realm: 'veil',
+    glyph: '🧭',
+    keywords: ['Direction', 'Loss'],
+    upright: 'I am the Severed Compass. Your old north is gone. Orientation must be rebuilt from scar and stars, not from the gadget that failed. Admit the loss of direction without performing despair. Choose a provisional north. Walk. Recalibrate by results, not vibes alone.',
+    reversed: 'In shadow you cling to a broken needle, or you spin forever calling confusion freedom. Pick a heading. Severed compasses still teach: magnetism is real even when the instrument is not.',
   },
   {
-    id: 'cups-9',
-    image: 'cards/cups-9.jpg',
-    name: 'Nine of Cups',
-    suit: 'cups',
-    number: 9,
-    glyph: '🜄',
-    keywords: ['wish fulfilled', 'satisfaction', 'contentment', 'gratitude'],
-    upright:
-      'The wish card. Emotional satisfaction, earned pleasure, gratitude for what fills the table. Enjoy without guilt. Abundance of the heart is present.',
-    reversed:
-      'Hollow satisfaction, greed, or wishes that cost too much. Check if the feast feeds the soul or only the ego.',
+    id: 'veil-42',
+    image: 'cards/veil-42.jpg',
+    name: 'The Ashen Twin',
+    number: 42,
+    realm: 'ash',
+    glyph: '⚭',
+    keywords: ['Duality', 'Mirror-self'],
+    upright: 'I am the Ashen Twin. I am the you that stayed in the fire while you fled into daylight stories. Meet me. Integrate the ruthless, tired, clear-eyed double. Duality denied becomes sabotage. Duality claimed becomes range. Speak with both mouths until one honest voice emerges.',
+    reversed: 'In shadow you split into performance and shadow-operative, never introducing them. Or you try to murder the twin and stay half a person. Reconciliation is the work. Twins of ash who war forever burn the house twice.',
   },
   {
-    id: 'cups-10',
-    image: 'cards/cups-10.jpg',
-    name: 'Ten of Cups',
-    suit: 'cups',
-    number: 10,
-    glyph: '🜄',
-    keywords: ['harmony', 'family', 'fulfillment', 'emotional home'],
-    upright:
-      'Emotional rainbow — lasting harmony, chosen family, the feeling of home in another\'s presence. This is the heart\'s completion. Cherish and protect it.',
-    reversed:
-      'Discord in the home, broken ideal, or searching for belonging. Rebuild connection with truth. Perfect pictures hide cracked foundations.',
+    id: 'veil-43',
+    image: 'cards/veil-43.jpg',
+    name: 'The Last Door',
+    number: 43,
+    realm: 'veil',
+    glyph: '⌂',
+    keywords: ['Passage', 'Finality'],
+    upright: 'I am the Last Door. Beyond me there is no elegant rewind. A decision has reached finality — leave, stay, sign, end, begin. Put your hand on the wood. Feel the weight. Then open or seal with full adulthood. Passages of this order remake the map behind you.',
+    reversed: 'In shadow you linger in the frame forever, or you kick doors for adrenaline and call it courage. Finality is sacred. Use it sparingly and completely. Last doors mocked become revolving traps.',
   },
   {
-    id: 'cups-11',
-    image: 'cards/cups-11.jpg',
-    name: 'Page of Cups',
-    suit: 'cups',
-    number: 11,
-    glyph: '🜄',
-    keywords: ['sensitivity', 'message', 'dream', 'creative offer'],
-    upright:
-      'A gentle messenger of feeling. Intuitive news, creative invitation, or tender surprise. Stay open to the unexpected fish in the cup.',
-    reversed:
-      'Emotional immaturity, blocked creativity, or messages ignored. Soften defenses. The Page asks for wonder, not armor.',
-  },
-  {
-    id: 'cups-12',
-    image: 'cards/cups-12.jpg',
-    name: 'Knight of Cups',
-    suit: 'cups',
-    number: 12,
-    glyph: '🜄',
-    keywords: ['romance', 'idealism', 'quest', 'invitation'],
-    upright:
-      'The romantic quest. An offer of the heart, artistic pursuit, or idealistic journey. Follow beauty — but keep one foot on earth.',
-    reversed:
-      'Moodiness, empty promises, or idealism without follow-through. Feel deeply, then act consistently. Charm without substance fades.',
-  },
-  {
-    id: 'cups-13',
-    image: 'cards/cups-13.jpg',
-    name: 'Queen of Cups',
-    suit: 'cups',
-    number: 13,
-    glyph: '🜄',
-    keywords: ['empathy', 'intuition', 'compassion', 'emotional mastery'],
-    upright:
-      'Deep waters held with grace. Empathy without drowning. The Queen reads the unspoken and holds space for others\' storms while remaining sovereign.',
-    reversed:
-      'Emotional overwhelm, codependency, or intuition clouded by projection. Pour out what is not yours. Reclaim the shore of self.',
-  },
-  {
-    id: 'cups-14',
-    image: 'cards/cups-14.jpg',
-    name: 'King of Cups',
-    suit: 'cups',
-    number: 14,
-    glyph: '🜄',
-    keywords: ['emotional balance', 'diplomacy', 'wisdom', 'calm'],
-    upright:
-      'Mastery of feeling without repression. Calm in the storm. Lead with emotional intelligence. Your steadiness becomes sanctuary for others.',
-    reversed:
-      'Emotional manipulation, repression, or volatility beneath a calm mask. Feel honestly. Authority over emotion is not the same as denial.',
-  },
-
-  // —— SWORDS ——
-  {
-    id: 'swords-1',
-    image: 'cards/swords-1.jpg',
-    name: 'Ace of Swords',
-    suit: 'swords',
-    number: 1,
-    glyph: '🜁',
-    keywords: ['clarity', 'truth', 'breakthrough', 'mental power'],
-    upright:
-      'A blade of pure truth cuts through fog. Mental breakthrough, decisive insight, the word that liberates. Speak and think with precision. Clarity is power.',
-    reversed:
-      'Confusion, harsh words, or truth used as a weapon. Sharpen without cutting indiscriminately. Seek clarity, not victory in argument.',
-  },
-  {
-    id: 'swords-2',
-    image: 'cards/swords-2.jpg',
-    name: 'Two of Swords',
-    suit: 'swords',
-    number: 2,
-    glyph: '🜁',
-    keywords: ['stalemate', 'blind choice', 'truce', 'avoidance'],
-    upright:
-      'Blindfolded at the crossroads. A decision delayed by fear of seeing. Remove the cloth. Even imperfect choice is better than frozen balance.',
-    reversed:
-      'Information flooding in, or deeper denial. The stalemate breaks — ready or not. Face what you have been refusing to weigh.',
-  },
-  {
-    id: 'swords-3',
-    image: 'cards/swords-3.jpg',
-    name: 'Three of Swords',
-    suit: 'swords',
-    number: 3,
-    glyph: '🜁',
-    keywords: ['heartbreak', 'sorrow', 'truth pain', 'release'],
-    upright:
-      'Sorrow that clarifies. Heartbreak, betrayal, or necessary painful truth. Let the swords pass through — grief that is felt becomes medicine. Do not armor the wound shut.',
-    reversed:
-      'Healing from heartbreak, or pain held too long. Forgiveness and release await. The storm cloud can pass if you stop feeding it rain.',
-  },
-  {
-    id: 'swords-4',
-    image: 'cards/swords-4.jpg',
-    name: 'Four of Swords',
-    suit: 'swords',
-    number: 4,
-    glyph: '🜁',
-    keywords: ['rest', 'recuperation', 'meditation', 'truce'],
-    upright:
-      'Sacred pause. Rest the mind. Recuperate in stillness before the next campaign. Meditation is not inactivity — it is strategic silence.',
-    reversed:
-      'Restlessness, burnout ignored, or forced isolation. Rest before the body demands it. Burnout is a sword that cuts the wielder.',
-  },
-  {
-    id: 'swords-5',
-    image: 'cards/swords-5.jpg',
-    name: 'Five of Swords',
-    suit: 'swords',
-    number: 5,
-    glyph: '🜁',
-    keywords: ['defeat', 'hollow victory', 'conflict', 'ego war'],
-    upright:
-      'A victory that costs too much, or a defeat that teaches. Ego battles leave everyone wounded. Ask: is winning this fight worth the field of corpses?',
-    reversed:
-      'Walking away from conflict, or lingering resentment. Choose peace without becoming a doormat. Some swords are best left on the ground.',
-  },
-  {
-    id: 'swords-6',
-    image: 'cards/swords-6.jpg',
-    name: 'Six of Swords',
-    suit: 'swords',
-    number: 6,
-    glyph: '🜁',
-    keywords: ['transition', 'passage', 'healing journey', 'leaving'],
-    upright:
-      'Crossing troubled water toward calmer shores. Transition, mental healing, leaving a hard chapter. The boat moves slowly — trust the ferryman.',
-    reversed:
-      'Stuck in turbulent waters, or refusing necessary departure. Pack what serves and leave the rest. Lingering prolongs the storm.',
-  },
-  {
-    id: 'swords-7',
-    image: 'cards/swords-7.jpg',
-    name: 'Seven of Swords',
-    suit: 'swords',
-    number: 7,
-    glyph: '🜁',
-    keywords: ['strategy', 'deception', 'theft', 'cunning'],
-    upright:
-      'Strategy in the shadows. Not all battles are fought face-to-face. Be cunning — or beware cunning around you. Integrity still matters in stealth.',
-    reversed:
-      'Exposure of deceit, or coming clean. Secrets unravel. Choose honesty before it is forced. The thief\'s path eventually circles back.',
-  },
-  {
-    id: 'swords-8',
-    image: 'cards/swords-8.jpg',
-    name: 'Eight of Swords',
-    suit: 'swords',
-    number: 8,
-    glyph: '🜁',
-    keywords: ['restriction', 'mental prison', 'victimhood', 'blindness'],
-    upright:
-      'Bound by beliefs more than rope. The prison is largely mental. Remove the blindfold. Your power to leave was never taken — only forgotten.',
-    reversed:
-      'Finding the way out, or deeper entanglement in victim stories. Freedom is a decision repeated daily. Cut one cord at a time.',
-  },
-  {
-    id: 'swords-9',
-    image: 'cards/swords-9.jpg',
-    name: 'Nine of Swords',
-    suit: 'swords',
-    number: 9,
-    glyph: '🜁',
-    keywords: ['anxiety', 'nightmares', 'guilt', 'mental torment'],
-    upright:
-      'The dark night of the mind. Anxiety, guilt, sleepless spirals. Name the fear — it shrinks in light. You are not your worst 3 a.m. thought.',
-    reversed:
-      'Anxiety releasing, or secrets coming to light. Seek support. The nightmare ends when shared. Healing begins with one true sentence spoken aloud.',
-  },
-  {
-    id: 'swords-10',
-    image: 'cards/swords-10.jpg',
-    name: 'Ten of Swords',
-    suit: 'swords',
-    number: 10,
-    glyph: '🜁',
-    keywords: ['ending', 'rock bottom', 'betrayal', 'dawn'],
-    upright:
-      'The worst has happened — and dawn still comes. Absolute ending clears absolute space. You cannot fall further. Rise. The sky behind the swords is lightening.',
-    reversed:
-      'Recovery from ruin, or resisting the final blow. Accept the ending. Survival is already underway. Stand among the fallen blades and walk.',
-  },
-  {
-    id: 'swords-11',
-    image: 'cards/swords-11.jpg',
-    name: 'Page of Swords',
-    suit: 'swords',
-    number: 11,
-    glyph: '🜁',
-    keywords: ['curiosity', 'vigilance', 'ideas', 'truth-seeking'],
-    upright:
-      'Sharp young mind. Questions, vigilance, new ideas cutting air. Stay curious and alert. Truth-seeking begins with honest inquiry.',
-    reversed:
-      'Gossip, spy energy, or ideas without substance. Temper the blade. Curiosity without kindness becomes cruelty.',
-  },
-  {
-    id: 'swords-12',
-    image: 'cards/swords-12.jpg',
-    name: 'Knight of Swords',
-    suit: 'swords',
-    number: 12,
-    glyph: '🜁',
-    keywords: ['intellect', 'haste', 'ambition', 'direct action'],
-    upright:
-      'Charge of the mind. Swift intellect, direct speech, ambitious pursuit of truth. Act decisively — but remember the collateral of a careless blade.',
-    reversed:
-      'Ruthlessness, burnt bridges, or ideas charging without wisdom. Slow the horse. Precision beats speed when lives and feelings are at stake.',
-  },
-  {
-    id: 'swords-13',
-    image: 'cards/swords-13.jpg',
-    name: 'Queen of Swords',
-    suit: 'swords',
-    number: 13,
-    glyph: '🜁',
-    keywords: ['clarity', 'independence', 'truth', 'discernment'],
-    upright:
-      'Clear-eyed sovereignty. Independent thought, honest speech, boundaries of steel wrapped in grace. Cut away what confuses. Truth is her throne.',
-    reversed:
-      'Coldness, bitterness, or weaponized intellect. Soften the edge without dulling it. Clarity without compassion isolates.',
-  },
-  {
-    id: 'swords-14',
-    image: 'cards/swords-14.jpg',
-    name: 'King of Swords',
-    suit: 'swords',
-    number: 14,
-    glyph: '🜁',
-    keywords: ['authority', 'logic', 'ethics', 'judgment'],
-    upright:
-      'Intellectual authority with ethical spine. Fair judgment, clear strategy, leadership through reason. Speak law that serves truth, not ego.',
-    reversed:
-      'Tyrannical intellect, cruelty of logic, or abuse of authority. Temper judgment with humanity. A king\'s sword must serve justice, not pride.',
-  },
-
-  // —— PENTACLES ——
-  {
-    id: 'pentacles-1',
-    image: 'cards/pentacles-1.jpg',
-    name: 'Ace of Pentacles',
-    suit: 'pentacles',
-    number: 1,
-    glyph: '🜃',
-    keywords: ['opportunity', 'seed', 'prosperity', 'manifest seed'],
-    upright:
-      'A golden seed of material opportunity. New resources, grounded beginnings, prosperity\'s first coin. Plant it in real soil. Manifestation starts with a tangible step.',
-    reversed:
-      'Missed opportunity, poor planning, or scarcity mindset blocking the seed. The coin is offered — open the hand.',
-  },
-  {
-    id: 'pentacles-2',
-    image: 'cards/pentacles-2.jpg',
-    name: 'Two of Pentacles',
-    suit: 'pentacles',
-    number: 2,
-    glyph: '🜃',
-    keywords: ['balance', 'juggling', 'adaptability', 'priorities'],
-    upright:
-      'The dance of priorities. Juggle with grace. Adaptability keeps the coins in motion. Life asks for rhythm, not rigidity.',
-    reversed:
-      'Dropped balls, overwhelm, or poor time management. Simplify. Not every coin needs to stay in the air. Choose what matters.',
-  },
-  {
-    id: 'pentacles-3',
-    image: 'cards/pentacles-3.jpg',
-    name: 'Three of Pentacles',
-    suit: 'pentacles',
-    number: 3,
-    glyph: '🜃',
-    keywords: ['craft', 'collaboration', 'skill', 'mastery building'],
-    upright:
-      'Skilled collaboration. Your craft is recognized. Build with others who honor excellence. Mastery is communal as much as solitary.',
-    reversed:
-      'Poor teamwork, mediocrity accepted, or unrecognized skill. Raise the standard. Seek collaborators who match your dedication.',
-  },
-  {
-    id: 'pentacles-4',
-    image: 'cards/pentacles-4.jpg',
-    name: 'Four of Pentacles',
-    suit: 'pentacles',
-    number: 4,
-    glyph: '🜃',
-    keywords: ['security', 'control', 'holding', 'conservation'],
-    upright:
-      'Holding tight to resources. Security is wise — hoarding is fear. Examine whether your grip protects or imprisons. Stability without flow becomes a tomb.',
-    reversed:
-      'Release of control, generosity, or reckless spending. Loosen the fist. True security includes circulation of energy and trust.',
-  },
-  {
-    id: 'pentacles-5',
-    image: 'cards/pentacles-5.jpg',
-    name: 'Five of Pentacles',
-    suit: 'pentacles',
-    number: 5,
-    glyph: '🜃',
-    keywords: ['hardship', 'exclusion', 'poverty mindset', 'seeking help'],
-    upright:
-      'Cold season of lack — material or spiritual. Help is nearer than it appears (look to the lit window). Ask. Isolation deepens poverty of every kind.',
-    reversed:
-      'Recovery from hardship, or lingering in victimhood of scarcity. The door is open. Step toward warmth and support.',
-  },
-  {
-    id: 'pentacles-6',
-    image: 'cards/pentacles-6.jpg',
-    name: 'Six of Pentacles',
-    suit: 'pentacles',
-    number: 6,
-    glyph: '🜃',
-    keywords: ['generosity', 'exchange', 'charity', 'power balance'],
-    upright:
-      'Giving and receiving in balance. Generosity that empowers. Notice who holds the scales. True charity honors dignity on both sides.',
-    reversed:
-      'Strings attached, debt dynamics, or unequal exchange. Examine power in your giving and receiving. Fairness restores flow.',
-  },
-  {
-    id: 'pentacles-7',
-    image: 'cards/pentacles-7.jpg',
-    name: 'Seven of Pentacles',
-    suit: 'pentacles',
-    number: 7,
-    glyph: '🜃',
-    keywords: ['assessment', 'patience', 'investment', 'long game'],
-    upright:
-      'Pause to assess the crop. Patience with long investments. Not all growth is visible day to day. Trust the work already done — then decide what to prune.',
-    reversed:
-      'Impatience, poor returns, or abandoning the field too soon. Recalibrate effort. Some harvests need one more season.',
-  },
-  {
-    id: 'pentacles-8',
-    image: 'cards/pentacles-8.jpg',
-    name: 'Eight of Pentacles',
-    suit: 'pentacles',
-    number: 8,
-    glyph: '🜃',
-    keywords: ['diligence', 'craft', 'apprenticeship', 'focus'],
-    upright:
-      'Devotion to craft. Repetition as sacred practice. Skill compounds through focused labor. Show up to the bench again. Mastery is made of ordinary days.',
-    reversed:
-      'Perfectionism, boredom, or careless work. Rekindle love of the craft, or honestly ask if this is still your path.',
-  },
-  {
-    id: 'pentacles-9',
-    image: 'cards/pentacles-9.jpg',
-    name: 'Nine of Pentacles',
-    suit: 'pentacles',
-    number: 9,
-    glyph: '🜃',
-    keywords: ['independence', 'luxury', 'self-sufficiency', 'refinement'],
-    upright:
-      'Self-made abundance. Enjoy the garden you cultivated. Independence, refined taste, quiet luxury of earned peace. Savor without apology.',
-    reversed:
-      'Financial dependence, isolation in success, or status without fulfillment. Share the garden. Wealth without connection is a gilded cage.',
-  },
-  {
-    id: 'pentacles-10',
-    image: 'cards/pentacles-10.jpg',
-    name: 'Ten of Pentacles',
-    suit: 'pentacles',
-    number: 10,
-    glyph: '🜃',
-    keywords: ['legacy', 'wealth', 'family', 'long-term security'],
-    upright:
-      'Legacy and lasting foundation. Generational wealth — material or wisdom. What you build now outlives you. Plant trees whose shade you may never sit in.',
-    reversed:
-      'Family financial conflict, unstable legacy, or short-term thinking. Rebuild foundations. True wealth includes relationships and meaning.',
-  },
-  {
-    id: 'pentacles-11',
-    image: 'cards/pentacles-11.jpg',
-    name: 'Page of Pentacles',
-    suit: 'pentacles',
-    number: 11,
-    glyph: '🜃',
-    keywords: ['student', 'opportunity', 'study', 'practical start'],
-    upright:
-      'Student of the material world. A practical opportunity, study path, or grounded new beginning. Hold the coin with curiosity and care.',
-    reversed:
-      'Procrastination, lack of focus, or missed practical chances. Commit to the apprenticeship. Dreams need dirt under the nails.',
-  },
-  {
-    id: 'pentacles-12',
-    image: 'cards/pentacles-12.jpg',
-    name: 'Knight of Pentacles',
-    suit: 'pentacles',
-    number: 12,
-    glyph: '🜃',
-    keywords: ['reliability', 'method', 'duty', 'steadfast'],
-    upright:
-      'Steady, methodical progress. Reliability as a virtue. The slow knight arrives. Duty fulfilled through consistent small acts. Trust the plodding path.',
-    reversed:
-      'Stubbornness, stagnation, or lazy routine. Move — even slowly. Duty without heart becomes dead weight.',
-  },
-  {
-    id: 'pentacles-13',
-    image: 'cards/pentacles-13.jpg',
-    name: 'Queen of Pentacles',
-    suit: 'pentacles',
-    number: 13,
-    glyph: '🜃',
-    keywords: ['nurture', 'abundance', 'practical care', 'earth mother'],
-    upright:
-      'Nurturing abundance. Practical care, resourcefulness, creating comfort that heals. You make the material world feel like sanctuary.',
-    reversed:
-      'Self-neglect while caring for others, or smothering control of resources. Tend your own garden first. Emptied queens cannot feed kingdoms.',
-  },
-  {
-    id: 'pentacles-14',
-    image: 'cards/pentacles-14.jpg',
-    name: 'King of Pentacles',
-    suit: 'pentacles',
-    number: 14,
-    glyph: '🜃',
-    keywords: ['prosperity', 'stability', 'enterprise', 'provider'],
-    upright:
-      'Master of the material realm. Prosperity with responsibility. Build empires that feed people. Success is measured by what you stabilize for others.',
-    reversed:
-      'Greed, materialism without soul, or failed stewardship. Wealth is a tool. Return to values that outlast the vault.',
+    id: 'veil-44',
+    image: 'cards/veil-44.jpg',
+    name: 'The Unnamed Witness',
+    number: 44,
+    realm: 'veil',
+    glyph: '👁',
+    keywords: ['Observation', 'Fate'],
+    upright: 'I am the Unnamed Witness. I do not intervene; I record. You are being seen — by fate, by consequence, by the part of you that never sleeps. Act as if the ledger is open, because it is. Integrity is not for applause; it is for the eye that cannot be bribed.',
+    reversed: 'In shadow you perform for imaginary judges, or you act foul because you believe no one watches. Both miss me. I am not a crowd. I am the cold clarity that outlives your excuses. Behave accordingly.',
   },
 ];
 
-export function shuffleDeck(deck: TarotCard[] = DECK): TarotCard[] {
+export function shuffleDeck(deck: OracleCard[] = DECK): OracleCard[] {
   const arr = [...deck];
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -1035,30 +497,6 @@ export function shuffleDeck(deck: TarotCard[] = DECK): TarotCard[] {
   return arr;
 }
 
-export function romanNumeral(n: number): string {
-  if (n === 0) return '0';
-  const map: [number, string][] = [
-    [10, 'X'],
-    [9, 'IX'],
-    [5, 'V'],
-    [4, 'IV'],
-    [1, 'I'],
-  ];
-  let result = '';
-  let num = n;
-  for (const [val, sym] of map) {
-    while (num >= val) {
-      result += sym;
-      num -= val;
-    }
-  }
-  return result;
-}
-
-export function courtLabel(n: number): string | null {
-  if (n === 11) return 'PAGE';
-  if (n === 12) return 'KNIGHT';
-  if (n === 13) return 'QUEEN';
-  if (n === 14) return 'KING';
-  return null;
+export function cardNumeral(n: number): string {
+  return String(n).padStart(2, '0');
 }

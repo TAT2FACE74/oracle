@@ -1,5 +1,5 @@
 import { DECK } from '../data/deck';
-import type { DrawnCard, TarotCard } from '../types';
+import type { DrawnCard, OracleCard } from '../types';
 
 /** Deterministic hash of a string → unsigned 32-bit. */
 export function hashString(s: string): number {
@@ -47,21 +47,21 @@ export function saveDaily(payload: DailyPayload): void {
   }
 }
 
-export function drawDailyCard(date = todayKey()): { card: TarotCard; reversed: boolean } {
+export function drawDailyCard(date = todayKey()): { card: OracleCard; reversed: boolean } {
   const h = hashString(`oracle-daily:${date}`);
   const idx = h % DECK.length;
   const reversed = (h >>> 16) % 2 === 1;
   return { card: DECK[idx], reversed };
 }
 
-export function buildDailyFortune(card: TarotCard, reversed: boolean): string {
+export function buildDailyFortune(card: OracleCard, reversed: boolean): string {
   const meaning = reversed ? card.reversed : card.upright;
   const orient = reversed ? 'reversed' : 'upright';
   const punch = reversed
-    ? 'Today asks for honesty with the shadow — do not flinch.'
-    : 'Today the current favors conscious motion — claim it.';
+    ? 'Today the messenger leans into shadow — do not flinch.'
+    : 'Today the messenger favors conscious motion — claim the cost.';
   const short = meaning.split('.').slice(0, 2).join('.').trim();
-  return `Daily Transmission: ${card.name} (${orient}). ${punch} ${short}. Carry this frequency until midnight.`;
+  return `Daily Transmission: ${card.name} (${orient}). ${punch} ${short}. Carry this transmission until midnight. The Ash Realms do not repeat themselves lightly.`;
 }
 
 export function getOrCreateDaily(): {

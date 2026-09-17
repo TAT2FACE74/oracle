@@ -45,10 +45,10 @@ export default function App() {
       unlock(kind);
       const labels = {
         plus: 'Oracle+',
-        shadow: 'Shadow Realm Deck',
+        shadow: 'Shadow Realm Skin',
         gilded: 'Gilded Obsidian Deck',
       } as const;
-      setCheckoutNotice(`${labels[kind]} unlocked. Thank you, seeker.`);
+      setCheckoutNotice(`${labels[kind]} unlocked. Thank you, witness.`);
       setUpsellBack('hub');
       setStage('upsell');
     } else if (success) {

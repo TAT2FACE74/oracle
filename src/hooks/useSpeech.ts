@@ -2,11 +2,15 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 /** Prefetched cinematic clips — keys must match spoken strings exactly. */
 const STATIC_VOICE: Record<string, string> = {
-  'Beyond the veil of ordinary sight, fate and destiny braid themselves into the fabric of all that is.': 'voice/intro-0.mp3',
-  'You stand at the threshold of the shadow realm — a place of mysticism, where other-dimensional planes touch this one.': 'voice/intro-1.mp3',
-  'Here, Source speaks in energy, vibration, and frequency. Timelines shimmer. Enlightenment waits for those who listen.': 'voice/intro-2.mp3',
-  'Ascension is not escape. It is remembering. Enter, seeker. The Oracle awaits.': 'voice/intro-3.mp3',
-  'Choose your path through the veil.': 'voice/hub-tagline.mp3',
+  'Beyond ordinary sight, the Ash Realms keep their own ledger. Fate does not ask permission — it sends messengers.':
+    'voice/intro-0.mp3',
+  'You stand at a threshold of bone and cinder, where veiled courts weigh what you will not admit.':
+    'voice/intro-1.mp3',
+  'Here, Source speaks in consequence, heat, and silence. Timelines harden. Soft lies go first into the fire.':
+    'voice/intro-2.mp3',
+  'Ascension is not escape. It is surviving the truth with your spine intact. Enter. The Oracle is already watching.':
+    'voice/intro-3.mp3',
+  'The Ash Realms do not flatter. Choose your path through the veil.': 'voice/hub-tagline.mp3',
 };
 
 function ttsEndpoint(): string | null {

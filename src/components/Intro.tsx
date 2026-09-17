@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 const NARRATION = [
-  'Beyond the veil of ordinary sight, fate and destiny braid themselves into the fabric of all that is.',
-  'You stand at the threshold of the shadow realm — a place of mysticism, where other-dimensional planes touch this one.',
-  'Here, Source speaks in energy, vibration, and frequency. Timelines shimmer. Enlightenment waits for those who listen.',
-  'Ascension is not escape. It is remembering. Enter, seeker. The Oracle awaits.',
+  'Beyond ordinary sight, the Ash Realms keep their own ledger. Fate does not ask permission — it sends messengers.',
+  'You stand at a threshold of bone and cinder, where veiled courts weigh what you will not admit.',
+  'Here, Source speaks in consequence, heat, and silence. Timelines harden. Soft lies go first into the fire.',
+  'Ascension is not escape. It is surviving the truth with your spine intact. Enter. The Oracle is already watching.',
 ];
 
 interface Props {
@@ -59,6 +59,7 @@ export function Intro({ onComplete, speak, stop }: Props) {
     <div className="stage intro" onClick={entered ? undefined : handleEnter}>
       <div className="intro-orb" aria-hidden />
       <h1 className="title-oracle">Oracle</h1>
+      <p className="deck-subtitle">Veil of the Ash Realms</p>
       {!entered ? (
         <p className="tap-enter">Tap to enter</p>
       ) : (

@@ -28,11 +28,11 @@ function writeFlag(key: string, on: boolean) {
 function readDeck(): DeckId {
   try {
     const v = localStorage.getItem(KEY_DECK);
-    if (v === 'rws' || v === 'shadow' || v === 'gilded' || v === 'abyss') return v;
+    if (v === 'veil' || v === 'shadow' || v === 'gilded' || v === 'abyss') return v;
   } catch {
     /* ignore */
   }
-  return 'rws';
+  return 'veil';
 }
 
 export interface Entitlements {
@@ -87,7 +87,7 @@ export function useOraclePlus() {
 
   const canUseDeck = useCallback(
     (id: DeckId) => {
-      if (id === 'rws') return true;
+      if (id === 'veil') return true;
       if (id === 'shadow') return entitlements.shadow || entitlements.plus;
       if (id === 'gilded') return entitlements.gilded || entitlements.plus;
       if (id === 'abyss') return entitlements.plus;
@@ -99,7 +99,7 @@ export function useOraclePlus() {
   // If selected deck is no longer allowed, fall back
   useEffect(() => {
     if (!canUseDeck(deckId)) {
-      setDeckId('rws');
+      setDeckId('veil');
     }
   }, [canUseDeck, deckId, setDeckId]);
 

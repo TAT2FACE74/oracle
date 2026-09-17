@@ -33,18 +33,18 @@ function buildSynthesis(drawn: DrawnCard[]): string {
 
   const tone =
     revCount >= 3
-      ? 'The spread leans into shadow work — inverted forces ask for honesty before ascent.'
+      ? 'The messengers lean into shadow — inverted forces demand honesty before any rise.'
       : revCount === 0
-        ? 'The forces stand upright; momentum favors conscious alignment.'
-        : 'Light and shadow braid together; neither can be ignored.';
+        ? 'The messengers stand upright; the current favors deliberate, costly alignment.'
+        : 'Upright and shadow braid together; neither will be bargained away.';
 
   return `${tone} Your Shadow (${shadow.card.name}${
-    shadow.reversed ? ', reversed' : ''
-  }) colors the field, while the Ascension Path (${ascension.card.name}${
-    ascension.reversed ? ', reversed' : ''
-  }) names the higher trajectory. Between them — ${names[1]}, ${names[2]}, and ${
+    shadow.reversed ? ', in shadow' : ''
+  }) stains the field, while the Ascension Path (${ascension.card.name}${
+    ascension.reversed ? ', in shadow' : ''
+  }) names the harder trajectory. Between them — ${names[1]}, ${names[2]}, and ${
     names[3]
-  } — the near work is clear: name what binds you, choose at the crossroads, follow the hidden thread, and walk the timeline with intention. The Oracle does not decide for you. It reveals the current. You steer.`;
+  } — the near work is mercilessly clear: name what stalks you, choose at the crossroads, follow the hidden thread, and walk the timeline without soft lies. The Oracle does not rescue you. It reveals the current. You steer — or you are steered.`;
 }
 
 export function Reading({
@@ -54,7 +54,7 @@ export function Reading({
   onDrawAgain,
   onUpsell,
   plusUnlocked,
-  deckId = 'rws',
+  deckId = 'veil',
   premiumArt = false,
   onHome,
 }: Props) {
@@ -83,10 +83,8 @@ export function Reading({
 
     drawn.forEach((d, i) => {
       const pos = SPREAD_POSITIONS[i] as SpreadPosition;
-      const orient = d.reversed ? 'reversed' : 'upright';
-      lines.push(
-        `${pos}. ${d.card.name}, ${orient}. ${meaningOf(d)}`,
-      );
+      const orient = d.reversed ? 'in shadow aspect' : 'upright';
+      lines.push(`${pos}. ${d.card.name}, ${orient}. ${meaningOf(d)}`);
     });
     lines.push(`Synthesis. ${synthesis}`);
 
@@ -133,11 +131,14 @@ export function Reading({
           <article key={d.card.id} className="reading-detail">
             <h3>
               {d.card.name}
-              {d.reversed ? ' · Reversed' : ''}
+              {d.reversed ? ' · Shadow' : ''}
             </h3>
             <div className="pos">
               {pos} — {POSITION_DESCRIPTIONS[pos]}
             </div>
+            <p className="kw-line">
+              {d.card.keywords[0]} · {d.card.keywords[1]}
+            </p>
             <p>{meaningOf(d)}</p>
           </article>
         );

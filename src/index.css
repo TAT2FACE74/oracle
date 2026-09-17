@@ -11,8 +11,10 @@
   --gold-dim: #8a7340;
   --bone: #e8dcc8;
   --bone-dim: #a89880;
-  --green-soul: #2ecc71;
-  --green-glow: #3dff9a;
+  --green-soul: #5a8f3a;
+  --green-glow: #8fbf4a;
+  --ember-sick: #6b9a3d;
+  --blood-dried: #6e1524;
   --smoke: rgba(232, 220, 200, 0.08);
   --font-display: 'Cinzel', Georgia, serif;
   --font-body: 'Cormorant Garamond', Georgia, serif;
@@ -44,8 +46,9 @@ body,
 
 body {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(155, 27, 46, 0.18), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(100, 20, 40, 0.12), transparent),
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(110, 21, 36, 0.22), transparent),
+    radial-gradient(ellipse 50% 35% at 15% 90%, rgba(90, 143, 58, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(80, 16, 28, 0.14), transparent),
     var(--obsidian);
 }
 
@@ -650,11 +653,104 @@ button {
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.55) 100%),
-    linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 28%, transparent 62%, rgba(0,0,0,0.72) 100%);
-  box-shadow: inset 0 0 0 1px rgba(155, 27, 46, 0.35);
+    radial-gradient(ellipse at 50% 45%, transparent 38%, rgba(0, 0, 0, 0.62) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.35) 0%, transparent 22%, transparent 70%, rgba(0,0,0,0.55) 100%);
+  box-shadow: inset 0 0 0 1px rgba(110, 21, 36, 0.45);
 }
 
+
+
+.deck-subtitle {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  color: var(--crimson-bright);
+  opacity: 0.85;
+  margin: -0.35rem 0 0.85rem;
+  text-align: center;
+}
+
+.kw-line {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--crimson-bright);
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+/* Oracle chrome overlay (title / keywords / number) */
+.oracle-chrome {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.45rem 0.4rem 0.35rem;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(5, 4, 8, 0.82) 0%, rgba(5, 4, 8, 0.35) 70%, transparent 100%);
+}
+
+.oracle-chrome-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.15rem;
+  margin-bottom: 0.15rem;
+}
+
+.card-number {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--bone);
+  opacity: 0.9;
+}
+
+.card-sigil {
+  font-size: 0.85rem;
+  color: var(--green-glow);
+  text-shadow: 0 0 10px rgba(111, 154, 61, 0.45);
+}
+
+.oracle-chrome-title {
+  font-family: var(--font-display);
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--bone);
+  line-height: 1.25;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+}
+
+.oracle-chrome-keywords {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.58rem;
+  color: var(--crimson-bright);
+  letter-spacing: 0.04em;
+  margin-top: 0.1rem;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.card.oracle-face .card-art-meta,
+.oracle-face .card-art-meta {
+  display: none;
+}
+
+.card.reading-size .oracle-chrome-title {
+  font-size: 0.42rem;
+}
+.card.reading-size .oracle-chrome-keywords {
+  font-size: 0.48rem;
+}
 .card-art-meta {
   position: absolute;
   left: 0;

@@ -8,7 +8,7 @@ interface Props {
   speak?: (text: string, onEnd?: () => void) => void;
 }
 
-const TAGLINE = 'Choose your path through the veil.';
+const TAGLINE = 'The Ash Realms do not flatter. Choose your path through the veil.';
 
 export function Hub({ onRitual, onDaily, onPlus, plusUnlocked, speak }: Props) {
   useEffect(() => {
@@ -19,6 +19,7 @@ export function Hub({ onRitual, onDaily, onPlus, plusUnlocked, speak }: Props) {
     <div className="stage hub-stage fade-in">
       <div className="intro-orb hub-orb" aria-hidden />
       <h1 className="title-oracle">Oracle</h1>
+      <p className="deck-subtitle">Veil of the Ash Realms</p>
       <p className="caption" style={{ marginBottom: '1.75rem', opacity: 0.75 }}>
         {TAGLINE}
       </p>
@@ -30,7 +31,7 @@ export function Hub({ onRitual, onDaily, onPlus, plusUnlocked, speak }: Props) {
           Daily Transmission
         </button>
         <button type="button" className="btn-ghost" onClick={onPlus}>
-          {plusUnlocked ? 'Oracle+ · Decks' : 'Oracle+'}
+          {plusUnlocked ? 'Oracle+ · Skins' : 'Oracle+'}
         </button>
       </div>
     </div>

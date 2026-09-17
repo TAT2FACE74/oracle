@@ -53,10 +53,10 @@ export function Upsell({
         )}
 
         <ul className="feature-list">
-          <li>Master unlock — Abyss Chrome deck + premium art</li>
-          <li>Shadow Realm Deck — desaturated crimson faces ($4.99)</li>
+          <li>Core deck: Veil of the Ash Realms — original 44-card dark oracle</li>
+          <li>Master unlock — Abyss Chrome skin + premium art shimmer</li>
+          <li>Shadow Realm skin — desaturated crimson faces ($4.99)</li>
           <li>Gilded Obsidian — gold foil borders ($4.99)</li>
-          <li>Animated shimmer on card faces</li>
         </ul>
 
         <div className="upsell-actions">
@@ -76,7 +76,7 @@ export function Upsell({
               className="btn-ghost"
               onClick={() => goCheckout('shadow')}
             >
-              Shadow Realm Deck · $4.99
+              Shadow Realm Skin · $4.99
             </button>
           )}
 
@@ -91,7 +91,7 @@ export function Upsell({
           )}
 
           <div className="deck-picker">
-            <h3>Deck skin</h3>
+            <h3>Oracle skin</h3>
             <div className="deck-grid">
               {(Object.keys(DECK_META) as DeckId[]).map((id) => {
                 const meta = DECK_META[id];

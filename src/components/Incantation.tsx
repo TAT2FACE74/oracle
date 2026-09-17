@@ -1,14 +1,14 @@
 import { useRef, useState } from 'react';
 
 const LINES = [
-  'By shadow and by flame I call,',
-  'Through veil and void, through rise and fall,',
-  'I open sight beyond the known,',
-  'I claim the thread that is my own.',
-  'What sleeps beneath, now wake and speak,',
-  'What hides in silence, find the weak.',
+  'By cinder, bone, and veiled decree,',
+  'I call the courts that judge through me.',
+  'No soft lie holds. No pretty mask.',
+  'I claim the cost. I do the task.',
+  'What stalks beneath, now stand and speak,',
+  'What feeds on silence, find the weak.',
   'I stand between the worlds tonight —',
-  'Reveal the truth. Align the light.',
+  'Cut clean the false. Align the right.',
 ];
 
 const HOLD_MS = 2000;
@@ -93,7 +93,7 @@ export function Incantation({ onComplete }: Props) {
         Incantation
       </h2>
       <p className="caption" style={{ opacity: 0.7, marginBottom: '0.5rem', fontSize: '0.95rem' }}>
-        Speak aloud. Then hold to confirm.
+        Speak aloud. Then hold to seal the call.
       </p>
       <div className="incantation-text">
         {LINES.map((line) => (
