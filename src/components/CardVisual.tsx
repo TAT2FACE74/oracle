@@ -28,6 +28,10 @@ export function CardVisual({
       ? romanNumeral(card.number)
       : courtLabel(card?.number ?? 0) || String(card?.number ?? '');
 
+  const artSrc = card
+    ? `${import.meta.env.BASE_URL}${card.image.replace(/^\//, '')}`
+    : '';
+
   return (
     <div
       className={`card deck-${deckId} ${premiumArt ? 'premium-art' : ''} ${sizeClass} ${
@@ -52,14 +56,19 @@ export function CardVisual({
           <span className="card-ornament br" />
           {premiumArt && <div className="card-shimmer" aria-hidden />}
           <div className="card-face-inner">
-            <div className="card-roman">{numeral}</div>
-            <div className="card-glyph">{card.glyph}</div>
-            <div className="card-suit-line" />
-            <div className="card-name">{card.name}</div>
-            <div className="card-keywords">
-              {card.keywords.slice(0, 3).join(' · ')}
+            <img
+              className="card-art"
+              src={artSrc}
+              alt={card.name}
+              draggable={false}
+              loading="lazy"
+            />
+            <div className="card-art-vignette" aria-hidden />
+            <div className="card-art-meta">
+              <div className="card-roman">{numeral}</div>
+              <div className="card-name">{card.name}</div>
+              {reversed && <div className="orient-badge">REVERSED</div>}
             </div>
-            {reversed && <div className="orient-badge">REVERSED</div>}
           </div>
         </div>
       )}

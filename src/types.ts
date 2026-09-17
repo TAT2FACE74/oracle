@@ -24,6 +24,7 @@ export interface TarotCard {
   upright: string;
   reversed: string;
   glyph: string;
+  image: string;
 }
 
 export interface DrawnCard {

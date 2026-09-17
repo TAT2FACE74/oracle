@@ -8,22 +8,27 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "deploy": "npm run build && npx --yes gh-pages -d dist"
+    "deploy": "npm run build && npx --yes gh-pages -d dist -m \"deploy oracle\"",
+    "tts": "node server/tts.mjs",
+    "voice:pregen": "bash scripts/pregen-voice.sh",
+    "deploy:api": "npx --yes vercel --prod --yes"
   },
   "dependencies": {
     "framer-motion": "^13.4.0",
+    "msedge-tts": "^2.0.7",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@types/node": "^24.13.3",
+    "@types/node": "^24.13.5",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
+    "@vercel/node": "^13.0.1",
     "@vitejs/plugin-react": "^6.1.1",
     "gh-pages": "^6.3.0",
     "oxlint": "^1.81.0",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
   },
-  "description": "Oracle — cinematic dark-themed tarot web app"
+  "description": "Oracle \u2014 cinematic dark-themed tarot web app"
 }

@@ -104,6 +104,7 @@ export default function App() {
           onDaily={() => go('daily')}
           onPlus={() => openUpsell('hub')}
           plusUnlocked={unlocked}
+          speak={speak}
         />
       )}
       {stage === 'intro' && (

@@ -1,122 +1,175 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-const PREFERRED_VOICE_HINTS = [
-  'daniel',
-  'david',
-  'james',
-  'mark',
-  'alex',
-  'fred',
-  'bruce',
-  'lee',
-  'rishi',
-  'thomas',
-  'google uk english male',
-  'microsoft david',
-  'microsoft mark',
-  'microsoft guy',
-];
+/** Prefetched cinematic clips — keys must match spoken strings exactly. */
+const STATIC_VOICE: Record<string, string> = {
+  'Beyond the veil of ordinary sight, fate and destiny braid themselves into the fabric of all that is.': 'voice/intro-0.mp3',
+  'You stand at the threshold of the shadow realm — a place of mysticism, where other-dimensional planes touch this one.': 'voice/intro-1.mp3',
+  'Here, Source speaks in energy, vibration, and frequency. Timelines shimmer. Enlightenment waits for those who listen.': 'voice/intro-2.mp3',
+  'Ascension is not escape. It is remembering. Enter, seeker. The Oracle awaits.': 'voice/intro-3.mp3',
+  'Choose your path through the veil.': 'voice/hub-tagline.mp3',
+};
 
-function pickDeepMaleVoice(): SpeechSynthesisVoice | null {
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices.length) return null;
+function ttsEndpoint(): string | null {
+  const env = (import.meta.env.VITE_TTS_URL as string | undefined)?.trim();
+  if (env) return env.replace(/\/$/, '');
+  // Dev convenience: local server
+  if (import.meta.env.DEV) return 'http://127.0.0.1:8787';
+  return null;
+}
 
-  const lower = (s: string) => s.toLowerCase();
-  const english = voices.filter(
-    (v) => lower(v.lang).startsWith('en') || lower(v.lang).includes('en-'),
-  );
-  const pool = english.length ? english : voices;
+async function sha256(text: string): Promise<string> {
+  const data = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(digest))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+}
 
-  for (const hint of PREFERRED_VOICE_HINTS) {
-    const found = pool.find((v) => lower(v.name).includes(hint));
-    if (found) return found;
+const memoryCache = new Map<string, string>();
+
+async function cacheGet(key: string): Promise<Blob | null> {
+  if (typeof caches === 'undefined') return null;
+  try {
+    const c = await caches.open('oracle-tts-v1');
+    const res = await c.match(`tts://${key}`);
+    return res ? await res.blob() : null;
+  } catch {
+    return null;
+  }
+}
+
+async function cachePut(key: string, blob: Blob) {
+  if (typeof caches === 'undefined') return;
+  try {
+    const c = await caches.open('oracle-tts-v1');
+    await c.put(
+      `tts://${key}`,
+      new Response(blob, { headers: { 'Content-Type': 'audio/mpeg' } }),
+    );
+  } catch {
+    /* ignore */
+  }
+}
+
+async function fetchNeuralAudio(text: string): Promise<string | null> {
+  const staticPath = STATIC_VOICE[text];
+  if (staticPath) {
+    return `${import.meta.env.BASE_URL}${staticPath}`;
   }
 
-  const male = pool.find(
-    (v) =>
-      lower(v.name).includes('male') && !lower(v.name).includes('female'),
-  );
-  if (male) return male;
+  const key = await sha256(text);
+  if (memoryCache.has(key)) return memoryCache.get(key)!;
 
-  // Prefer lower-index / deeper-sounding en-GB / en-US
-  return pool.find((v) => lower(v.lang).includes('en-gb')) || pool[0] || null;
+  const cached = await cacheGet(key);
+  if (cached) {
+    const url = URL.createObjectURL(cached);
+    memoryCache.set(key, url);
+    return url;
+  }
+
+  const endpoint = ttsEndpoint();
+  if (!endpoint) return null;
+
+  const res = await fetch(`${endpoint}/api/tts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+  if (!res.ok) throw new Error(`TTS ${res.status}`);
+  const blob = await res.blob();
+  await cachePut(key, blob);
+  const url = URL.createObjectURL(blob);
+  memoryCache.set(key, url);
+  return url;
 }
 
 export function useSpeech() {
   const [muted, setMuted] = useState(false);
   const [speaking, setSpeaking] = useState(false);
-  const [voicesReady, setVoicesReady] = useState(false);
-  const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
+  const [caption, setCaption] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const queueRef = useRef<Promise<void>>(Promise.resolve());
   const cancelledRef = useRef(false);
+  const genRef = useRef(0);
 
-  useEffect(() => {
-    if (typeof window === 'undefined' || !window.speechSynthesis) return;
-
-    const load = () => {
-      voiceRef.current = pickDeepMaleVoice();
-      setVoicesReady(true);
-    };
-
-    load();
-    window.speechSynthesis.onvoiceschanged = load;
-    return () => {
-      window.speechSynthesis.onvoiceschanged = null;
-      window.speechSynthesis.cancel();
-    };
+  const stop = useCallback(() => {
+    cancelledRef.current = true;
+    genRef.current += 1;
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.removeAttribute('src');
+      audioRef.current = null;
+    }
+    setSpeaking(false);
+    queueRef.current = Promise.resolve();
   }, []);
+
+  useEffect(() => () => stop(), [stop]);
 
   const speak = useCallback(
     (text: string, onEnd?: () => void) => {
-      if (typeof window === 'undefined' || !window.speechSynthesis) {
-        onEnd?.();
-        return;
-      }
       if (muted) {
+        setCaption(text);
         onEnd?.();
         return;
       }
 
       cancelledRef.current = false;
-      window.speechSynthesis.cancel();
+      const myGen = genRef.current;
+      setCaption(text);
 
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.pitch = 0.65;
-      utter.rate = 0.8;
-      utter.volume = 1;
-      if (voiceRef.current) utter.voice = voiceRef.current;
-
-      utter.onstart = () => setSpeaking(true);
-      utter.onend = () => {
-        setSpeaking(false);
-        if (!cancelledRef.current) onEnd?.();
-      };
-      utter.onerror = () => {
-        setSpeaking(false);
-        if (!cancelledRef.current) onEnd?.();
-      };
-
-      window.speechSynthesis.speak(utter);
+      queueRef.current = queueRef.current.then(async () => {
+        if (cancelledRef.current || myGen !== genRef.current) {
+          onEnd?.();
+          return;
+        }
+        try {
+          const url = await fetchNeuralAudio(text);
+          if (cancelledRef.current || myGen !== genRef.current) {
+            onEnd?.();
+            return;
+          }
+          if (!url) {
+            // Caption-only fallback — never speechSynthesis
+            onEnd?.();
+            return;
+          }
+          await new Promise<void>((resolve) => {
+            const audio = new Audio(url);
+            audioRef.current = audio;
+            setSpeaking(true);
+            const done = () => {
+              setSpeaking(false);
+              if (audioRef.current === audio) audioRef.current = null;
+              resolve();
+            };
+            audio.onended = done;
+            audio.onerror = done;
+            void audio.play().catch(done);
+          });
+        } catch {
+          setSpeaking(false);
+        }
+        if (!cancelledRef.current && myGen === genRef.current) onEnd?.();
+      });
     },
     [muted],
   );
 
-  const stop = useCallback(() => {
-    cancelledRef.current = true;
-    if (typeof window !== 'undefined' && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-    }
-    setSpeaking(false);
-  }, []);
-
   const toggleMute = useCallback(() => {
     setMuted((m) => {
-      if (!m && typeof window !== 'undefined' && window.speechSynthesis) {
-        window.speechSynthesis.cancel();
+      if (!m) {
+        cancelledRef.current = true;
+        genRef.current += 1;
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current = null;
+        }
         setSpeaking(false);
       }
       return !m;
     });
   }, []);
 
-  return { speak, stop, muted, toggleMute, speaking, voicesReady };
+  return { speak, stop, muted, toggleMute, speaking, caption, voicesReady: true };
 }

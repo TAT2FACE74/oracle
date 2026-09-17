@@ -4,6 +4,7 @@ export const DECK: TarotCard[] = [
   // —— MAJOR ARCANA ——
   {
     id: 'major-0',
+    image: 'cards/major-0.jpg',
     name: 'The Fool',
     suit: 'major',
     number: 0,
@@ -16,6 +17,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-1',
+    image: 'cards/major-1.jpg',
     name: 'The Magician',
     suit: 'major',
     number: 1,
@@ -28,6 +30,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-2',
+    image: 'cards/major-2.jpg',
     name: 'The High Priestess',
     suit: 'major',
     number: 2,
@@ -40,6 +43,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-3',
+    image: 'cards/major-3.jpg',
     name: 'The Empress',
     suit: 'major',
     number: 3,
@@ -52,6 +56,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-4',
+    image: 'cards/major-4.jpg',
     name: 'The Emperor',
     suit: 'major',
     number: 4,
@@ -64,6 +69,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-5',
+    image: 'cards/major-5.jpg',
     name: 'The Hierophant',
     suit: 'major',
     number: 5,
@@ -76,6 +82,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-6',
+    image: 'cards/major-6.jpg',
     name: 'The Lovers',
     suit: 'major',
     number: 6,
@@ -88,6 +95,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-7',
+    image: 'cards/major-7.jpg',
     name: 'The Chariot',
     suit: 'major',
     number: 7,
@@ -100,6 +108,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-8',
+    image: 'cards/major-8.jpg',
     name: 'Strength',
     suit: 'major',
     number: 8,
@@ -112,6 +121,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-9',
+    image: 'cards/major-9.jpg',
     name: 'The Hermit',
     suit: 'major',
     number: 9,
@@ -124,6 +134,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-10',
+    image: 'cards/major-10.jpg',
     name: 'Wheel of Fortune',
     suit: 'major',
     number: 10,
@@ -136,6 +147,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-11',
+    image: 'cards/major-11.jpg',
     name: 'Justice',
     suit: 'major',
     number: 11,
@@ -148,6 +160,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-12',
+    image: 'cards/major-12.jpg',
     name: 'The Hanged Man',
     suit: 'major',
     number: 12,
@@ -160,6 +173,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-13',
+    image: 'cards/major-13.jpg',
     name: 'Death',
     suit: 'major',
     number: 13,
@@ -172,6 +186,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-14',
+    image: 'cards/major-14.jpg',
     name: 'Temperance',
     suit: 'major',
     number: 14,
@@ -184,6 +199,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-15',
+    image: 'cards/major-15.jpg',
     name: 'The Devil',
     suit: 'major',
     number: 15,
@@ -196,6 +212,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-16',
+    image: 'cards/major-16.jpg',
     name: 'The Tower',
     suit: 'major',
     number: 16,
@@ -208,6 +225,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-17',
+    image: 'cards/major-17.jpg',
     name: 'The Star',
     suit: 'major',
     number: 17,
@@ -220,6 +238,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-18',
+    image: 'cards/major-18.jpg',
     name: 'The Moon',
     suit: 'major',
     number: 18,
@@ -232,6 +251,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-19',
+    image: 'cards/major-19.jpg',
     name: 'The Sun',
     suit: 'major',
     number: 19,
@@ -244,6 +264,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-20',
+    image: 'cards/major-20.jpg',
     name: 'Judgement',
     suit: 'major',
     number: 20,
@@ -256,6 +277,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'major-21',
+    image: 'cards/major-21.jpg',
     name: 'The World',
     suit: 'major',
     number: 21,
@@ -270,6 +292,7 @@ export const DECK: TarotCard[] = [
   // —— WANDS ——
   {
     id: 'wands-1',
+    image: 'cards/wands-1.jpg',
     name: 'Ace of Wands',
     suit: 'wands',
     number: 1,
@@ -282,6 +305,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-2',
+    image: 'cards/wands-2.jpg',
     name: 'Two of Wands',
     suit: 'wands',
     number: 2,
@@ -294,6 +318,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-3',
+    image: 'cards/wands-3.jpg',
     name: 'Three of Wands',
     suit: 'wands',
     number: 3,
@@ -306,6 +331,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-4',
+    image: 'cards/wands-4.jpg',
     name: 'Four of Wands',
     suit: 'wands',
     number: 4,
@@ -318,6 +344,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-5',
+    image: 'cards/wands-5.jpg',
     name: 'Five of Wands',
     suit: 'wands',
     number: 5,
@@ -330,6 +357,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-6',
+    image: 'cards/wands-6.jpg',
     name: 'Six of Wands',
     suit: 'wands',
     number: 6,
@@ -342,6 +370,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-7',
+    image: 'cards/wands-7.jpg',
     name: 'Seven of Wands',
     suit: 'wands',
     number: 7,
@@ -354,6 +383,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-8',
+    image: 'cards/wands-8.jpg',
     name: 'Eight of Wands',
     suit: 'wands',
     number: 8,
@@ -366,6 +396,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-9',
+    image: 'cards/wands-9.jpg',
     name: 'Nine of Wands',
     suit: 'wands',
     number: 9,
@@ -378,6 +409,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-10',
+    image: 'cards/wands-10.jpg',
     name: 'Ten of Wands',
     suit: 'wands',
     number: 10,
@@ -390,6 +422,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-11',
+    image: 'cards/wands-11.jpg',
     name: 'Page of Wands',
     suit: 'wands',
     number: 11,
@@ -402,6 +435,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-12',
+    image: 'cards/wands-12.jpg',
     name: 'Knight of Wands',
     suit: 'wands',
     number: 12,
@@ -414,6 +448,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-13',
+    image: 'cards/wands-13.jpg',
     name: 'Queen of Wands',
     suit: 'wands',
     number: 13,
@@ -426,6 +461,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'wands-14',
+    image: 'cards/wands-14.jpg',
     name: 'King of Wands',
     suit: 'wands',
     number: 14,
@@ -440,6 +476,7 @@ export const DECK: TarotCard[] = [
   // —— CUPS ——
   {
     id: 'cups-1',
+    image: 'cards/cups-1.jpg',
     name: 'Ace of Cups',
     suit: 'cups',
     number: 1,
@@ -452,6 +489,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-2',
+    image: 'cards/cups-2.jpg',
     name: 'Two of Cups',
     suit: 'cups',
     number: 2,
@@ -464,6 +502,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-3',
+    image: 'cards/cups-3.jpg',
     name: 'Three of Cups',
     suit: 'cups',
     number: 3,
@@ -476,6 +515,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-4',
+    image: 'cards/cups-4.jpg',
     name: 'Four of Cups',
     suit: 'cups',
     number: 4,
@@ -488,6 +528,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-5',
+    image: 'cards/cups-5.jpg',
     name: 'Five of Cups',
     suit: 'cups',
     number: 5,
@@ -500,6 +541,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-6',
+    image: 'cards/cups-6.jpg',
     name: 'Six of Cups',
     suit: 'cups',
     number: 6,
@@ -512,6 +554,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-7',
+    image: 'cards/cups-7.jpg',
     name: 'Seven of Cups',
     suit: 'cups',
     number: 7,
@@ -524,6 +567,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-8',
+    image: 'cards/cups-8.jpg',
     name: 'Eight of Cups',
     suit: 'cups',
     number: 8,
@@ -536,6 +580,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-9',
+    image: 'cards/cups-9.jpg',
     name: 'Nine of Cups',
     suit: 'cups',
     number: 9,
@@ -548,6 +593,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-10',
+    image: 'cards/cups-10.jpg',
     name: 'Ten of Cups',
     suit: 'cups',
     number: 10,
@@ -560,6 +606,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-11',
+    image: 'cards/cups-11.jpg',
     name: 'Page of Cups',
     suit: 'cups',
     number: 11,
@@ -572,6 +619,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-12',
+    image: 'cards/cups-12.jpg',
     name: 'Knight of Cups',
     suit: 'cups',
     number: 12,
@@ -584,6 +632,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-13',
+    image: 'cards/cups-13.jpg',
     name: 'Queen of Cups',
     suit: 'cups',
     number: 13,
@@ -596,6 +645,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'cups-14',
+    image: 'cards/cups-14.jpg',
     name: 'King of Cups',
     suit: 'cups',
     number: 14,
@@ -610,6 +660,7 @@ export const DECK: TarotCard[] = [
   // —— SWORDS ——
   {
     id: 'swords-1',
+    image: 'cards/swords-1.jpg',
     name: 'Ace of Swords',
     suit: 'swords',
     number: 1,
@@ -622,6 +673,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-2',
+    image: 'cards/swords-2.jpg',
     name: 'Two of Swords',
     suit: 'swords',
     number: 2,
@@ -634,6 +686,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-3',
+    image: 'cards/swords-3.jpg',
     name: 'Three of Swords',
     suit: 'swords',
     number: 3,
@@ -646,6 +699,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-4',
+    image: 'cards/swords-4.jpg',
     name: 'Four of Swords',
     suit: 'swords',
     number: 4,
@@ -658,6 +712,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-5',
+    image: 'cards/swords-5.jpg',
     name: 'Five of Swords',
     suit: 'swords',
     number: 5,
@@ -670,6 +725,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-6',
+    image: 'cards/swords-6.jpg',
     name: 'Six of Swords',
     suit: 'swords',
     number: 6,
@@ -682,6 +738,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-7',
+    image: 'cards/swords-7.jpg',
     name: 'Seven of Swords',
     suit: 'swords',
     number: 7,
@@ -694,6 +751,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-8',
+    image: 'cards/swords-8.jpg',
     name: 'Eight of Swords',
     suit: 'swords',
     number: 8,
@@ -706,6 +764,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-9',
+    image: 'cards/swords-9.jpg',
     name: 'Nine of Swords',
     suit: 'swords',
     number: 9,
@@ -718,6 +777,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-10',
+    image: 'cards/swords-10.jpg',
     name: 'Ten of Swords',
     suit: 'swords',
     number: 10,
@@ -730,6 +790,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-11',
+    image: 'cards/swords-11.jpg',
     name: 'Page of Swords',
     suit: 'swords',
     number: 11,
@@ -742,6 +803,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-12',
+    image: 'cards/swords-12.jpg',
     name: 'Knight of Swords',
     suit: 'swords',
     number: 12,
@@ -754,6 +816,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-13',
+    image: 'cards/swords-13.jpg',
     name: 'Queen of Swords',
     suit: 'swords',
     number: 13,
@@ -766,6 +829,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'swords-14',
+    image: 'cards/swords-14.jpg',
     name: 'King of Swords',
     suit: 'swords',
     number: 14,
@@ -780,6 +844,7 @@ export const DECK: TarotCard[] = [
   // —— PENTACLES ——
   {
     id: 'pentacles-1',
+    image: 'cards/pentacles-1.jpg',
     name: 'Ace of Pentacles',
     suit: 'pentacles',
     number: 1,
@@ -792,6 +857,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-2',
+    image: 'cards/pentacles-2.jpg',
     name: 'Two of Pentacles',
     suit: 'pentacles',
     number: 2,
@@ -804,6 +870,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-3',
+    image: 'cards/pentacles-3.jpg',
     name: 'Three of Pentacles',
     suit: 'pentacles',
     number: 3,
@@ -816,6 +883,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-4',
+    image: 'cards/pentacles-4.jpg',
     name: 'Four of Pentacles',
     suit: 'pentacles',
     number: 4,
@@ -828,6 +896,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-5',
+    image: 'cards/pentacles-5.jpg',
     name: 'Five of Pentacles',
     suit: 'pentacles',
     number: 5,
@@ -840,6 +909,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-6',
+    image: 'cards/pentacles-6.jpg',
     name: 'Six of Pentacles',
     suit: 'pentacles',
     number: 6,
@@ -852,6 +922,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-7',
+    image: 'cards/pentacles-7.jpg',
     name: 'Seven of Pentacles',
     suit: 'pentacles',
     number: 7,
@@ -864,6 +935,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-8',
+    image: 'cards/pentacles-8.jpg',
     name: 'Eight of Pentacles',
     suit: 'pentacles',
     number: 8,
@@ -876,6 +948,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-9',
+    image: 'cards/pentacles-9.jpg',
     name: 'Nine of Pentacles',
     suit: 'pentacles',
     number: 9,
@@ -888,6 +961,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-10',
+    image: 'cards/pentacles-10.jpg',
     name: 'Ten of Pentacles',
     suit: 'pentacles',
     number: 10,
@@ -900,6 +974,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-11',
+    image: 'cards/pentacles-11.jpg',
     name: 'Page of Pentacles',
     suit: 'pentacles',
     number: 11,
@@ -912,6 +987,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-12',
+    image: 'cards/pentacles-12.jpg',
     name: 'Knight of Pentacles',
     suit: 'pentacles',
     number: 12,
@@ -924,6 +1000,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-13',
+    image: 'cards/pentacles-13.jpg',
     name: 'Queen of Pentacles',
     suit: 'pentacles',
     number: 13,
@@ -936,6 +1013,7 @@ export const DECK: TarotCard[] = [
   },
   {
     id: 'pentacles-14',
+    image: 'cards/pentacles-14.jpg',
     name: 'King of Pentacles',
     suit: 'pentacles',
     number: 14,
