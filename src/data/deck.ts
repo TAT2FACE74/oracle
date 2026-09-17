@@ -10,16 +10,8 @@ export const DECK: OracleCard[] = [
     realm: 'ash',
     glyph: '⟐',
     keywords: ['Summons', 'Warning'],
-    upright: {
-      coming: 'A hard message is about to land — about money owed, a relationship truth, or a decision you have stalled. Expect the conversation you have been dodging.',
-      workOn: 'Say the burning sentence out loud this week. Deliver the update, the breakup talk, the boundary, or the ask — unfinished silence is now costing you.',
-      watchFor: 'Watch for people who punish honesty while demanding it from you. Also watch your habit of softening bad news until it becomes a lie.',
-    },
-    reversed: {
-      coming: 'News arrives twisted or late because you or someone else buried the original warning. Confusion around timing of cash, love, or work news grows.',
-      workOn: 'Stop rewriting the omen. Write one clear message and send it — no spin, no delay theater.',
-      watchFor: 'Beware the peace that only exists if nobody mentions the fire. That peace collapses without warning.',
-    },
+    upright: `I am the Cinder Herald, messenger of heat that will not stay polite. A hard truth is already walking toward your door — about love unspoken, money owed, or the decision you keep polishing instead of making. Do not soften me into a rumor. Speak the burning sentence this week; the Ash Realms favor the one who delivers the warning before the fire chooses its own path.`,
+    reversed: `When I turn, the omen arrives late or twisted — news of cash, affection, or timing already warped by spin. You have been rewriting the smoke to spare yourself the flame. Send one clear message without theater. The peace that survives only if nobody names the fire is not peace; it is a fuse waiting for a name.`,
   },
   {
     id: 'veil-02',
@@ -29,16 +21,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '✝',
     keywords: ['Silence', 'Relic'],
-    upright: {
-      coming: 'A period of quiet is arriving — not loneliness for its own sake, but a forced clearing around vows, faith, or the promise you broke to yourself.',
-      workOn: 'Protect one sacred rule: sleep, sobriety, savings, or a promise you made. Strip noise and recover the relic of your word.',
-      watchFor: 'Watch for people who invade your solitude to keep you useful, and for spiritual talk that excuses avoidance of real accountability.',
-    },
-    reversed: {
-      coming: 'Isolation hardens into hiding. Deadlines, intimacy, or health check-ins get skipped under the name of \'needing space.\'',
-      workOn: 'Return to one disciplined practice and one honest apology. Bones without oath are just furniture.',
-      watchFor: 'Beware calling avoidance sacred. If silence costs someone else\'s trust, it is not holiness.',
-    },
+    upright: `I am the Bone Abbess. I bring a quiet that is not loneliness, but a clearing around the vow you broke to yourself — sleep, sobriety, savings, faith, or the promise you abandoned for applause. Guard one sacred rule as if it were a relic. Strip the noise; recover the marrow of your word before the world treats you as hollow furniture.`,
+    reversed: `In shadow I become hiding dressed as holiness. Deadlines, intimacy, and health check-ins vanish under the banner of "needing space." Return to one disciplined practice and one honest apology. If your silence costs someone else's trust, it is not sanctity — it is a locked chapel with no god inside.`,
   },
   {
     id: 'veil-03',
@@ -48,16 +32,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '♛',
     keywords: ['Dominion', 'Emptiness'],
-    upright: {
-      coming: 'Authority is shifting — a promotion, a family role, or someone trying to put you in charge of a mess. The seat comes with little comfort.',
-      workOn: 'Lead without theater. Claim the role if it is truly yours; refuse it if it is flattery. Make one decisive call and own the fallout.',
-      watchFor: 'Watch for empty titles, fake respect, and people who want your labor without your power. Hollow power still cuts.',
-    },
-    reversed: {
-      coming: 'You chase status while the center stays vacant — applause without substance, control without care.',
-      workOn: 'Put down the performance. Do the unglamorous work that makes dominion real, or walk away from the costume.',
-      watchFor: 'Beware resentment when the crown wears you. Titles without integrity become a beautiful cage.',
-    },
+    upright: `I am the Hollow Crown. Authority is shifting — a promotion, a family seat, or a mess someone wants you to rule. The throne arrives with little comfort and less flattery that can be trusted. Lead without theater. Claim the role if it is truly yours; refuse it if it is bait. Make one decisive call and own the fallout. Empty titles still cut when you wear them.`,
+    reversed: `Reversed, I show you chasing status while the center stays vacant — applause without substance, control without care. Put down the costume. Do the unglamorous work that makes dominion real, or walk away from the glitter. Resentment blooms when the crown wears you; a beautiful cage is still a cage.`,
   },
   {
     id: 'veil-04',
@@ -67,16 +43,8 @@ export const DECK: OracleCard[] = [
     realm: 'ash',
     glyph: '☽',
     keywords: ['Grief', 'Remembrance'],
-    upright: {
-      coming: 'A loss — person, identity, timeline, or hope — will press close. Grief wants naming, not distraction.',
-      workOn: 'Name what died. Keep one ember of what mattered, then take one forward step that honors the vow the loss forged.',
-      watchFor: 'Watch for numbing with shopping, scrolling, or rebound intimacy that pretends the ash is already clean.',
-    },
-    reversed: {
-      coming: 'Grief becomes a shrine you refuse to leave; days blur into polishing ashes instead of living.',
-      workOn: 'Close one chapter with a clean ritual: a letter, a deleted chat, a returned key. Remembering is holy; rotting is not.',
-      watchFor: 'Beware people who keep you stuck in mourning because your pain is useful to them.',
-    },
+    upright: `I am the Ash Widow. A loss presses close — person, identity, timeline, or hope — and grief wants naming, not distraction. Keep one ember of what mattered, then take a forward step that honors the vow the ending forged. Love does not vanish when the form does; it asks you to carry heat without living forever in the ruin.`,
+    reversed: `When I invert, grief becomes a shrine you refuse to leave; days blur into polishing ashes instead of living. Close one chapter with a clean ritual — a letter, a deleted chat, a returned key. Remembering is holy; rotting is not. Beware those who keep you stuck in mourning because your pain is useful to them.`,
   },
   {
     id: 'veil-05',
@@ -86,16 +54,8 @@ export const DECK: OracleCard[] = [
     realm: 'ember',
     glyph: '🜂',
     keywords: ['Vigil', 'Heat'],
-    upright: {
-      coming: 'A fragile fire — project, love, recovery, or truth — needs guarding. Others may shrug while it cools.',
-      workOn: 'Stay awake to the small feeds: one check-in, one budget line, one honest hour of craft. Steady heat outlasts spectacle.',
-      watchFor: 'Watch for frenzy mistaken for care, and for \'helpers\' who starve what you are trying to keep alive.',
-    },
-    reversed: {
-      coming: 'Vigil flips to obsession or neglect — smothering control or abandoned watch.',
-      workOn: 'Choose stewardship: set a simple schedule of care and stick to it without drama.',
-      watchFor: 'Beware arson wearing a saint\'s cloak — heat without wisdom burns the thing you love.',
-    },
+    upright: `I am the Ember Warden. A fragile fire — project, love, recovery, or truth — needs guarding while others shrug. Stay awake to the small feeds: one check-in, one budget line, one honest hour of craft. Steady heat outlasts spectacle. What you tend now becomes the hearth winter cannot steal.`,
+    reversed: `In shadow my vigil flips to obsession or neglect — smothering control or a watch abandoned. Choose stewardship: a simple schedule of care without drama. Arson wearing a saint's cloak still burns the thing you love. Guard the flame; do not become the wind that kills it.`,
   },
   {
     id: 'veil-06',
@@ -105,16 +65,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '☠',
     keywords: ['Threshold', 'Harvest'],
-    upright: {
-      coming: 'A season ends: a role, relationship, illusion, or job arc reaches its cut point. Something finished wants removal.',
-      workOn: 'Let go of what is done. Empty your hands — unsubscribe, resign, return the ring, delete the folder — so the next threshold can open.',
-      watchFor: 'Watch for bargaining with corpses: nostalgia deals, \'one more chance\' loops, and people who need you unfinished.',
-    },
-    reversed: {
-      coming: 'You harvest too early or refuse harvest — green fruit or poison rot.',
-      workOn: 'Ask one question: what is truly finished? Then cut once, cleanly, without apology theater.',
-      watchFor: 'Beware timing games from others who benefit if you never close the chapter.',
-    },
+    upright: `I am the Veil Reaper. A season ends — role, relationship, illusion, or job arc — and something finished wants removal. Empty your hands: unsubscribe, resign, return the ring, delete the folder. Let the harvest go so the next threshold can open. Bargaining with corpses only delays the cut that frees you.`,
+    reversed: `Reversed, you harvest too early or refuse harvest — green fruit or poison rot. Ask what is truly finished, then cut once, cleanly, without apology theater. Timing games from those who need you unfinished will multiply if you keep delaying the blade.`,
   },
   {
     id: 'veil-07',
@@ -124,16 +76,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '⚖',
     keywords: ['Truth', 'Weight'],
-    upright: {
-      coming: 'Confession is due — a truth about money, fidelity, health, or a lie you have been living. It wants out.',
-      workOn: 'Tell yourself the costly sentence first, then the person your silence injured. Iron truth bruises, then sets the bone.',
-      watchFor: 'Watch for performative vulnerability that dumps guilt to punish, and for delay that multiplies the fracture.',
-    },
-    reversed: {
-      coming: 'Confession becomes spectacle or weapon; nothing changes after the speech.',
-      workOn: 'Match mouth to action. One repair behavior beats ten emotional speeches.',
-      watchFor: 'Beware audiences who reward drama over change — they will keep you confessing forever.',
-    },
+    upright: `I am the Iron Confessor. A truth about money, fidelity, health, or a life you have been performing wants out. Tell yourself the costly sentence first, then the person your silence injured. Iron truth bruises, then sets the bone. Delay only multiplies the fracture; courage is the only balm that lasts.`,
+    reversed: `In shadow confession becomes spectacle or weapon — speeches without repair. Match mouth to action. One repair behavior beats ten emotional performances. Audiences who reward drama over change will keep you confessing forever if you let them.`,
   },
   {
     id: 'veil-08',
@@ -143,16 +87,8 @@ export const DECK: OracleCard[] = [
     realm: 'blood',
     glyph: '◈',
     keywords: ['Pattern', 'Sacrifice'],
-    upright: {
-      coming: 'The pattern of where you bleed — time, loyalty, body, reputation — is about to become obvious. Someone else\'s design may be using you as ink.',
-      workOn: 'Audit your sacrifices. Redirect the next offering toward what you actually serve: your craft, your kids, your healing — not their chaos.',
-      watchFor: 'Watch for guilt math that always equals you paying, and for \'urgent\' asks that never end.',
-    },
-    reversed: {
-      coming: 'Sacrifices turn chaotic or theatrical; you bleed for patterns that do not love you back.',
-      workOn: 'Recalculate. Stop funding a design that treats you as disposable ink.',
-      watchFor: 'Beware lovers and bosses who romanticize your martyrdom while pocketing the profit.',
-    },
+    upright: `I am the Blood Geometer. The pattern of where you bleed — time, loyalty, body, reputation — is becoming visible. Someone else's design may be using you as ink. Audit your sacrifices. Redirect the next offering toward what you actually serve: craft, children, healing — not their chaos. Guilt math that always equals you paying is a spell; break it.`,
+    reversed: `When I turn, sacrifices grow chaotic or theatrical; you bleed for patterns that do not love you back. Recalculate. Stop funding a design that treats you as disposable ink. Lovers and bosses who romanticize your martyrdom while pocketing the profit are not destiny — they are a ledger error.`,
   },
   {
     id: 'veil-09',
@@ -162,16 +98,8 @@ export const DECK: OracleCard[] = [
     realm: 'ember',
     glyph: '❧',
     keywords: ['Temptation', 'Fruit'],
-    upright: {
-      coming: 'Desire ripens: an offer in love, money, pleasure, or status glows with consequence. Something sweet wants a contract.',
-      workOn: 'Take one true fruit only if you can carry the aftertaste. Name the price before you bite.',
-      watchFor: 'Watch for bait dressed as destiny, and for denial dressed as virtue that starves you into bad choices later.',
-    },
-    reversed: {
-      coming: 'You gorge on every luminous bait or starve and call it purity.',
-      workOn: 'Choose one nourishing yes and several clean nos. Hunger is not the same as fate.',
-      watchFor: 'Beware soft people and soft deals that disappear you after the sweetness.',
-    },
+    upright: `I am the Night Orchard. Desire ripens — an offer in love, money, pleasure, or status glowing with consequence. Something sweet wants a contract. Take one true fruit only if you can carry the aftertaste. Name the price before you bite. Destiny rarely arrives without a bill tucked under the bloom.`,
+    reversed: `Reversed, you gorge on every luminous bait or starve and call it purity. Choose one nourishing yes and several clean nos. Hunger is not the same as fate. Soft people and soft deals that disappear you after the sweetness are orchard thieves, not soulmates.`,
   },
   {
     id: 'veil-10',
@@ -181,16 +109,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '⟡',
     keywords: ['Map', 'Exile'],
-    upright: {
-      coming: 'You are off the approved path — layoff, move, breakup, or a shove out of the old map. Exile energy rises.',
-      workOn: 'Chart what is real: allies, traps, exits, cash runway. Draw exile as strategy, not apology.',
-      watchFor: 'Watch for outdated maps and people who shame you for leaving the polite road.',
-    },
-    reversed: {
-      coming: 'You wander without a legend or clutch a dead map while the land has moved.',
-      workOn: 'Update coordinates this week. One new route, one retired fantasy.',
-      watchFor: 'Beware nostalgia sold as navigation — circling the same soft hell.',
-    },
+    upright: `I am the Pale Cartographer. You are off the approved path — layoff, move, breakup, or a shove out of the old map. Exile energy rises, and with it a strange freedom. Chart what is real: allies, traps, exits, cash runway. Draw exile as strategy, not apology. The polite road was never the only road.`,
+    reversed: `In shadow you wander without a legend or clutch a dead map while the land has moved. Update coordinates this week — one new route, one retired fantasy. Nostalgia sold as navigation will keep you circling the same soft hell until you redraw the page.`,
   },
   {
     id: 'veil-11',
@@ -200,16 +120,8 @@ export const DECK: OracleCard[] = [
     realm: 'blood',
     glyph: '⚜',
     keywords: ['Pact', 'Boundary'],
-    upright: {
-      coming: 'A pact forms — business, love, oath, roommate, family deal. Terms want thorns visible before the handshake.',
-      workOn: 'Name the barbs. Demand reciprocal cost. Put boundaries in writing where money or intimacy is involved.',
-      watchFor: 'Watch for perfume contracts: charm without clauses, and people who call your boundaries cruelty.',
-    },
-    reversed: {
-      coming: 'You either puncture everyone or let yourself be pierced for fake peace.',
-      workOn: 'Renegotiate one soft deal. Soften only where loyalty is proven; harden where charm was a blade.',
-      watchFor: 'Beware peacekeepers who need you bleeding to keep the room calm.',
-    },
+    upright: `I am the Thorn Consul. A pact forms — business, love, oath, household, family deal — and the thorns want to be visible before the handshake. Name the barbs. Demand reciprocal cost. Put boundaries in writing where money or intimacy is involved. Charm without clauses is a perfume contract; it fades into a cut.`,
+    reversed: `When I invert, you either puncture everyone or let yourself be pierced for fake peace. Renegotiate one soft deal. Soften only where loyalty is proven; harden where charm was a blade. Peacekeepers who need you bleeding to keep the room calm are not diplomats — they are vampires with manners.`,
   },
   {
     id: 'veil-12',
@@ -219,16 +131,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '♫',
     keywords: ['Echo', 'Consensus'],
-    upright: {
-      coming: 'Old voices vote on your next move — family patterns, ancestors, exes, former selves. A consensus of the dead presses in.',
-      workOn: 'Listen for the harmony beneath opinion. Separate inherited guilt from your actual choice, then decide once.',
-      watchFor: 'Watch for other people\'s unfinished business wearing your name, and for crowd pressure from the grave.',
-    },
-    reversed: {
-      coming: 'The choir becomes noise; inherited shame runs the schedule.',
-      workOn: 'Sing your line only. One decision that belongs to the living you.',
-      watchFor: 'Beware relatives or partners who weaponize \'what the family would want.\'',
-    },
+    upright: `I am the Grave Choir. Old voices vote on your next move — family patterns, ancestors, exes, former selves. A consensus of the dead presses in. Listen for the harmony beneath the noise. Separate inherited guilt from your actual choice, then decide once for the living. Other people's unfinished business loves to wear your name.`,
+    reversed: `In shadow the choir becomes noise; inherited shame runs the schedule. Sing your line only. Make one decision that belongs to the living you. Relatives or partners who weaponize "what the family would want" are borrowing the dead to leash the living.`,
   },
   {
     id: 'veil-13',
@@ -238,16 +142,8 @@ export const DECK: OracleCard[] = [
     realm: 'ash',
     glyph: '⚔',
     keywords: ['Debt', 'Blade'],
-    upright: {
-      coming: 'A debt comes due — money, favors, loyalty, or an apology unpaid. Politeness has become delay.',
-      workOn: 'Collect or settle. Send the invoice, return the borrowed thing, or cut the fake loyalty with clear words.',
-      watchFor: 'Watch for endless war over principle after the point is paid, and for interest compounding in silence.',
-    },
-    reversed: {
-      coming: 'Debt becomes a lifestyle fight; you swing long after the ledger should close.',
-      workOn: 'Close one ledger this week. Mercenaries who never finish contracts die bitter.',
-      watchFor: 'Beware people who keep you in \'almost paid\' limbo to keep power.',
-    },
+    upright: `I am the Salt Mercenary. A debt comes due — money, favors, loyalty, or an apology unpaid. Politeness has become delay. Collect or settle: send the invoice, return the borrowed thing, or cut the fake loyalty with clear words. Interest compounds in silence; the blade prefers a clean ledger.`,
+    reversed: `Reversed, debt becomes a lifestyle fight; you swing long after the ledger should close. Close one account this week. Mercenaries who never finish contracts die bitter. Those who keep you in "almost paid" limbo are farming power from your unfinished war.`,
   },
   {
     id: 'veil-14',
@@ -257,16 +153,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '◉',
     keywords: ['Reflection', 'Judgment'],
-    upright: {
-      coming: 'Accurate seeing arrives. Feedback, a photo, a bank balance, or a friend\'s honesty shows the architect of your weather.',
-      workOn: 'Correct what the glass shows — one habit, one apology, one budget fix. Judgment here is accuracy, not damnation.',
-      watchFor: 'Watch for smashed mirrors (denial) and worshiped mirrors (vanity spirals).',
-    },
-    reversed: {
-      coming: 'You refuse all feedback or drown in self-surveillance until nothing moves.',
-      workOn: 'Take one clear glance, act, put the glass down.',
-      watchFor: 'Beware critics who want you frozen in shame rather than improved.',
-    },
+    upright: `I am the Mirror Saint. Accurate seeing arrives — feedback, a photograph, a bank balance, a friend's honesty showing the architect of your weather. Correct what the glass shows: one habit, one apology, one budget fix. Judgment here is accuracy, not damnation. The mirror does not hate you; it refuses your fiction.`,
+    reversed: `When I turn, you refuse all feedback or drown in self-surveillance until nothing moves. Take one clear glance, act, put the glass down. Critics who want you frozen in shame rather than improved are not saints — they are jailers with good lighting.`,
   },
   {
     id: 'veil-15',
@@ -276,16 +164,8 @@ export const DECK: OracleCard[] = [
     realm: 'ash',
     glyph: '〰',
     keywords: ['Diplomacy', 'Obscurity'],
-    upright: {
-      coming: 'You will negotiate in fog — family theater, office politics, or a half-true love talk. Rooms that hate each other need a courier.',
-      workOn: 'Speak enough to open doors, not enough to sell your spine. Keep one non-negotiable center.',
-      watchFor: 'Watch for vagueness that destroys trust, and for brutal clarity used as a weapon too early.',
-    },
-    reversed: {
-      coming: 'You hide until no one believes you, or you start wars with \'honesty.\'',
-      workOn: 'Master both tact and truth. One clean diplomatic sentence beats a fog machine.',
-      watchFor: 'Beware becoming smoke yourself — obscurity as personality is a slow erasure.',
-    },
+    upright: `I am the Smoke Ambassador. You will negotiate in fog — family theater, office politics, half-true love talk. Rooms that hate each other need a courier. Speak enough to open doors, not enough to sell your spine. Keep one non-negotiable center. Vagueness destroys trust; premature brutality starts wars you cannot afford.`,
+    reversed: `In shadow you hide until no one believes you, or you start wars with "honesty." Master both tact and truth. One clean diplomatic sentence beats a fog machine. Obscurity as personality is a slow erasure — do not become smoke yourself.`,
   },
   {
     id: 'veil-16',
@@ -295,16 +175,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '⎈',
     keywords: ['Birth', 'Collapse'],
-    upright: {
-      coming: 'Something must break for the next form to arrive — a structure, myth, job, or relationship scaffold. Labor through rubble begins.',
-      workOn: 'Do not romanticize the mess or numb it. Push through the ugly middle with practical midwifery: lists, rest, helpers.',
-      watchFor: 'Watch for forced premature birth and for clinging to a dying structure out of fear.',
-    },
-    reversed: {
-      coming: 'Panic vandalism dressed as transformation, or refusal to let anything collapse.',
-      workOn: 'Attend timing. Support the real child of the ruin — the viable next life.',
-      watchFor: 'Beware people who profit from keeping you in endless demolition.',
-    },
+    upright: `I am the Ruin Midwife. Something must break for the next form to arrive — structure, myth, job, or relationship scaffold. Labor through rubble begins. Do not romanticize the mess or numb it. Push through the ugly middle with practical midwifery: lists, rest, helpers. Premature birth and clinging to dying scaffolds both kill the child of change.`,
+    reversed: `Reversed, panic vandalism dresses as transformation, or you refuse any collapse. Attend timing. Support the real child of the ruin — the viable next life. Those who profit from keeping you in endless demolition will cheer every crash and never hand you a towel.`,
   },
   {
     id: 'veil-17',
@@ -314,16 +186,8 @@ export const DECK: OracleCard[] = [
     realm: 'ember',
     glyph: '✎',
     keywords: ['Record', 'Permanence'],
-    upright: {
-      coming: 'What gets written now sticks — contracts, texts, vows, evidence, medical notes. Soft memory will try to renegotiate later.',
-      workOn: 'Document the boundary, the intention, the money terms. Carve one permanent line future-you cannot blur.',
-      watchFor: 'Watch for over-archiving that replaces living, and for slipperiness that refuses any ink.',
-    },
-    reversed: {
-      coming: 'You write nothing so you can stay slippery, or you bury life under files.',
-      workOn: 'Ink one binding sentence and live by it.',
-      watchFor: 'Beware partners who hate paper because paper ends their escape hatch.',
-    },
+    upright: `I am the Obsidian Scribe. What gets written now sticks — contracts, texts, vows, evidence, medical notes. Soft memory will try to renegotiate later. Document the boundary, the intention, the money terms. Carve one permanent line future-you cannot blur. Ink is a spell against gaslight and amnesia.`,
+    reversed: `In shadow you write nothing so you can stay slippery, or you bury life under files. Ink one binding sentence and live by it. Partners who hate paper because paper ends their escape hatch are telling you exactly who they are.`,
   },
   {
     id: 'veil-18',
@@ -333,16 +197,8 @@ export const DECK: OracleCard[] = [
     realm: 'blood',
     glyph: '🔥',
     keywords: ['Vision', 'Illness'],
-    upright: {
-      coming: 'A vision presses through — creative, spiritual, or strategic — with a body cost: sleep, appetite, nerves. Heat rises.',
-      workOn: 'Receive the idea, then ground it: water, food, a draft, a walk. Cool hands before you preach or quit your job.',
-      watchFor: 'Watch for mania sold as prophecy, and for people inflaming your fever for their agenda.',
-    },
-    reversed: {
-      coming: 'Vision cooks judgment; illness or burnout follows unmanaged heat.',
-      workOn: 'Translate revelation into one small next step, then rest.',
-      watchFor: 'Beware ignoring body alarms while chasing cosmic urgency.',
-    },
+    upright: `I am the Fever Prophet. A vision presses through — creative, spiritual, or strategic — with a body cost: sleep, appetite, nerves. Heat rises. Receive the idea, then ground it: water, food, a draft, a walk. Cool your hands before you preach or quit your job. Mania sold as prophecy is still fever; prophecy that ignores the body becomes ash.`,
+    reversed: `When I invert, vision cooks judgment; burnout follows unmanaged heat. Translate revelation into one small next step, then rest. Ignoring body alarms while chasing cosmic urgency is how oracles become patients. Tend the vessel that carries the flame.`,
   },
   {
     id: 'veil-19',
@@ -352,16 +208,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '⛓',
     keywords: ['Binding', 'Transmutation'],
-    upright: {
-      coming: 'A restriction — habit, contract, trauma pattern, debt — can be remade into useful structure. Alchemy window opens.',
-      workOn: 'Study the chain. Change one link: renegotiate terms, replace a habit, turn compulsion into craft schedule.',
-      watchFor: 'Watch for pretending you are free when you are only loose, and for staying bonded to romanticized pain.',
-    },
-    reversed: {
-      coming: 'You rattle chains for drama or melt everything and lose necessary structure.',
-      workOn: 'Transmute, don\'t fantasize. Freedom is forged.',
-      watchFor: 'Beware gurus who sell liberation while selling new bondage.',
-    },
+    upright: `I am the Chain Alchemist. A restriction — habit, contract, trauma pattern, debt — can be remade into useful structure. Study the chain. Change one link: renegotiate terms, replace a habit, turn compulsion into craft schedule. Pretending you are free when you are only loose is a prettier prison. Freedom is forged, not wished.`,
+    reversed: `Reversed, you rattle chains for drama or melt everything and lose necessary structure. Transmute, don't fantasize. Gurus who sell liberation while selling new bondage love the sound of your rattling; they do not love your freedom.`,
   },
   {
     id: 'veil-20',
@@ -371,16 +219,8 @@ export const DECK: OracleCard[] = [
     realm: 'ash',
     glyph: '⌛',
     keywords: ['Rule', 'Decay'],
-    upright: {
-      coming: 'A late season arrives — job winding down, identity myth aging, habit dynasty crumbling. Autumn speaks.',
-      workOn: 'Rule the decay with dignity. Harvest wisdom, money, and relationships from what is ending; plan the exit.',
-      watchFor: 'Watch for fake spring talk and for people who need you to pretend nothing is dying.',
-    },
-    reversed: {
-      coming: 'You deny autumn and waste the harvest, or you collapse into dust without governing the ending.',
-      workOn: 'Make an ending plan: dates, savings, goodbyes.',
-      watchFor: 'Beware successors who loot while you are still pretending it is summer.',
-    },
+    upright: `I am the Dust Sovereign. A late season arrives — job winding down, identity myth aging, habit dynasty crumbling. Autumn speaks. Rule the decay with dignity. Harvest wisdom, money, and relationships from what is ending; plan the exit. Fake spring talk from those who need you pretending nothing dies is a theft of your harvest.`,
+    reversed: `In shadow you deny autumn and waste the harvest, or collapse into dust without governing the ending. Make an ending plan: dates, savings, goodbyes. Successors who loot while you still pretend it is summer are already counting your furniture.`,
   },
   {
     id: 'veil-21',
@@ -390,16 +230,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '🔔',
     keywords: ['Call', 'Ending'],
-    upright: {
-      coming: 'An ending needs ceremony — not doomscrolling erasure. A goodbye wants witnesses and sound.',
-      workOn: 'Mark it: a gathering, a letter, a walk, a donation. Let the body feel the vibration so the psyche stops ghosting goodbye.',
-      watchFor: 'Watch for quiet erasure that leaves hauntings, and for endless funeral theater.',
-    },
-    reversed: {
-      coming: 'You skip the bell and carry unfinished endings into new rooms.',
-      workOn: 'Ring it once, cleanly, with the people who matter.',
-      watchFor: 'Beware audiences who keep you mourning as entertainment.',
-    },
+    upright: `I am the Mourning Bell. An ending needs ceremony — not doomscrolling erasure. A goodbye wants witnesses and sound. Mark it: a gathering, a letter, a walk, a donation. Let the body feel the vibration so the psyche stops ghosting goodbye. Quiet erasure leaves hauntings; endless funeral theater leaves nothing but performance.`,
+    reversed: `When I turn, you skip the bell and carry unfinished endings into new rooms. Ring it once, cleanly, with the people who matter. Audiences who keep you mourning as entertainment will never let the last note fade if your grief feeds them.`,
   },
   {
     id: 'veil-22',
@@ -409,16 +241,8 @@ export const DECK: OracleCard[] = [
     realm: 'blood',
     glyph: '🗂',
     keywords: ['Memory', 'Bite'],
-    upright: {
-      coming: 'A memory with teeth returns — old betrayal, old triumph, a file that still bites. History is not done with you.',
-      workOn: 'Retrieve the precise file, not the whole haunted attic. Let it bite once into clarity, then shelve under mastery.',
-      watchFor: 'Watch for victimhood loops and for people who reopen wounds to control you.',
-    },
-    reversed: {
-      coming: 'You drown in the attic or pretend the fangs were never real.',
-      workOn: 'One precise memory, one lesson, one boundary update.',
-      watchFor: 'Beware nostalgia that still has venom.',
-    },
+    upright: `I am the Fang Archivist. A memory with teeth returns — old betrayal, old triumph, a file that still bites. History is not done with you. Retrieve the precise file, not the whole haunted attic. Let it bite once into clarity, then shelve under mastery. Victimhood loops and people who reopen wounds to control you are not archivists — they are looters.`,
+    reversed: `Reversed, you drown in the attic or pretend the fangs were never real. One precise memory, one lesson, one boundary update. Nostalgia that still has venom is not nostalgia; it is unfinished combat wearing perfume.`,
   },
   {
     id: 'veil-23',
@@ -428,16 +252,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '⚰',
     keywords: ['Consequence', 'Justice'],
-    upright: {
-      coming: 'Cause finds effect. A consequence — yours or another\'s — arrives with little room for soft mercy without structure.',
-      workOn: 'Face accountability. Pay, apologize, leave, or hold the line. Justice that flinches becomes theater.',
-      watchFor: 'Watch for cruelty dressed as justice, and for mercy that only breeds more harm.',
-    },
-    reversed: {
-      coming: 'You dodge the scaffold or hang the wrong person for your relief.',
-      workOn: 'Match consequence to the real cause. One clean account-settling.',
-      watchFor: 'Beware mobs and partners who demand blood over repair.',
-    },
+    upright: `I am the Cobalt Hangman. Cause finds effect. A consequence — yours or another's — arrives with little room for soft mercy without structure. Face accountability. Pay, apologize, leave, or hold the line. Justice that flinches becomes theater; cruelty dressed as justice becomes another crime. Match the weight to the true cause.`,
+    reversed: `In shadow you dodge the scaffold or hang the wrong person for your relief. Match consequence to the real cause — one clean account-settling. Mobs and partners who demand blood over repair will never be satisfied; they feed on spectacle, not balance.`,
   },
   {
     id: 'veil-24',
@@ -447,16 +263,8 @@ export const DECK: OracleCard[] = [
     realm: 'ember',
     glyph: '🕯',
     keywords: ['Guide', 'Treachery'],
-    upright: {
-      coming: 'Trust is under audit. A guide, mentor, lover, or inner voice has mixed light with bait.',
-      workOn: 'Keep walking, but verify every glow. Ask for proof, receipts, second opinions.',
-      watchFor: 'Watch for cynicism that strands you, and for blind loyalty that walks you off a cliff.',
-    },
-    reversed: {
-      coming: 'You smash every lantern or follow the brightest liar.',
-      workOn: 'Discernment: test light, keep your own matches.',
-      watchFor: 'Beware charm that needs your doubt silenced.',
-    },
+    upright: `I am the Lantern Betrayer. Trust is under audit. A guide, mentor, lover, or inner voice has mixed light with bait. Keep walking, but verify every glow — proof, receipts, second opinions. Cynicism that strands you is a different trap; blind loyalty that walks you off a cliff is the older one. Carry your own matches.`,
+    reversed: `When I invert, you smash every lantern or follow the brightest liar. Practice discernment: test light, keep your own matches. Charm that needs your doubt silenced is already confessing. Do not outsource your night vision.`,
   },
   {
     id: 'veil-25',
@@ -466,16 +274,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '🗿',
     keywords: ['Appetite', 'Stone'],
-    upright: {
-      coming: 'Cold desire intensifies — status, body, art, revenge, belonging — and will not be shamed away.',
-      workOn: 'Name the appetite. Feed it cleanly with a plan, or starve it on purpose. No accidental feeding.',
-      watchFor: 'Watch for marble hunger ignored until it crushes rooms, and for shame that only drives it underground.',
-    },
-    reversed: {
-      coming: 'Appetite becomes statue: frozen craving that rules without speech.',
-      workOn: 'Choose feed or starve with adulthood. One honest regimen.',
-      watchFor: 'Beware people who bait your hunger then punish you for having it.',
-    },
+    upright: `I am the Marble Hunger. Cold desire intensifies — status, body, art, revenge, belonging — and will not be shamed away. Name the appetite. Feed it cleanly with a plan, or starve it on purpose. No accidental feeding. Hunger ignored until it crushes rooms, or shame that drives it underground, both become statues that rule without speech.`,
+    reversed: `Reversed, appetite becomes statue: frozen craving that rules without speech. Choose feed or starve with adulthood — one honest regimen. People who bait your hunger then punish you for having it are sculptors of your shame, not your allies.`,
   },
   {
     id: 'veil-26',
@@ -485,16 +285,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '🌿',
     keywords: ['Cultivate', 'Haunt'],
-    upright: {
-      coming: 'Past soil can become compost. Haunted ground wants deliberate planting — therapy, craft, a new habit in the scary place.',
-      workOn: 'Plant one living thing in haunted soil. Water it. Pull vines that feed on unfinished stories.',
-      watchFor: 'Watch for ghost farming — replaying haunt without agriculture — and for planting nothing.',
-    },
-    reversed: {
-      coming: 'You either dig endlessly in graves or pave over everything and call it healed.',
-      workOn: 'Haunting as agriculture: one living project in the old wound.',
-      watchFor: 'Beware companions who need your ghosts more than your growth.',
-    },
+    upright: `I am the Wraith Gardener. Past soil can become compost. Haunted ground wants deliberate planting — therapy, craft, a new habit in the scary place. Plant one living thing in haunted soil. Water it. Pull vines that feed on unfinished stories. Ghost farming — replaying haunt without agriculture — is how ruins stay ruins.`,
+    reversed: `In shadow you dig endlessly in graves or pave over everything and call it healed. Treat haunting as agriculture: one living project in the old wound. Companions who need your ghosts more than your growth will weed every seedling you plant.`,
   },
   {
     id: 'veil-27',
@@ -504,16 +296,8 @@ export const DECK: OracleCard[] = [
     realm: 'ember',
     glyph: '🟡',
     keywords: ['Question', 'Preserve'],
-    upright: {
-      coming: 'A situation you have been fossilizing as \'just how it is\' comes up for hard questions. Amber cracks.',
-      workOn: 'Interrogate before you preserve. Ask until the pretty permanence fails — then choose live change.',
-      watchFor: 'Watch for questions used as stalling, and for preserving fear as tradition.',
-    },
-    reversed: {
-      coming: 'You trap yourself in gold resin of excuses, or you question forever and never decide.',
-      workOn: 'One hard question, one living answer, one action.',
-      watchFor: 'Beware people who call interrogation disloyal when it threatens their comfort.',
-    },
+    upright: `I am the Amber Inquisitor. A situation you have been fossilizing as "just how it is" comes up for hard questions. Amber cracks. Interrogate before you preserve. Ask until the pretty permanence fails — then choose live change. Questions used as stalling and fear preserved as tradition are twin prisons of gold resin.`,
+    reversed: `When I turn, you trap yourself in golden excuses, or you question forever and never decide. One hard question, one living answer, one action. People who call interrogation disloyal when it threatens their comfort are confessing their investment in your fossilization.`,
   },
   {
     id: 'veil-28',
@@ -523,16 +307,8 @@ export const DECK: OracleCard[] = [
     realm: 'blood',
     glyph: '📒',
     keywords: ['Account', 'Blood-debt'],
-    upright: {
-      coming: 'Balance is due. Kindness, betrayal, and borrowed favors show in iron-red ink. Who you bleed for becomes obvious.',
-      workOn: 'Close accounts that keep you anemic. Open only mutual-cost bonds. Send the hard money or emotional invoice.',
-      watchFor: 'Watch for ledgers others keep on you in secret, and for bleeding as hobby.',
-    },
-    reversed: {
-      coming: 'You ignore the books until crisis, or you collect endlessly without grace.',
-      workOn: 'Balance one scarlet line this week.',
-      watchFor: 'Beware caretakers who call your boundaries selfish while draining you.',
-    },
+    upright: `I am the Scarlet Ledger. Balance is due. Kindness, betrayal, and borrowed favors show in iron-red ink. Who you bleed for becomes obvious. Close accounts that keep you anemic. Open only mutual-cost bonds. Send the hard money or emotional invoice. Ledgers others keep on you in secret are still debts — and bleeding as hobby is not love.`,
+    reversed: `Reversed, you ignore the books until crisis, or you collect endlessly without grace. Balance one scarlet line this week. Caretakers who call your boundaries selfish while draining you are accountants of your depletion, not your heart.`,
   },
   {
     id: 'veil-29',
@@ -542,16 +318,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '❄',
     keywords: ['Discipline', 'Authority'],
-    upright: {
-      coming: 'A cold rite is required: discipline, training, tradition, or a hard initiation into competence. Warmth has been used to seduce you off standards.',
-      workOn: 'Submit to the structure that forges you — schedule, mentor, curriculum — not the one that flatters you.',
-      watchFor: 'Watch for cruelty sold as discipline, and for comfort cults that melt your spine.',
-    },
-    reversed: {
-      coming: 'You freeze into rigid dogma or refuse all structure and stay soft forever.',
-      workOn: 'Choose one cold practice and keep it for thirty days.',
-      watchFor: 'Beware teachers who need students weak.',
-    },
+    upright: `I am the Frost Hierophant. A cold rite is required: discipline, training, tradition, or a hard initiation into competence. Warmth has been used to seduce you off standards. Submit to the structure that forges you — schedule, mentor, curriculum — not the one that flatters you. Cruelty sold as discipline is a different cold; comfort cults that melt your spine are a different heat.`,
+    reversed: `In shadow you freeze into rigid dogma or refuse all structure and stay soft forever. Choose one cold practice and keep it for thirty days. Teachers who need students weak will praise your obedience and never hand you the forge.`,
   },
   {
     id: 'veil-30',
@@ -561,16 +329,8 @@ export const DECK: OracleCard[] = [
     realm: 'ash',
     glyph: '🕊',
     keywords: ['Peace', 'Execution'],
-    upright: {
-      coming: 'Reconciliation is possible only after a false peace dies. A sharp ending precedes real olive branch.',
-      workOn: 'Kill the performance of harmony. Then offer real peace with clean hands — or leave cleanly.',
-      watchFor: 'Watch for soft peace built on lies; it is delayed violence.',
-    },
-    reversed: {
-      coming: 'You execute the wrong thing, or you clutch fake harmony until explosion.',
-      workOn: 'End the act. Offer one honest peace term.',
-      watchFor: 'Beware peacemakers who need the war quiet but unresolved.',
-    },
+    upright: `I am the Gallows Dove. Reconciliation is possible only after a false peace dies. A sharp ending precedes a real olive branch. Kill the performance of harmony. Then offer real peace with clean hands — or leave cleanly. Soft peace built on lies is delayed violence wearing white feathers.`,
+    reversed: `When I invert, you execute the wrong thing, or you clutch fake harmony until explosion. End the act. Offer one honest peace term. Peacemakers who need the war quiet but unresolved will always prefer your silence to the truth that would free you.`,
   },
   {
     id: 'veil-31',
@@ -580,16 +340,8 @@ export const DECK: OracleCard[] = [
     realm: 'ash',
     glyph: '⬛',
     keywords: ['Bargain', 'Blackness'],
-    upright: {
-      coming: 'A bargain waits in the dark — with a person, a system, or your shadow. Costumes will not save you.',
-      workOn: 'Enter deliberately. Name terms. Refuse deals that require you to disappear.',
-      watchFor: 'Watch for blind pacts and for fleeing every bargain until you starve.',
-    },
-    reversed: {
-      coming: 'You sign invisible contracts or reject all negotiation out of fear.',
-      workOn: 'Learn to see in the dark without becoming it. One clear term sheet.',
-      watchFor: 'Beware louder darkness that eats hesitant ambassadors.',
-    },
+    upright: `I am the Pitch Ambassador. A bargain waits in the dark — with a person, a system, or your shadow. Costumes will not save you. Enter deliberately. Name terms. Refuse deals that require you to disappear. Blind pacts and fleeing every bargain until you starve are twin forms of surrender to blackness without agency.`,
+    reversed: `Reversed, you sign invisible contracts or reject all negotiation out of fear. Learn to see in the dark without becoming it — one clear term sheet. Louder darkness eats hesitant ambassadors; bring a light you control.`,
   },
   {
     id: 'veil-32',
@@ -599,16 +351,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '⚔',
     keywords: ['Mercy', 'Cut'],
-    upright: {
-      coming: 'Something must die cleanly: a habit, a hope, a role, a cruelty you keep feeding. Prolonged bleed helps no one.',
-      workOn: 'Make the sharp cut without spectacle. Mercy is precision here.',
-      watchFor: 'Watch for dramatic slow deaths and for executing the wrong target.',
-    },
-    reversed: {
-      coming: 'You nick endlessly or swing wildly.',
-      workOn: 'One clean ending. No audience required.',
-      watchFor: 'Beware people who need your suffering prolonged.',
-    },
+    upright: `I am the Ivory Executioner. Something must die cleanly: a habit, a hope, a role, a cruelty you keep feeding. Prolonged bleed helps no one. Make the sharp cut without spectacle. Mercy is precision here. Dramatic slow deaths and executing the wrong target both desecrate the blade.`,
+    reversed: `In shadow you nick endlessly or swing wildly. One clean ending. No audience required. People who need your suffering prolonged will always ask for one more scene before the credits.`,
   },
   {
     id: 'veil-33',
@@ -618,16 +362,8 @@ export const DECK: OracleCard[] = [
     realm: 'blood',
     glyph: '♛',
     keywords: ['Entanglement', 'Rule'],
-    upright: {
-      coming: 'Thorns tighten around ankles — relationships, obligations, stories sold as fate. The knot wants a ruler.',
-      workOn: 'Cut corridors. Crown what deserves loyalty. Burn what only feeds on your blood.',
-      watchFor: 'Watch for entanglement marketed as love, and for cutting everyone including the loyal.',
-    },
-    reversed: {
-      coming: 'You rule nothing and bleed everywhere, or you slash the garden bare.',
-      workOn: 'One corridor cut, one loyalty crowned.',
-      watchFor: 'Beware queens and kings who need you tangled to stay powerful.',
-    },
+    upright: `I am the Bramble Queen. Thorns tighten around ankles — relationships, obligations, stories sold as fate. The knot wants a ruler. Cut corridors. Crown what deserves loyalty. Burn what only feeds on your blood. Entanglement marketed as love is a garden of hooks; cutting everyone including the loyal is a different tyranny.`,
+    reversed: `When I turn, you rule nothing and bleed everywhere, or you slash the garden bare. One corridor cut, one loyalty crowned. Queens and kings who need you tangled to stay powerful will call every pruning a betrayal.`,
   },
   {
     id: 'veil-34',
@@ -637,16 +373,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '⚰',
     keywords: ['Rest', 'Trade'],
-    upright: {
-      coming: 'You have been trading peace for status, caretaking, or unfinished wars. Rest wants a price tag.',
-      workOn: 'Buy back sleep, silence, and unavailability. Schedule rest like a non-negotiable purchase.',
-      watchFor: 'Watch for martyr deals and for rest that is only collapse.',
-    },
-    reversed: {
-      coming: 'You sell every hour or you coffin yourself away from life entirely.',
-      workOn: 'Price your rest correctly this week — one protected block.',
-      watchFor: 'Beware employers and family who call your rest selfish.',
-    },
+    upright: `I am the Coffin Merchant. You have been trading peace for status, caretaking, or unfinished wars. Rest wants a price tag. Buy back sleep, silence, and unavailability. Schedule rest like a non-negotiable purchase. Martyr deals and rest that is only collapse are both bad trades at my counter.`,
+    reversed: `Reversed, you sell every hour or coffin yourself away from life entirely. Price your rest correctly this week — one protected block. Employers and family who call your rest selfish are shopping with your lifespan.`,
   },
   {
     id: 'veil-35',
@@ -656,16 +384,8 @@ export const DECK: OracleCard[] = [
     realm: 'ember',
     glyph: '🌑',
     keywords: ['Innocence', 'Omen'],
-    upright: {
-      coming: 'A shadowed new beginning arrives — tender, strange, disruptive to adult plans. Something nascent wants protection.',
-      workOn: 'Protect what is new without infantilizing it. Do not force the light early; let the eclipse teach.',
-      watchFor: 'Watch for cynics who crush beginnings, and for forcing premature exposure.',
-    },
-    reversed: {
-      coming: 'You abandon the nascent thing or smother it with adult panic.',
-      workOn: 'One gentle protection plan for the new work, love, or healing.',
-      watchFor: 'Beware omens used to scare you out of starting.',
-    },
+    upright: `I am the Eclipse Child. A shadowed new beginning arrives — tender, strange, disruptive to adult plans. Something nascent wants protection. Protect what is new without infantilizing it. Do not force the light early; let the eclipse teach. Cynics who crush beginnings and panic that forces premature exposure both kill what wants to grow in the dark.`,
+    reversed: `In shadow you abandon the nascent thing or smother it with adult panic. One gentle protection plan for the new work, love, or healing. Omens used to scare you out of starting are often just someone else's fear wearing a prophecy costume.`,
   },
   {
     id: 'veil-36',
@@ -675,16 +395,8 @@ export const DECK: OracleCard[] = [
     realm: 'ash',
     glyph: '✝',
     keywords: ['Faith', 'Corrosion'],
-    upright: {
-      coming: 'Weathered faith wants renewal — ethics, craft, spirituality oxidized but still standing. Less glitter, more iron honesty.',
-      workOn: 'Believe again in the vow that survived corrosion. Rewrite a mature creed you can keep.',
-      watchFor: 'Watch for shiny doctrine that denies weather, and for giving up because rust showed.',
-    },
-    reversed: {
-      coming: 'You polish a dead faith or abandon all vows as fraud.',
-      workOn: 'Keep the office: one weathered practice, honestly named.',
-      watchFor: 'Beware priests of glitter who shame your oxide.',
-    },
+    upright: `I am the Rust Cardinal. Weathered faith wants renewal — ethics, craft, spirituality oxidized but still standing. Less glitter, more iron honesty. Believe again in the vow that survived corrosion. Rewrite a mature creed you can keep. Shiny doctrine that denies weather, and giving up because rust showed, are twin apostasies.`,
+    reversed: `When I invert, you polish a dead faith or abandon all vows as fraud. Keep the office: one weathered practice, honestly named. Priests of glitter who shame your oxide have never survived a real season.`,
   },
   {
     id: 'veil-37',
@@ -694,16 +406,8 @@ export const DECK: OracleCard[] = [
     realm: 'ember',
     glyph: '🔨',
     keywords: ['Forge', 'Secrets'],
-    upright: {
-      coming: 'Private muttering is ready to become a tool — idea, confession, strategy heated to usable form.',
-      workOn: 'Bring it to the anvil. Draft, tell, build while the hush still holds charge.',
-      watchFor: 'Watch for secrets that become carbon monoxide, and for forging too loud too soon.',
-    },
-    reversed: {
-      coming: 'You hoard until poison, or dump molten metal on the wrong people.',
-      workOn: 'Forge one secret into one tool this week.',
-      watchFor: 'Beware confidants who sell your sparks.',
-    },
+    upright: `I am the Whisper Foundry. Private muttering is ready to become a tool — idea, confession, strategy heated to usable form. Bring it to the anvil. Draft, tell, build while the hush still holds charge. Secrets that become carbon monoxide and forging too loud too soon both waste the spark. Shape the iron while it is yours.`,
+    reversed: `Reversed, you hoard until poison, or dump molten metal on the wrong people. Forge one secret into one tool this week. Confidants who sell your sparks will smile while they bank the heat you thought was sacred.`,
   },
   {
     id: 'veil-38',
@@ -713,16 +417,8 @@ export const DECK: OracleCard[] = [
     realm: 'blood',
     glyph: '🕯',
     keywords: ['Care', 'Poison'],
-    upright: {
-      coming: 'A wound needs honest care — medicine, boundary, rest, confrontation. Soft care has failed.',
-      workOn: 'Tend with thorns when needed: the hard conversation, the appointment, the dose, the no.',
-      watchFor: 'Watch for poisons sold as medicine and medicine refused as \'too harsh.\'',
-    },
-    reversed: {
-      coming: 'You over-dose others (or yourself) or neglect until rot.',
-      workOn: 'Know dose from murder. One correct care action.',
-      watchFor: 'Beware caretakers who need you sick.',
-    },
+    upright: `I am the Blackthorn Nurse. A wound needs honest care — medicine, boundary, rest, confrontation. Soft care has failed. Tend with thorns when needed: the hard conversation, the appointment, the dose, the no. Poisons sold as medicine and medicine refused as "too harsh" both leave the patient unfinished.`,
+    reversed: `In shadow you over-dose others (or yourself) or neglect until rot. Know dose from murder. One correct care action. Caretakers who need you sick will always invent a new symptom when you begin to heal.`,
   },
   {
     id: 'veil-39',
@@ -732,16 +428,8 @@ export const DECK: OracleCard[] = [
     realm: 'ember',
     glyph: '📚',
     keywords: ['Study', 'Burning'],
-    upright: {
-      coming: 'You learn by what survives fire — burnout patterns, rage, illumination. An ordeal-exam approaches.',
-      workOn: 'Study the burn. Take the flame\'s exam; graduate with fewer illusions.',
-      watchFor: 'Watch for tourism knowledge without ordeal, and for burning everything including the library.',
-    },
-    reversed: {
-      coming: 'You collect theories and avoid heat, or you incinerate without learning.',
-      workOn: 'One lesson from the last fire, applied once.',
-      watchFor: 'Beware teachers who only sell smoke.',
-    },
+    upright: `I am the Pyre Scholar. You learn by what survives fire — burnout patterns, rage, illumination. An ordeal-exam approaches. Study the burn. Take the flame's exam; graduate with fewer illusions. Tourism knowledge without ordeal, and burning everything including the library, both leave you uneducated in the only curriculum that matters.`,
+    reversed: `When I turn, you collect theories and avoid heat, or you incinerate without learning. One lesson from the last fire, applied once. Teachers who only sell smoke will keep you buying books while the house burns.`,
   },
   {
     id: 'veil-40',
@@ -751,16 +439,8 @@ export const DECK: OracleCard[] = [
     realm: 'bone',
     glyph: '🕯',
     keywords: ['Negotiation', 'Dead'],
-    upright: {
-      coming: 'Buried matter wants a table — family secrets, institutional corpses, dead ambitions. History ambushes if ignored.',
-      workOn: 'Sit underground. Make terms with the past so it stops ambushing the living.',
-      watchFor: 'Watch for digging that never ends, and for sealing crypts that still leak.',
-    },
-    reversed: {
-      coming: 'You either live in the crypt or pretend the dead never existed.',
-      workOn: 'One treaty with history: a talk, a will, a boundary with the family story.',
-      watchFor: 'Beware dynasties that need the dead weaponized.',
-    },
+    upright: `I am the Crypt Diplomat. Buried matter wants a table — family secrets, institutional corpses, dead ambitions. History ambushes if ignored. Sit underground. Make terms with the past so it stops ambushing the living. Endless digging and sealing crypts that still leak are both failed treaties with the dead.`,
+    reversed: `Reversed, you either live in the crypt or pretend the dead never existed. One treaty with history: a talk, a will, a boundary with the family story. Dynasties that need the dead weaponized will never let you leave the funeral.`,
   },
   {
     id: 'veil-41',
@@ -770,16 +450,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '🧭',
     keywords: ['Direction', 'Loss'],
-    upright: {
-      coming: 'Old north is gone. Orientation must rebuild from scar and stars. Direction loss peaks.',
-      workOn: 'Admit the loss without despair theater. Choose a provisional north and walk; recalibrate by results.',
-      watchFor: 'Watch for vibes-only navigation and for clinging to the broken gadget.',
-    },
-    reversed: {
-      coming: 'You perform lostness forever or fake certainty.',
-      workOn: 'Pick provisional north for thirty days.',
-      watchFor: 'Beware guides selling magic compasses that fail the same way.',
-    },
+    upright: `I am the Severed Compass. Old north is gone. Orientation must rebuild from scar and stars. Admit the loss without despair theater. Choose a provisional north and walk; recalibrate by results. Vibes-only navigation and clinging to the broken gadget both leave you circling. Direction is rebuilt by steps, not by wishing the needle whole.`,
+    reversed: `In shadow you perform lostness forever or fake certainty. Pick provisional north for thirty days. Guides selling magic compasses that fail the same way are merchants of your disorientation.`,
   },
   {
     id: 'veil-42',
@@ -789,16 +461,8 @@ export const DECK: OracleCard[] = [
     realm: 'ash',
     glyph: '🪞',
     keywords: ['Duality', 'Mirror-self'],
-    upright: {
-      coming: 'The you that stayed in the fire wants a meeting — ruthless, tired, clear-eyed double. Integration knocks.',
-      workOn: 'Meet the twin. Claim range: soft and hard, day and ash. Speak until one honest voice emerges.',
-      watchFor: 'Watch for sabotage from the denied twin, and for letting only the ash-self drive.',
-    },
-    reversed: {
-      coming: 'Duality denied becomes underground war; duality unbalanced becomes chaos.',
-      workOn: 'One conversation with the shadow twin — journal or trusted witness — then one integrated act.',
-      watchFor: 'Beware people who only love one of your faces.',
-    },
+    upright: `I am the Ashen Twin. The you that stayed in the fire wants a meeting — ruthless, tired, clear-eyed double. Integration knocks. Meet the twin. Claim range: soft and hard, day and ash. Speak until one honest voice emerges. Sabotage from the denied twin, and letting only the ash-self drive, both split the kingdom.`,
+    reversed: `When I invert, duality denied becomes underground war; duality unbalanced becomes chaos. One conversation with the shadow twin — journal or trusted witness — then one integrated act. People who only love one of your faces will punish the other until you disappear.`,
   },
   {
     id: 'veil-43',
@@ -808,16 +472,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '🚪',
     keywords: ['Passage', 'Finality'],
-    upright: {
-      coming: 'A decision reaches finality — leave, stay, sign, end, begin. No elegant rewind beyond this door.',
-      workOn: 'Put your hand on the wood. Open or seal with full adulthood. Remake the map behind you deliberately.',
-      watchFor: 'Watch for endless hovering at the threshold, and for slamming doors in panic.',
-    },
-    reversed: {
-      coming: 'You treat every door as last (exhaustion) or never last (commitment phobia).',
-      workOn: 'One final-feeling decision, owned.',
-      watchFor: 'Beware advisors who need you undecided.',
-    },
+    upright: `I am the Last Door. A decision reaches finality — leave, stay, sign, end, begin. No elegant rewind beyond this threshold. Put your hand on the wood. Open or seal with full adulthood. Remake the map behind you deliberately. Endless hovering and slamming doors in panic both waste the only passage that matters now.`,
+    reversed: `Reversed, you treat every door as last (exhaustion) or never last (commitment phobia). One final-feeling decision, owned. Advisors who need you undecided will always invent another hallway.`,
   },
   {
     id: 'veil-44',
@@ -827,16 +483,8 @@ export const DECK: OracleCard[] = [
     realm: 'veil',
     glyph: '👁',
     keywords: ['Observation', 'Fate'],
-    upright: {
-      coming: 'You are being seen — by consequence, by a sober part of you, by the ledger that does not take bribes. Integrity is on stage.',
-      workOn: 'Act as if the ledger is open. Choose the behavior you can stand under a cold clear eye.',
-      watchFor: 'Watch for performing for imaginary judges, and for acting foul because you think no one watches.',
-    },
-    reversed: {
-      coming: 'You freeze for applause that never comes, or you go feral in imagined privacy.',
-      workOn: 'Behave for the witness that outlives excuses — one integrity move today.',
-      watchFor: 'Beware crowds that bribe you off your own standards.',
-    },
+    upright: `I am the Unnamed Witness. You are being seen — by consequence, by a sober part of you, by the ledger that does not take bribes. Integrity is on stage. Act as if the ledger is open. Choose the behavior you can stand under a cold clear eye. Performing for imaginary judges, and acting foul because you think no one watches, both fail the same examination.`,
+    reversed: `In shadow you freeze for applause that never comes, or you go feral in imagined privacy. Behave for the witness that outlives excuses — one integrity move today. Crowds that bribe you off your own standards are not fate; they are noise pretending to be judgment.`,
   },
 ];
 

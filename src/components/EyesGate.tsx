@@ -4,6 +4,10 @@ interface Props {
   onComplete: () => void;
 }
 
+/**
+ * Black-screen stare gate: center orb red → green.
+ * At ~5s a barely-visible shadowed face fades in behind the orb (creepy, subtle).
+ */
 export function EyesGate({ onComplete }: Props) {
   const [showFace, setShowFace] = useState(false);
   const [green, setGreen] = useState(false);
@@ -11,7 +15,7 @@ export function EyesGate({ onComplete }: Props) {
   useEffect(() => {
     const faceT = window.setTimeout(() => setShowFace(true), 5000);
     const greenT = window.setTimeout(() => setGreen(true), 10000);
-    const doneT = window.setTimeout(() => onComplete(), 11000);
+    const doneT = window.setTimeout(() => onComplete(), 11200);
     return () => {
       clearTimeout(faceT);
       clearTimeout(greenT);
@@ -22,27 +26,22 @@ export function EyesGate({ onComplete }: Props) {
   return (
     <div className="stage eyes-stage">
       <div className={`shadow-face ${showFace ? 'visible' : ''}`} aria-hidden>
-        <svg className="face-svg" viewBox="0 0 200 240" fill="none">
-          <ellipse cx="100" cy="120" rx="70" ry="90" fill="#0a0a0a" stroke="#1a1a1a" strokeWidth="2" />
-          {/* left eye */}
-          <g className="eye-ball">
-            <ellipse cx="72" cy="105" rx="14" ry="8" fill="#111" stroke="#2a2a2a" strokeWidth="1" />
-            <circle cx="72" cy="105" r="4.5" fill="#1a0508" />
-            <circle cx="73" cy="104" r="1.5" fill="#3a1018" />
-          </g>
-          {/* right eye */}
-          <g className="eye-ball right">
-            <ellipse cx="128" cy="105" rx="14" ry="8" fill="#111" stroke="#2a2a2a" strokeWidth="1" />
-            <circle cx="128" cy="105" r="4.5" fill="#1a0508" />
-            <circle cx="129" cy="104" r="1.5" fill="#3a1018" />
-          </g>
-          <path
-            d="M85 145 Q100 155 115 145"
-            stroke="#1a1a1a"
-            strokeWidth="1.5"
-            fill="none"
-          />
-        </svg>
+        {/* Soft photoreal-ish silhouette — not a cartoon face */}
+        <div className="shadow-face-inner">
+          <div className="sf-skull" />
+          <div className="sf-eye sf-eye-l">
+            <span className="sf-iris" />
+            <span className="sf-glint" />
+          </div>
+          <div className="sf-eye sf-eye-r">
+            <span className="sf-iris" />
+            <span className="sf-glint" />
+          </div>
+          <div className="sf-brow sf-brow-l" />
+          <div className="sf-brow sf-brow-r" />
+          <div className="sf-nose" />
+          <div className="sf-mouth" />
+        </div>
       </div>
       <div className={`eyes-orb ${green ? 'green' : 'red'}`} />
       <p className="eyes-copy">

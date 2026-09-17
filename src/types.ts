@@ -17,12 +17,11 @@ export type DeckId = 'veil' | 'shadow' | 'gilded' | 'abyss';
 /** Realm flavor for original oracle messengers (not tarot suits). */
 export type Realm = 'ash' | 'bone' | 'blood' | 'ember' | 'veil';
 
-/** Structured fortune body — clear, concrete reading sections. */
-export interface FortuneAspect {
-  coming: string;
-  workOn: string;
-  watchFor: string;
-}
+/**
+ * Fortune body — flowing upright/reversed message prose from the card entity.
+ * (Formerly structured as coming/workOn/watchFor — removed.)
+ */
+export type FortuneMessage = string;
 
 export interface OracleCard {
   id: string;
@@ -30,8 +29,8 @@ export interface OracleCard {
   number: number;
   realm: Realm;
   keywords: [string, string];
-  upright: FortuneAspect;
-  reversed: FortuneAspect;
+  upright: FortuneMessage;
+  reversed: FortuneMessage;
   glyph: string;
   image: string;
 }

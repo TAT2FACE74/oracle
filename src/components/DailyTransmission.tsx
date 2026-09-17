@@ -23,7 +23,7 @@ export function DailyTransmission({
 }: Props) {
   const data = useMemo(() => getOrCreateDaily(), []);
   const spokenRef = useRef(false);
-  const aspect = aspectOfDrawn(data.drawn);
+  const message = aspectOfDrawn(data.drawn);
 
   useEffect(() => {
     if (spokenRef.current) return;
@@ -64,20 +64,7 @@ export function DailyTransmission({
         <p className="kw-line">
           {data.drawn.card.keywords[0]} · {data.drawn.card.keywords[1]}
         </p>
-        <div className="fortune-sections">
-          <div className="fortune-block">
-            <h4>What&apos;s coming</h4>
-            <p>{aspect.coming}</p>
-          </div>
-          <div className="fortune-block">
-            <h4>Work on this</h4>
-            <p>{aspect.workOn}</p>
-          </div>
-          <div className="fortune-block">
-            <h4>Watch out for</h4>
-            <p>{aspect.watchFor}</p>
-          </div>
-        </div>
+        <p className="fortune-message">{message}</p>
       </article>
 
       <div className="reading-actions">

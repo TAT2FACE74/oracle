@@ -22,25 +22,6 @@ interface Props {
   onHome?: () => void;
 }
 
-function FortuneSections({ coming, workOn, watchFor }: { coming: string; workOn: string; watchFor: string }) {
-  return (
-    <div className="fortune-sections">
-      <div className="fortune-block">
-        <h4>What&apos;s coming</h4>
-        <p>{coming}</p>
-      </div>
-      <div className="fortune-block">
-        <h4>Work on this</h4>
-        <p>{workOn}</p>
-      </div>
-      <div className="fortune-block">
-        <h4>Watch out for</h4>
-        <p>{watchFor}</p>
-      </div>
-    </div>
-  );
-}
-
 function buildSynthesis(drawn: DrawnCard[]): string {
   const names = drawn.map((d) => d.card.name);
   const revCount = drawn.filter((d) => d.reversed).length;
@@ -104,9 +85,7 @@ export function Reading({
       const pos = SPREAD_POSITIONS[i] as SpreadPosition;
       const orient = d.reversed ? 'in shadow aspect' : 'upright';
       const a = aspectOfDrawn(d);
-      lines.push(
-        speakFortune(a, `${pos}. ${d.card.name}, ${orient}.`),
-      );
+      lines.push(speakFortune(a, `${pos}. ${d.card.name}, ${orient}.`));
     });
     lines.push(`Synthesis. ${synthesis}`);
 
@@ -150,7 +129,7 @@ export function Reading({
 
       {drawn.map((d, i) => {
         const pos = SPREAD_POSITIONS[i] as SpreadPosition;
-        const a = aspectOfDrawn(d);
+        const message = aspectOfDrawn(d);
         return (
           <article key={d.card.id} className="reading-detail">
             <h3>
@@ -163,7 +142,7 @@ export function Reading({
             <p className="kw-line">
               {d.card.keywords[0]} · {d.card.keywords[1]}
             </p>
-            <FortuneSections coming={a.coming} workOn={a.workOn} watchFor={a.watchFor} />
+            <p className="fortune-message">{message}</p>
           </article>
         );
       })}

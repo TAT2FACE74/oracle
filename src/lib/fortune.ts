@@ -1,23 +1,18 @@
-import type { DrawnCard, FortuneAspect, OracleCard } from '../types';
+import type { DrawnCard, FortuneMessage, OracleCard } from '../types';
 
-export function aspectOf(card: OracleCard, reversed: boolean): FortuneAspect {
+export function aspectOf(card: OracleCard, reversed: boolean): FortuneMessage {
   return reversed ? card.reversed : card.upright;
 }
 
-export function aspectOfDrawn(d: DrawnCard): FortuneAspect {
+export function aspectOfDrawn(d: DrawnCard): FortuneMessage {
   return aspectOf(d.card, d.reversed);
 }
 
-/** Plain prose for TTS — three labeled sections in order. */
-export function speakFortune(aspect: FortuneAspect, intro?: string): string {
-  const body = [
-    `What's coming. ${aspect.coming}`,
-    `Work on this. ${aspect.workOn}`,
-    `Watch out for. ${aspect.watchFor}`,
-  ].join(' ');
-  return intro ? `${intro} ${body}` : body;
+/** Plain prose for TTS — message only (no category labels). */
+export function speakFortune(message: FortuneMessage, intro?: string): string {
+  return intro ? `${intro} ${message}` : message;
 }
 
-export function formatFortunePlain(aspect: FortuneAspect): string {
-  return `${aspect.coming} ${aspect.workOn} ${aspect.watchFor}`;
+export function formatFortunePlain(message: FortuneMessage): string {
+  return message;
 }
