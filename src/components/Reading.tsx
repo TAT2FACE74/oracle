@@ -7,6 +7,7 @@ import {
 } from '../types';
 import { saveReading } from '../hooks/useOraclePlus';
 import { CardVisual } from './CardVisual';
+import type { DeckId } from '../types';
 
 interface Props {
   drawn: DrawnCard[];
@@ -15,6 +16,9 @@ interface Props {
   onDrawAgain: () => void;
   onUpsell: () => void;
   plusUnlocked: boolean;
+  deckId?: DeckId;
+  premiumArt?: boolean;
+  onHome?: () => void;
 }
 
 function meaningOf(d: DrawnCard): string {
@@ -50,6 +54,9 @@ export function Reading({
   onDrawAgain,
   onUpsell,
   plusUnlocked,
+  deckId = 'rws',
+  premiumArt = false,
+  onHome,
 }: Props) {
   const synthesis = useMemo(() => buildSynthesis(drawn), [drawn]);
   const spokenRef = useRef(false);
@@ -113,6 +120,8 @@ export function Reading({
               flipped
               reversed={d.reversed}
               size="reading"
+              deckId={deckId}
+              premiumArt={premiumArt}
             />
           </div>
         ))}
@@ -146,6 +155,11 @@ export function Reading({
         <button type="button" className="btn-ghost" onClick={onUpsell}>
           {plusUnlocked ? 'Oracle+ features' : 'Unlock Oracle+'}
         </button>
+        {onHome && (
+          <button type="button" className="btn-ghost" onClick={onHome}>
+            Hub
+          </button>
+        )}
       </div>
     </div>
   );

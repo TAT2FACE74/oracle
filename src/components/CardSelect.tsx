@@ -1,15 +1,17 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { shuffleDeck } from '../data/deck';
-import type { DrawnCard, TarotCard } from '../types';
+import type { DeckId, DrawnCard, TarotCard } from '../types';
 import { CardVisual } from './CardVisual';
 
 interface Props {
   onComplete: (drawn: DrawnCard[]) => void;
+  deckId?: DeckId;
+  premiumArt?: boolean;
 }
 
 const MAX = 5;
 
-export function CardSelect({ onComplete }: Props) {
+export function CardSelect({ onComplete, deckId = 'rws', premiumArt = false }: Props) {
   const deck = useMemo(() => shuffleDeck(), []);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<DrawnCard[]>([]);
@@ -140,6 +142,8 @@ export function CardSelect({ onComplete }: Props) {
                   card={isPending ? card : undefined}
                   flipped={!!isPending}
                   reversed={isPending ? pending!.reversed : false}
+                  deckId={deckId}
+                  premiumArt={premiumArt}
                 />
               </div>
             );
@@ -162,7 +166,13 @@ export function CardSelect({ onComplete }: Props) {
             }}
           >
             <div style={{ transform: 'scale(0.19)', transformOrigin: 'center center' }}>
-              <CardVisual card={s.card} flipped reversed={s.reversed} />
+              <CardVisual
+                card={s.card}
+                flipped
+                reversed={s.reversed}
+                deckId={deckId}
+                premiumArt={premiumArt}
+              />
             </div>
           </div>
         ))}

@@ -943,3 +943,287 @@ button {
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+/* —— Cinematic intro —— */
+.cinematic-stage {
+  background: #000 !important;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+}
+
+.cinematic-logo {
+  width: min(78vw, 340px);
+  height: auto;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.92);
+  filter: drop-shadow(0 0 24px rgba(196, 43, 66, 0.35))
+    drop-shadow(0 0 48px rgba(201, 168, 76, 0.2));
+  transition: opacity 1.4s ease, transform 4s ease-out, filter 1.4s ease;
+  pointer-events: none;
+}
+
+.cinematic-in .cinematic-logo,
+.cinematic-hold .cinematic-logo {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+.cinematic-out .cinematic-logo {
+  opacity: 0;
+  transform: scale(1.1);
+  transition-duration: 0.35s;
+}
+
+.cinematic-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.85) 100%),
+    radial-gradient(ellipse at 50% 60%, rgba(155, 27, 46, 0.18), transparent 55%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cinematic-embers {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ember {
+  position: absolute;
+  bottom: -8px;
+  left: calc(8% + (var(--i) * 5.1%));
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255, 140, 80, 0.7);
+  box-shadow: 0 0 8px rgba(255, 100, 40, 0.6);
+  animation: ember-rise 4.5s linear infinite;
+  animation-delay: calc(var(--i) * -0.28s);
+  opacity: 0.55;
+}
+
+@keyframes ember-rise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-110vh) scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* —— Hub —— */
+.hub-stage .hub-orb {
+  margin-bottom: 1.5rem;
+}
+
+.hub-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 16rem;
+}
+
+.hub-actions .btn-primary,
+.hub-actions .btn-ghost {
+  width: 100%;
+}
+
+.continue-spoken {
+  max-width: 18rem;
+}
+
+.daily-card-wrap {
+  margin: 0.5rem 0 0.25rem;
+}
+
+/* —— Upsell extras —— */
+.checkout-notice {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--green-soul);
+  margin-bottom: 1rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(46, 204, 113, 0.35);
+  background: rgba(46, 204, 113, 0.08);
+  border-radius: 4px;
+}
+
+.deck-picker {
+  margin: 0.5rem 0 0.25rem;
+  text-align: left;
+}
+
+.deck-picker h3 {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 0.55rem;
+  text-transform: uppercase;
+}
+
+.deck-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.deck-chip {
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 2px;
+  color: var(--bone-dim);
+  background: rgba(7, 6, 10, 0.5);
+}
+
+.deck-chip.active {
+  border-color: var(--crimson-bright);
+  color: var(--bone);
+  box-shadow: 0 0 16px rgba(196, 43, 66, 0.3);
+}
+
+.deck-chip.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.premium-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.95rem;
+  color: var(--bone);
+  margin: 0.35rem 0;
+  cursor: pointer;
+}
+
+.premium-toggle input {
+  accent-color: var(--crimson-bright);
+}
+
+/* —— Deck themes —— */
+.card.deck-shadow .card-face {
+  background: linear-gradient(165deg, #1a0c10 0%, #0a0608 55%, #140a0e 100%);
+  filter: saturate(0.55) contrast(1.08);
+}
+
+.card.deck-shadow .card-glyph {
+  color: #8a2030;
+  text-shadow: 0 0 20px rgba(120, 20, 40, 0.55);
+}
+
+.card.deck-shadow .card-back {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(100, 20, 35, 0.35), transparent 60%),
+    linear-gradient(160deg, #140a0e, #060405);
+}
+
+.card.deck-gilded {
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(201, 168, 76, 0.55),
+    0 0 24px rgba(201, 168, 76, 0.2);
+}
+
+.card.deck-gilded .card-border {
+  border-color: rgba(232, 200, 100, 0.75);
+  box-shadow: inset 0 0 12px rgba(201, 168, 76, 0.15);
+}
+
+.card.deck-gilded .card-border::before {
+  border-color: rgba(201, 168, 76, 0.45);
+}
+
+.card.deck-gilded .card-ornament {
+  border-color: var(--gold);
+  box-shadow: 0 0 6px rgba(201, 168, 76, 0.4);
+}
+
+.card.deck-gilded .card-face {
+  background: linear-gradient(165deg, #1c1810 0%, #0a0908 50%, #16120c 100%);
+}
+
+.card.deck-abyss .card-face {
+  background: linear-gradient(165deg, #12151c 0%, #07080c 50%, #0e1218 100%);
+}
+
+.card.deck-abyss .card-glyph {
+  color: #9ec8e0;
+  text-shadow: 0 0 22px rgba(140, 200, 230, 0.45);
+}
+
+.card.deck-abyss .card-roman,
+.card.deck-abyss .back-sigil {
+  color: #c5d8e8;
+}
+
+.card.deck-abyss .card-back {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(80, 120, 160, 0.22), transparent 60%),
+    linear-gradient(160deg, #10141a, #06070a);
+}
+
+.card.deck-abyss {
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(160, 190, 210, 0.35);
+}
+
+/* Premium shimmer */
+.card.premium-art .card-face,
+.card.premium-art .card-back {
+  position: relative;
+}
+
+.card-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.07) 45%,
+    rgba(201, 168, 76, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 55%,
+    transparent 70%
+  );
+  background-size: 220% 100%;
+  animation: shimmer-slide 3.8s ease-in-out infinite;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+@keyframes shimmer-slide {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+.card.premium-art .card-face {
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba(196, 43, 66, 0.18), transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(201, 168, 76, 0.1), transparent 45%),
+    linear-gradient(165deg, #1a1520 0%, #0c0a10 50%, #151018 100%);
+}
