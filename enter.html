@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050203" />
+    <meta name="description" content="Oracle — Veil of the Ash Realms. Enter the Shadow Realm." />
+    <meta property="og:title" content="Oracle — Enter the Shadow Realm" />
+    <meta property="og:description" content="A dark oracle awaits. Cross the veil." />
+    <meta property="og:image" content="https://tat2face74.github.io/oracle/oracle-ad-cover.png" />
+    <meta property="og:url" content="https://tat2face74.github.io/oracle/enter.html" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Oracle — Enter the Shadow Realm</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ember: #ff4a2e;
+        --ember-deep: #9a1a12;
+        --ash: #e8d4c8;
+        --void: #050203;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body {
+        min-height: 100%;
+        background: var(--void);
+        font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+        color: var(--ash);
+        overflow-x: hidden;
+      }
+      .ad {
+        position: relative;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: clamp(1.25rem, 4vw, 2.5rem);
+        isolation: isolate;
+      }
+      .bg {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(to top, rgba(5, 2, 3, 0.55) 0%, rgba(5, 2, 3, 0.15) 28%, rgba(5, 2, 3, 0.72) 72%, rgba(5, 2, 3, 0.92) 100%),
+          radial-gradient(ellipse 90% 40% at 50% 100%, rgba(180, 30, 18, 0.45), transparent 65%),
+          url('./oracle-ad-cover.png') center / cover no-repeat;
+        z-index: -2;
+      }
+      .embers {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden;
+      }
+      .ember {
+        position: absolute;
+        bottom: -4px;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #ffb070;
+        box-shadow: 0 0 8px 2px rgba(255, 80, 30, 0.7);
+        animation: rise linear infinite;
+        opacity: 0;
+      }
+      @keyframes rise {
+        0% { transform: translateY(0) scale(1); opacity: 0; }
+        12% { opacity: 0.85; }
+        100% { transform: translateY(-105vh) scale(0.4); opacity: 0; }
+      }
+      .frame {
+        width: min(100%, 420px);
+        text-align: center;
+        padding: 1.75rem 1.25rem 1.5rem;
+        border: 1px solid rgba(196, 55, 45, 0.45);
+        box-shadow:
+          0 0 0 1px rgba(80, 10, 10, 0.6) inset,
+          0 20px 60px rgba(0, 0, 0, 0.65),
+          0 0 80px rgba(140, 20, 15, 0.2);
+        background: linear-gradient(180deg, rgba(8, 4, 6, 0.55), rgba(8, 3, 4, 0.78));
+        backdrop-filter: blur(2px);
+      }
+      .brand {
+        letter-spacing: 0.55em;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        color: rgba(232, 180, 160, 0.7);
+        margin-bottom: 0.85rem;
+      }
+      h1 {
+        font-weight: 600;
+        font-size: clamp(2.4rem, 10vw, 3.4rem);
+        letter-spacing: 0.18em;
+        line-height: 1;
+        color: #f2e6de;
+        text-shadow: 0 0 24px rgba(200, 40, 30, 0.35);
+        margin-bottom: 0.55rem;
+      }
+      .tag {
+        font-size: 0.92rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(210, 90, 70, 0.95);
+        margin-bottom: 1.35rem;
+      }
+      .blurb {
+        font-size: 0.98rem;
+        line-height: 1.55;
+        color: rgba(220, 200, 190, 0.82);
+        margin: 0 auto 1.75rem;
+        max-width: 28ch;
+      }
+      .enter {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 3.25rem;
+        padding: 0.95rem 1.25rem;
+        border: 1px solid rgba(255, 90, 55, 0.65);
+        background:
+          linear-gradient(180deg, rgba(150, 28, 22, 0.95), rgba(70, 8, 8, 0.98));
+        color: #ffe8dc;
+        text-decoration: none;
+        letter-spacing: 0.22em;
+        font-size: clamp(0.72rem, 2.8vw, 0.82rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        box-shadow:
+          0 0 24px rgba(255, 60, 30, 0.28),
+          0 10px 28px rgba(0, 0, 0, 0.45);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        cursor: pointer;
+      }
+      .enter:hover,
+      .enter:focus-visible {
+        transform: translateY(-1px) scale(1.01);
+        filter: brightness(1.08);
+        box-shadow:
+          0 0 36px rgba(255, 70, 35, 0.45),
+          0 12px 32px rgba(0, 0, 0, 0.5);
+        outline: none;
+      }
+      .enter:active { transform: translateY(1px) scale(0.995); }
+      .fine {
+        margin-top: 1.1rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(160, 130, 120, 0.55);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="ad">
+      <div class="bg" aria-hidden="true"></div>
+      <div class="embers" aria-hidden="true" id="embers"></div>
+      <section class="frame">
+        <p class="brand">TAT2FACE presents</p>
+        <h1>ORACLE</h1>
+        <p class="tag">Veil of the Ash Realms</p>
+        <p class="blurb">A dark oracle watches from the void. Draw the cards. Hear what the ash remembers.</p>
+        <a class="enter" href="./">ENTER THE SHADOW REALM</a>
+        <p class="fine">Tap to cross the veil</p>
+      </section>
+    </main>
+    <script>
+      const root = document.getElementById('embers');
+      for (let i = 0; i < 28; i++) {
+        const e = document.createElement('span');
+        e.className = 'ember';
+        e.style.left = 4 + ((i * 37) % 92) + '%';
+        e.style.animationDuration = 3.2 + (i % 7) * 0.45 + 's';
+        e.style.animationDelay = -(i * 0.33) + 's';
+        e.style.width = e.style.height = 1.5 + (i % 4) * 0.7 + 'px';
+        root.appendChild(e);
+      }
+    </script>
+  </body>
+</html>
