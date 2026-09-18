@@ -107,91 +107,115 @@
     } catch (e) {}
   }
 
+
   /** Public-domain folk melody — mariachi-ish synth fanfare on win. */
   let winMusicTimer = null;
+  let winNodes = [];
   function stopWinMusic() {
     if (winMusicTimer) {
       clearTimeout(winMusicTimer);
       winMusicTimer = null;
     }
+    for (const n of winNodes) {
+      try { n.stop(); } catch (e) {}
+      try { n.disconnect(); } catch (e) {}
+    }
+    winNodes = [];
   }
   function playLaCucaracha() {
-    if (muted) return;
+    // Mute button is for sirens only — always play the border fanfare.
     stopWinMusic();
     ensureAudio();
-    // Note freqs (Hz). Melody of La Cucaracha (traditional).
-    const N = {
-      C4: 261.63, D4: 293.66, Eb4: 311.13, E4: 329.63, F4: 349.23,
-      G4: 392.0, A4: 440.0, Bb4: 466.16, C5: 523.25, D5: 587.33, Eb5: 622.25, F5: 698.46, G5: 783.99,
-    };
-    // [freq|null for rest, beats]
-    const phrase = [
-      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.C4, 1],
-      [N.D4, 1], [N.D4, 1], [N.D4, 1], [233.08, 1],
-      [N.C4, 1], [N.D4, 1], [N.Eb4, 1], [N.F4, 1],
-      [N.G4, 1], [N.G4, 1], [N.G4, 2],
-      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.C4, 1],
-      [N.D4, 1], [N.D4, 1], [N.D4, 1], [233.08, 1], // Bb3
-      [N.C4, 1], [N.Eb4, 1], [N.D4, 1], [N.C4, 2],
-      // second lift
-      [N.G4, 1], [N.G4, 1], [N.G4, 1], [N.Eb4, 1],
-      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.D4, 1],
-      [N.C4, 1], [N.D4, 1], [N.Eb4, 1], [N.F4, 1],
-      [N.G4, 1], [N.G4, 1], [N.G4, 2],
-      [N.C5, 1], [N.C5, 1], [N.Bb4, 1], [N.A4, 1],
-      [N.G4, 1], [N.F4, 1], [N.Eb4, 1], [N.D4, 1],
-      [N.C4, 2], [N.G4, 1], [N.C5, 2],
-    ];
-    const beat = 0.18; // snappy mariachi clip
-    const master = audioCtx.createGain();
-    master.gain.value = 0.12;
-    master.connect(audioCtx.destination);
+    const kickOff = () => {
+      if (!audioCtx) return;
+      // Note freqs (Hz). Melody of La Cucaracha (traditional).
+      const N = {
+        C4: 261.63, D4: 293.66, Eb4: 311.13, E4: 329.63, F4: 349.23,
+        G4: 392.0, A4: 440.0, Bb4: 466.16, C5: 523.25, D5: 587.33, Eb5: 622.25, F5: 698.46, G5: 783.99,
+        Bb3: 233.08, C3: 130.81, F3: 174.61, G3: 196.0,
+      };
+      // Classic La Cucaracha phrasing (public domain)
+      const phrase = [
+        [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.C4, 1],
+        [N.D4, 1], [N.D4, 1], [N.D4, 1], [N.Bb3, 1],
+        [N.C4, 1], [N.D4, 1], [N.Eb4, 1], [N.F4, 1],
+        [N.G4, 1], [N.G4, 1], [N.G4, 2],
+        [null, 1],
+        [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.C4, 1],
+        [N.D4, 1], [N.D4, 1], [N.D4, 1], [N.Bb3, 1],
+        [N.C4, 1], [N.Eb4, 1], [N.D4, 1], [N.C4, 2],
+        [null, 1],
+        [N.G4, 1], [N.G4, 1], [N.G4, 1], [N.Eb4, 1],
+        [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.D4, 1],
+        [N.C4, 1], [N.D4, 1], [N.Eb4, 1], [N.F4, 1],
+        [N.G4, 1], [N.G4, 1], [N.G4, 2],
+        [null, 1],
+        [N.C5, 1], [N.C5, 1], [N.Bb4, 1], [N.A4, 1],
+        [N.G4, 1], [N.F4, 1], [N.Eb4, 1], [N.D4, 1],
+        [N.C4, 2], [N.G4, 1], [N.C5, 3],
+      ];
+      const beat = 0.2;
+      const master = audioCtx.createGain();
+      // Louder — was nearly inaudible on phones under the siren duck
+      master.gain.value = 0.38;
+      master.connect(audioCtx.destination);
 
-    // light "guitarrón" pulse under melody
-    const bassNotes = [174.61, 174.61, 196.0, 196.0, 130.81, 130.81, 174.61, 174.61]; // F3 F3 G3 G3 C3 C3 F3 F3
-    let t = audioCtx.currentTime + 0.02;
-    for (let i = 0; i < 16; i++) {
-      const f = bassNotes[i % bassNotes.length];
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type = 'triangle';
-      o.frequency.value = f;
-      g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(0.08, t + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + beat * 2);
-      o.connect(g); g.connect(master);
-      o.start(t); o.stop(t + beat * 2 + 0.02);
-      t += beat * 2;
-    }
-
-    t = audioCtx.currentTime + 0.02;
-    for (const [freq, beats] of phrase) {
-      if (freq) {
-        // dual osc for mariachi brass/accordion color
-        for (const [type, detune, vol] of [['square', 0, 0.09], ['sawtooth', 6, 0.04]]) {
-          const o = audioCtx.createOscillator();
-          const g = audioCtx.createGain();
-          const f = audioCtx.createBiquadFilter();
-          f.type = 'lowpass';
-          f.frequency.value = 2200;
-          o.type = type;
-          o.frequency.value = freq;
-          o.detune.value = detune;
-          const dur = beats * beat;
-          g.gain.setValueAtTime(0.0001, t);
-          g.gain.exponentialRampToValueAtTime(vol, t + 0.02);
-          g.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.92);
-          o.connect(f); f.connect(g); g.connect(master);
-          o.start(t); o.stop(t + dur + 0.03);
-        }
+      const bassNotes = [N.F3, N.F3, N.G3, N.G3, N.C3, N.C3, N.F3, N.F3];
+      let t = audioCtx.currentTime + 0.05;
+      for (let i = 0; i < 20; i++) {
+        const f = bassNotes[i % bassNotes.length];
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.type = 'triangle';
+        o.frequency.value = f;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.14, t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + beat * 2);
+        o.connect(g); g.connect(master);
+        o.start(t); o.stop(t + beat * 2 + 0.02);
+        winNodes.push(o);
+        t += beat * 2;
       }
-      t += beats * beat;
-    }
-    // schedule clear
-    const ms = (t - audioCtx.currentTime) * 1000 + 50;
-    winMusicTimer = setTimeout(() => { winMusicTimer = null; }, ms);
-  }
 
+      t = audioCtx.currentTime + 0.05;
+      for (const [freq, beats] of phrase) {
+        if (freq) {
+          for (const [type, detune, vol] of [['square', 0, 0.22], ['sawtooth', 8, 0.1], ['triangle', -5, 0.08]]) {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            const f = audioCtx.createBiquadFilter();
+            f.type = 'lowpass';
+            f.frequency.value = 2800;
+            o.type = type;
+            o.frequency.value = freq;
+            o.detune.value = detune;
+            const dur = beats * beat;
+            g.gain.setValueAtTime(0.0001, t);
+            g.gain.exponentialRampToValueAtTime(vol, t + 0.015);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + Math.max(0.04, dur * 0.9));
+            o.connect(f); f.connect(g); g.connect(master);
+            o.start(t); o.stop(t + dur + 0.04);
+            winNodes.push(o);
+          }
+        }
+        t += beats * beat;
+      }
+      const ms = Math.max(500, (t - audioCtx.currentTime) * 1000 + 80);
+      winMusicTimer = setTimeout(() => { winMusicTimer = null; winNodes = []; }, ms);
+    };
+
+    // iOS / Chrome often leave AudioContext suspended until resume() finishes.
+    // Scheduling notes before that makes the whole fanfare silent.
+    try {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume().then(kickOff).catch(kickOff);
+      } else {
+        kickOff();
+      }
+    } catch (e) {
+      try { kickOff(); } catch (e2) {}
+    }
+  }
 
   function showOverlay(title, sub, body, btn) {
     document.getElementById('overlay').classList.remove('hidden');
