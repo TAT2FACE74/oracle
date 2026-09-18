@@ -107,6 +107,96 @@
     } catch (e) {}
   }
 
+  /** Public-domain folk melody — mariachi-ish synth fanfare on win. */
+  let winMusicTimer = null;
+  function stopWinMusic() {
+    if (winMusicTimer) {
+      clearTimeout(winMusicTimer);
+      winMusicTimer = null;
+    }
+  }
+  function playLaCucaracha() {
+    if (muted) return;
+    stopWinMusic();
+    ensureAudio();
+    // Note freqs (Hz). Melody of La Cucaracha (traditional).
+    const N = {
+      C4: 261.63, D4: 293.66, Eb4: 311.13, E4: 329.63, F4: 349.23,
+      G4: 392.0, A4: 440.0, Bb4: 466.16, C5: 523.25, D5: 587.33, Eb5: 622.25, F5: 698.46, G5: 783.99,
+    };
+    // [freq|null for rest, beats]
+    const phrase = [
+      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.C4, 1],
+      [N.D4, 1], [N.D4, 1], [N.D4, 1], [N.Bb4 - 233.08, 1], // Bb3
+      [N.C4, 1], [N.D4, 1], [N.Eb4, 1], [N.F4, 1],
+      [N.G4, 1], [N.G4, 1], [N.G4, 2],
+      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.C4, 1],
+      [N.D4, 1], [N.D4, 1], [N.D4, 1], [233.08, 1], // Bb3
+      [N.C4, 1], [N.Eb4, 1], [N.D4, 1], [N.C4, 2],
+      // second lift
+      [N.G4, 1], [N.G4, 1], [N.G4, 1], [N.Eb4, 1],
+      [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.D4, 1],
+      [N.C4, 1], [N.D4, 1], [N.Eb4, 1], [N.F4, 1],
+      [N.G4, 1], [N.G4, 1], [N.G4, 2],
+      [N.C5, 1], [N.C5, 1], [N.Bb4, 1], [N.A4, 1],
+      [N.G4, 1], [N.F4, 1], [N.Eb4, 1], [N.D4, 1],
+      [N.C4, 2], [N.G4, 1], [N.C5, 2],
+    ];
+    // fix Bb3 properly
+    phrase[7] = [233.08, 1];
+    phrase[23] = [233.08, 1];
+
+    const beat = 0.18; // snappy mariachi clip
+    const master = audioCtx.createGain();
+    master.gain.value = 0.12;
+    master.connect(audioCtx.destination);
+
+    // light "guitarrón" pulse under melody
+    const bassNotes = [174.61, 174.61, 196.0, 196.0, 130.81, 130.81, 174.61, 174.61]; // F3 F3 G3 G3 C3 C3 F3 F3
+    let t = audioCtx.currentTime + 0.02;
+    for (let i = 0; i < 16; i++) {
+      const f = bassNotes[i % bassNotes.length];
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = 'triangle';
+      o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.08, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + beat * 2);
+      o.connect(g); g.connect(master);
+      o.start(t); o.stop(t + beat * 2 + 0.02);
+      t += beat * 2;
+    }
+
+    t = audioCtx.currentTime + 0.02;
+    for (const [freq, beats] of phrase) {
+      if (freq) {
+        // dual osc for mariachi brass/accordion color
+        for (const [type, detune, vol] of [['square', 0, 0.09], ['sawtooth', 6, 0.04]]) {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          const f = audioCtx.createBiquadFilter();
+          f.type = 'lowpass';
+          f.frequency.value = 2200;
+          o.type = type;
+          o.frequency.value = freq;
+          o.detune.value = detune;
+          const dur = beats * beat;
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(vol, t + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + dur * 0.92);
+          o.connect(f); f.connect(g); g.connect(master);
+          o.start(t); o.stop(t + dur + 0.03);
+        }
+      }
+      t += beats * beat;
+    }
+    // schedule clear
+    const ms = (t - audioCtx.currentTime) * 1000 + 50;
+    winMusicTimer = setTimeout(() => { winMusicTimer = null; }, ms);
+  }
+
+
   function showOverlay(title, sub, body, btn) {
     document.getElementById('overlay').classList.remove('hidden');
     document.getElementById('ovTitle').textContent = title;
@@ -128,6 +218,7 @@
   }
 
   function resetGame(full) {
+    stopWinMusic();
     if (full) {
       lives = 3;
       score = 0;
@@ -268,11 +359,12 @@
     if (distance >= GOAL) {
       mode = 'win';
       stopSiren();
+      playLaCucaracha();
       document.getElementById('pad').classList.remove('show');
       showOverlay(
         '¡MÉXICO!',
-        'You made it',
-        'Crossed with ' + lives + ' life' + (lives === 1 ? '' : 'ves') + ' left. Score ' + score + '.',
+        'La Cucaracha!',
+        'You made it across! Crossed with ' + lives + ' life' + (lives === 1 ? '' : 'ves') + ' left. Score ' + score + '.',
         'RUN AGAIN'
       );
     }
@@ -460,7 +552,7 @@
   document.getElementById('muteBtn').onclick = () => {
     muted = !muted;
     document.getElementById('muteBtn').textContent = muted ? '🔇 MUTED' : '🔊 SIRENS';
-    if (muted) stopSiren();
+    if (muted) { stopSiren(); stopWinMusic(); }
     else if (mode === 'play') startSiren();
   };
 
