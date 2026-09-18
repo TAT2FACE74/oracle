@@ -304,7 +304,7 @@
         } else {
           cars = [];
           player.lane = 1.5;
-          player.y = H * 0.84 + (H * 0.09 - H * 0.84) * Math.min(1, distance / GOAL);
+          player.y = Math.min(H * 0.88, player.y + 70);
           invuln = 1.6;
           mode = 'play';
         }
@@ -321,20 +321,18 @@
 
     player.lane = Math.max(0, Math.min(LANES - 0.02, player.lane + mx * 3.4 * dt));
 
-    // Up/down change border progress; screen Y follows that progress so he never
-    // freezes mid-highway while the meter keeps climbing.
-    let adv;
-    if (my < 0) adv = 150 * dt;
-    else if (my > 0) adv = -95 * dt;
-    else adv = 40 * dt;
-    distance = Math.max(0, distance + adv);
-    scroll += Math.abs(adv);
-    score = Math.floor(distance / 4);
+    // Direct climb — Up/Down move him on screen immediately (Frogger feel).
+    const yBottom = H * 0.88;
+    const yTop = H * 0.07;
+    if (my !== 0) {
+      player.y = Math.max(yTop, Math.min(yBottom, player.y + my * 300 * dt));
+    }
 
-    const yBottom = H * 0.84;
-    const yTop = H * 0.09;
-    const progress = Math.min(1, distance / GOAL);
-    player.y = yBottom + (yTop - yBottom) * progress;
+    // Border meter tracks how high he is. Road keeps scrolling a bit so it feels alive.
+    const progress = (yBottom - player.y) / (yBottom - yTop);
+    distance = progress * GOAL;
+    scroll += (my < 0 ? 210 : 55) * dt;
+    score = Math.floor(distance / 4);
 
     spawnT -= dt;
     if (spawnT <= 0) {
@@ -359,7 +357,7 @@
       }
     }
 
-    if (distance >= GOAL) {
+    if (progress >= 0.985 || player.y <= yTop + 0.5) {
       mode = 'win';
       stopSiren();
       playLaCucaracha();
@@ -590,12 +588,19 @@
 
   document.querySelectorAll('#pad button').forEach((btn) => {
     const d = btn.getAttribute('data-dir');
-    const on = (e) => { e.preventDefault(); held.add(d); };
-    const off = (e) => { e.preventDefault(); held.delete(d); };
+    const on = (e) => {
+      e.preventDefault();
+      try { btn.setPointerCapture(e.pointerId); } catch (_) {}
+      held.add(d);
+    };
+    const off = (e) => {
+      e.preventDefault();
+      held.delete(d);
+    };
     btn.addEventListener('pointerdown', on);
     btn.addEventListener('pointerup', off);
-    btn.addEventListener('pointerleave', off);
     btn.addEventListener('pointercancel', off);
+    btn.addEventListener('lostpointercapture', off);
   });
 
   document.getElementById('startBtn').onclick = () => {
