@@ -127,7 +127,7 @@
     // [freq|null for rest, beats]
     const phrase = [
       [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.C4, 1],
-      [N.D4, 1], [N.D4, 1], [N.D4, 1], [N.Bb4 - 233.08, 1], // Bb3
+      [N.D4, 1], [N.D4, 1], [N.D4, 1], [233.08, 1],
       [N.C4, 1], [N.D4, 1], [N.Eb4, 1], [N.F4, 1],
       [N.G4, 1], [N.G4, 1], [N.G4, 2],
       [N.F4, 1], [N.F4, 1], [N.F4, 1], [N.C4, 1],
@@ -142,10 +142,6 @@
       [N.G4, 1], [N.F4, 1], [N.Eb4, 1], [N.D4, 1],
       [N.C4, 2], [N.G4, 1], [N.C5, 2],
     ];
-    // fix Bb3 properly
-    phrase[7] = [233.08, 1];
-    phrase[23] = [233.08, 1];
-
     const beat = 0.18; // snappy mariachi clip
     const master = audioCtx.createGain();
     master.gain.value = 0.12;
