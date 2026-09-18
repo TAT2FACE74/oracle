@@ -12,33 +12,46 @@ canvas{display:block;width:min(100vw,440px);max-height:100vh;border:2px solid #3
 .panel p{font-size:.9rem;line-height:1.45;color:#ccc;margin-bottom:1rem}
 .panel button{width:100%;padding:.85rem;background:linear-gradient(#d62828,#7a1010);border:1px solid #ff6b4a;color:#fff;font-weight:800;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
 
-
-
-
-
+/* Circular D-pad in a clear PLUS layout */
 #pad{
-  position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
-  width:168px; height:168px;
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:180px;
+  height:180px;
   display:none;
-  grid-template-columns:56px 56px 56px;
-  grid-template-rows:56px 56px 56px;
-  grid-template-areas:
-    ". up ."
-    "left . right"
-    ". down .";
-  gap:0; z-index:3; place-items:center;
+  z-index:3;
 }
-#pad.show{display:grid}
+#pad.show{ display:block; }
 .pad-btn{
-  width:56px; height:56px; border-radius:50%;
+  position:absolute;
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  margin:0;
+  padding:0;
   background:radial-gradient(circle at 35% 30%, #ff6a4a, #9a1212 62%, #4a0606);
-  border:2px solid rgba(255,200,160,.85);
+  border:2px solid rgba(255,200,160,.9);
   box-shadow:0 4px 0 #3a0505, 0 8px 18px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.25);
-  color:#fff; font-size:1.25rem; font-weight:800;
-  display:grid; place-items:center;
-  -webkit-user-select:none; user-select:none;
+  color:#fff;
+  font-size:1.35rem;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  -webkit-user-select:none;
+  user-select:none;
 }
+/* UP — top center */
+.pad-btn[data-dir="up"]{ top:0; left:50%; transform:translateX(-50%); }
+/* DOWN — bottom center */
+.pad-btn[data-dir="down"]{ bottom:0; left:50%; transform:translateX(-50%); }
+/* LEFT — middle left */
+.pad-btn[data-dir="left"]{ left:0; top:50%; transform:translateY(-50%); }
+/* RIGHT — middle right */
+.pad-btn[data-dir="right"]{ right:0; top:50%; transform:translateY(-50%); }
 .pad-btn:active{
-  transform:translateY(2px);
-  box-shadow:0 2px 0 #3a0505, 0 4px 10px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2);
+  filter:brightness(1.1);
+  box-shadow:0 2px 0 #3a0505, 0 4px 10px rgba(0,0,0,.4), inset 0 2px 4px rgba(0,0,0,.35);
 }
