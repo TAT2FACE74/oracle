@@ -320,7 +320,7 @@
     if (held.has('ArrowDown') || held.has('s') || held.has('down')) my += 1;
 
     player.lane = Math.max(0, Math.min(LANES - 0.02, player.lane + mx * 3.4 * dt));
-    player.y = Math.max(H * 0.26, Math.min(H * 0.9, player.y + my * 170 * dt));
+    player.y = Math.max(H * 0.08, Math.min(H * 0.9, player.y + my * 170 * dt));
 
     const adv = (my < 0 ? 150 : 40) * dt;
     distance += adv;
