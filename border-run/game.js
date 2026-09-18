@@ -36,7 +36,7 @@
   let flash = 0;
   let invuln = 0;
 
-  const player = { lane: 1.5, y: H * 0.82, w: 48, h: 78 };
+  const player = { lane: 1.5, y: H * 0.82, w: 58, h: 96 };
   const held = new Set();
 
   let muted = false;
@@ -232,9 +232,7 @@
     mode = 'play';
     startSiren();
     hideOverlay();
-    if (window.matchMedia('(pointer: coarse)').matches) {
-      document.getElementById('pad').classList.add('show');
-    }
+    document.getElementById('pad').classList.add('show');
     updateHud();
   }
 
@@ -368,19 +366,48 @@
   }
 
   function drawRoad() {
-    const g = ctx.createLinearGradient(0, 0, 0, H);
-    g.addColorStop(0, '#c4a574');
-    g.addColorStop(1, '#7a5a32');
-    ctx.fillStyle = g;
+    // night desert sky
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#070b18');
+    sky.addColorStop(0.45, '#1a1020');
+    sky.addColorStop(1, '#3a2210');
+    ctx.fillStyle = sky;
     ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#2b2b2f';
-    ctx.fillRect(ROAD_L - 10, 0, ROAD_W + 20, H);
-    ctx.fillStyle = '#1e1e22';
-    ctx.fillRect(ROAD_L, 0, ROAD_W, H);
-    ctx.strokeStyle = '#d4c56a';
-    ctx.lineWidth = 3;
-    ctx.setLineDash([18, 16]);
-    ctx.lineDashOffset = scroll * 0.95;
+
+    // stars
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    for (let i = 0; i < 40; i++) {
+      const sx = (i * 97 + 13) % W;
+      const sy = (i * 53 + Math.floor(scroll * 0.02)) % Math.floor(H * 0.35);
+      ctx.fillRect(sx, sy, i % 5 === 0 ? 2 : 1, i % 5 === 0 ? 2 : 1);
+    }
+
+    // desert shoulders
+    const sand = ctx.createLinearGradient(0, 0, 0, H);
+    sand.addColorStop(0, '#6b4a28');
+    sand.addColorStop(1, '#3d2a14');
+    ctx.fillStyle = sand;
+    ctx.fillRect(0, 0, ROAD_L - 6, H);
+    ctx.fillRect(ROAD_R + 6, 0, W - ROAD_R - 6, H);
+
+    // asphalt
+    const road = ctx.createLinearGradient(ROAD_L, 0, ROAD_R, 0);
+    road.addColorStop(0, '#1a1a1e');
+    road.addColorStop(0.5, '#2a2a30');
+    road.addColorStop(1, '#1a1a1e');
+    ctx.fillStyle = road;
+    ctx.fillRect(ROAD_L - 8, 0, ROAD_W + 16, H);
+
+    // soft edge rumble
+    ctx.fillStyle = 'rgba(180,40,40,0.35)';
+    ctx.fillRect(ROAD_L - 8, 0, 6, H);
+    ctx.fillRect(ROAD_R + 2, 0, 6, H);
+
+    // lane dashes
+    ctx.strokeStyle = '#e8d56a';
+    ctx.lineWidth = 4;
+    ctx.setLineDash([22, 18]);
+    ctx.lineDashOffset = scroll * 1.1;
     for (let i = 1; i < LANES; i++) {
       const x = ROAD_L + LANE_W * i;
       ctx.beginPath();
@@ -389,30 +416,39 @@
       ctx.stroke();
     }
     ctx.setLineDash([]);
-    ctx.strokeStyle = '#eee';
-    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'rgba(240,240,240,0.9)';
+    ctx.lineWidth = 5;
     ctx.beginPath();
-    ctx.moveTo(ROAD_L, 0);
-    ctx.lineTo(ROAD_L, H);
-    ctx.moveTo(ROAD_R, 0);
-    ctx.lineTo(ROAD_R, H);
+    ctx.moveTo(ROAD_L, 0); ctx.lineTo(ROAD_L, H);
+    ctx.moveTo(ROAD_R, 0); ctx.lineTo(ROAD_R, H);
     ctx.stroke();
+
+    // heat shimmer lines near bottom glow from "asphalt"
+    ctx.fillStyle = 'rgba(255,120,40,0.04)';
+    ctx.fillRect(ROAD_L, H * 0.7, ROAD_W, H * 0.3);
 
     const remain = GOAL - distance;
     if (remain < 950) {
       const t = 1 - remain / 950;
-      ctx.fillStyle = 'rgba(0,110,55,' + (0.4 + t * 0.35) + ')';
-      ctx.fillRect(0, 0, W, 72 + t * 36);
+      ctx.fillStyle = 'rgba(0,120,60,' + (0.45 + t * 0.4) + ')';
+      ctx.fillRect(0, 0, W, 78 + t * 40);
+      // Mexican flag stripe accents
+      ctx.fillStyle = 'rgba(0,104,71,0.9)';
+      ctx.fillRect(W * 0.2, 18, W * 0.2, 10);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      ctx.fillRect(W * 0.4, 18, W * 0.2, 10);
+      ctx.fillStyle = 'rgba(206,17,38,0.95)';
+      ctx.fillRect(W * 0.6, 18, W * 0.2, 10);
       ctx.fillStyle = '#fff';
-      ctx.font = 'bold 22px system-ui';
+      ctx.font = 'bold 24px system-ui';
       ctx.textAlign = 'center';
-      ctx.fillText('🇲🇽  MÉXICO  🇲🇽', W / 2, 42 + t * 10);
-      ctx.strokeStyle = '#999';
+      ctx.fillText('🇲🇽  MÉXICO  🇲🇽', W / 2, 58 + t * 12);
+      ctx.strokeStyle = '#ccc';
       ctx.lineWidth = 2;
-      for (let x = 8; x < W; x += 16) {
+      for (let x = 8; x < W; x += 14) {
         ctx.beginPath();
-        ctx.moveTo(x, 58 + t * 24);
-        ctx.lineTo(x, 88 + t * 34);
+        ctx.moveTo(x, 68 + t * 28);
+        ctx.lineTo(x, 98 + t * 38);
         ctx.stroke();
       }
     }
@@ -452,15 +488,27 @@
       ctx.fillStyle = '#111';
       ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
     }
-    const blink = Math.sin(c.phase) > 0;
+    // headlight wash toward player
     ctx.globalCompositeOperation = 'lighter';
-    ctx.fillStyle = blink ? 'rgba(255,40,40,.6)' : 'rgba(50,90,255,.6)';
+    const hg = ctx.createRadialGradient(0, c.h * 0.45, 2, 0, c.h * 0.9, c.w * 0.9);
+    hg.addColorStop(0, 'rgba(255,230,160,0.35)');
+    hg.addColorStop(1, 'rgba(255,200,80,0)');
+    ctx.fillStyle = hg;
     ctx.beginPath();
-    ctx.arc(-14, -c.h * 0.32, 8, 0, Math.PI * 2);
+    ctx.moveTo(-c.w * 0.2, c.h * 0.2);
+    ctx.lineTo(c.w * 0.2, c.h * 0.2);
+    ctx.lineTo(c.w * 0.7, c.h * 1.1);
+    ctx.lineTo(-c.w * 0.7, c.h * 1.1);
+    ctx.closePath();
     ctx.fill();
-    ctx.fillStyle = blink ? 'rgba(50,90,255,.6)' : 'rgba(255,40,40,.6)';
+    const blink = Math.sin(c.phase) > 0;
+    ctx.fillStyle = blink ? 'rgba(255,40,40,.75)' : 'rgba(50,90,255,.75)';
     ctx.beginPath();
-    ctx.arc(14, -c.h * 0.32, 8, 0, Math.PI * 2);
+    ctx.arc(-16, -c.h * 0.28, 9, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = blink ? 'rgba(50,90,255,.75)' : 'rgba(255,40,40,.75)';
+    ctx.beginPath();
+    ctx.arc(16, -c.h * 0.28, 9, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }

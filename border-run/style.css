@@ -11,7 +11,34 @@ canvas{display:block;width:min(100vw,440px);max-height:100vh;border:2px solid #3
 .panel .sub{color:#c9a227;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.9rem}
 .panel p{font-size:.9rem;line-height:1.45;color:#ccc;margin-bottom:1rem}
 .panel button{width:100%;padding:.85rem;background:linear-gradient(#d62828,#7a1010);border:1px solid #ff6b4a;color:#fff;font-weight:800;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
-#pad{position:absolute;bottom:14px;left:0;right:0;display:none;justify-content:center;gap:8px;z-index:3}
-#pad.show{display:flex}
-#pad .mid{display:flex;flex-direction:column;gap:8px}
-#pad button{width:62px;height:50px;border-radius:10px;background:rgba(180,30,20,.75);border:1px solid #ff6b4a;color:#fff;font-size:1.15rem}
+
+
+
+
+
+#pad{
+  position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+  width:168px; height:168px;
+  display:none;
+  grid-template-columns:56px 56px 56px;
+  grid-template-rows:56px 56px 56px;
+  grid-template-areas:
+    ". up ."
+    "left . right"
+    ". down .";
+  gap:0; z-index:3; place-items:center;
+}
+#pad.show{display:grid}
+.pad-btn{
+  width:56px; height:56px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #ff6a4a, #9a1212 62%, #4a0606);
+  border:2px solid rgba(255,200,160,.85);
+  box-shadow:0 4px 0 #3a0505, 0 8px 18px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.25);
+  color:#fff; font-size:1.25rem; font-weight:800;
+  display:grid; place-items:center;
+  -webkit-user-select:none; user-select:none;
+}
+.pad-btn:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 #3a0505, 0 4px 10px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2);
+}

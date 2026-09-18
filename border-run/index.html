@@ -23,13 +23,11 @@
       <button id="startBtn" type="button">START RUNNING</button>
     </div>
   </div>
-  <div id="pad">
-    <button type="button" data-dir="left">◀</button>
-    <div class="mid">
-      <button type="button" data-dir="up">▲</button>
-      <button type="button" data-dir="down">▼</button>
-    </div>
-    <button type="button" data-dir="right">▶</button>
+  <div id="pad" aria-label="Controller">
+    <button type="button" class="pad-btn" data-dir="up" style="grid-area:up">▲</button>
+    <button type="button" class="pad-btn" data-dir="left" style="grid-area:left">◀</button>
+    <button type="button" class="pad-btn" data-dir="right" style="grid-area:right">▶</button>
+    <button type="button" class="pad-btn" data-dir="down" style="grid-area:down">▼</button>
   </div>
 </div>
 <script src="game.js"></script>
