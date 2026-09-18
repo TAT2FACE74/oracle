@@ -304,7 +304,7 @@
         } else {
           cars = [];
           player.lane = 1.5;
-          player.y = H * 0.82;
+          player.y = H * 0.84 + (H * 0.09 - H * 0.84) * Math.min(1, distance / GOAL);
           invuln = 1.6;
           mode = 'play';
         }
@@ -320,12 +320,21 @@
     if (held.has('ArrowDown') || held.has('s') || held.has('down')) my += 1;
 
     player.lane = Math.max(0, Math.min(LANES - 0.02, player.lane + mx * 3.4 * dt));
-    player.y = Math.max(H * 0.08, Math.min(H * 0.9, player.y + my * 170 * dt));
 
-    const adv = (my < 0 ? 150 : 40) * dt;
-    distance += adv;
-    scroll += adv;
+    // Up/down change border progress; screen Y follows that progress so he never
+    // freezes mid-highway while the meter keeps climbing.
+    let adv;
+    if (my < 0) adv = 150 * dt;
+    else if (my > 0) adv = -95 * dt;
+    else adv = 40 * dt;
+    distance = Math.max(0, distance + adv);
+    scroll += Math.abs(adv);
     score = Math.floor(distance / 4);
+
+    const yBottom = H * 0.84;
+    const yTop = H * 0.09;
+    const progress = Math.min(1, distance / GOAL);
+    player.y = yBottom + (yTop - yBottom) * progress;
 
     spawnT -= dt;
     if (spawnT <= 0) {
