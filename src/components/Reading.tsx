@@ -75,12 +75,11 @@ export function Reading({
   }, [drawn, synthesis]);
 
   useEffect(() => {
-    if (spokenRef.current) return;
-    spokenRef.current = true;
-
     let cancelled = false;
-    const lines: string[] = [];
+    // Reset so Strict Mode remount / speak identity churn can speak again
+    spokenRef.current = false;
 
+    const lines: string[] = [];
     drawn.forEach((d, i) => {
       const pos = SPREAD_POSITIONS[i] as SpreadPosition;
       const orient = d.reversed ? 'in shadow aspect' : 'upright';
@@ -89,15 +88,22 @@ export function Reading({
     });
     lines.push(`Synthesis. ${synthesis}`);
 
-    const speakNext = (i: number) => {
-      if (cancelled || i >= lines.length) return;
-      speak(lines[i], () => speakNext(i + 1));
-    };
-    speakNext(0);
+    // Defer one tick so cleanup from Strict Mode double-invoke doesn't kill the real run
+    const timer = window.setTimeout(() => {
+      if (cancelled || spokenRef.current) return;
+      spokenRef.current = true;
+      const speakNext = (i: number) => {
+        if (cancelled || i >= lines.length) return;
+        speak(lines[i], () => speakNext(i + 1));
+      };
+      speakNext(0);
+    }, 50);
 
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
       stop();
+      spokenRef.current = false;
     };
   }, [drawn, synthesis, speak, stop]);
 

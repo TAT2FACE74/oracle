@@ -3,31 +3,30 @@ import http from 'node:http';
 import { createHash } from 'node:crypto';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
-const VOICE = process.env.TTS_VOICE || 'en-GB-SoniaNeural';
-const RATE = process.env.TTS_RATE || '-10%';
-const PITCH = process.env.TTS_PITCH || '-2Hz';
+const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-ChristopherNeural';
+const EDGE_RATE = process.env.EDGE_TTS_RATE || '-15%';
+const EDGE_PITCH = process.env.EDGE_TTS_PITCH || '-6Hz';
 const PORT = Number(process.env.PORT || 8787);
 const cache = new Map();
 
 function hashText(text) {
-  return createHash('sha256').update(`${VOICE}|${RATE}|${PITCH}|${text}`).digest('hex');
-}
-
-async function streamToBuffer(stream) {
-  const chunks = [];
-  for await (const chunk of stream) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-  }
-  return Buffer.concat(chunks);
+  return createHash('sha256')
+    .update(`msedge|${EDGE_VOICE}|${EDGE_RATE}|${EDGE_PITCH}|${text}`)
+    .digest('hex');
 }
 
 async function synthesize(text) {
   const key = hashText(text);
   if (cache.has(key)) return cache.get(key);
   const tts = new MsEdgeTTS();
-  await tts.setMetadata(VOICE, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
-  const { audioStream } = tts.toStream(text, { rate: RATE, pitch: PITCH });
-  const buf = await streamToBuffer(audioStream);
+  await tts.setMetadata(EDGE_VOICE, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
+  const { audioStream } = tts.toStream(text, { rate: EDGE_RATE, pitch: EDGE_PITCH });
+  const chunks = [];
+  for await (const chunk of audioStream) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  const buf = Buffer.concat(chunks);
+  if (!buf.length) throw new Error('Edge TTS returned empty audio');
   if (cache.size > 200) cache.delete(cache.keys().next().value);
   cache.set(key, buf);
   return buf;
@@ -51,10 +50,12 @@ const server = http.createServer(async (req, res) => {
     res.end(
       JSON.stringify({
         ok: true,
-        voice: VOICE,
-        rate: RATE,
-        pitch: PITCH,
-        persona: 'The Fortune Teller — Elder of the Crossroads',
+        provider: 'msedge',
+        voice_id: EDGE_VOICE,
+        rate: EDGE_RATE,
+        pitch: EDGE_PITCH,
+        configured: true,
+        persona: 'Odin (free) — Oracle of the Ash Realms',
       }),
     );
     return;
@@ -79,14 +80,19 @@ const server = http.createServer(async (req, res) => {
       'Content-Type': 'audio/mpeg',
       'Cache-Control': 'public, max-age=86400',
       'Content-Length': audio.length,
+      'X-TTS-Provider': 'msedge',
+      'X-TTS-Voice': EDGE_VOICE,
     });
     res.end(audio);
   } catch (e) {
+    const msg = String(e.message || e);
     res.writeHead(500, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: String(e.message || e) }));
+    res.end(JSON.stringify({ error: msg }));
   }
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Oracle TTS on :${PORT} voice=${VOICE} rate=${RATE} pitch=${PITCH}`);
+  console.log(
+    `Oracle TTS on :${PORT} provider=msedge voice=${EDGE_VOICE} rate=${EDGE_RATE} pitch=${EDGE_PITCH}`,
+  );
 });
