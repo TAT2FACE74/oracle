@@ -1,0 +1,30 @@
+{
+  "name": "Oracle",
+  "short_name": "Oracle",
+  "description": "Veil of the Ash Realms dark oracle",
+  "start_url": "/oracle/",
+  "scope": "/oracle/",
+  "display": "standalone",
+  "background_color": "#07060a",
+  "theme_color": "#07060a",
+  "icons": [
+    {
+      "src": "/oracle/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/oracle/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/oracle/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
