@@ -3,19 +3,10 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 EDGE="$ROOT/.venv/bin/edge-tts"
 OUT="$ROOT/public/voice"
-# Prefer mature female: Nancy if present, else Sonia / Michelle
-VOICE="${TTS_VOICE:-en-GB-SoniaNeural}"
-if [[ -z "$VOICE" ]]; then
-  if "$EDGE" --list-voices 2>/dev/null | grep -q 'en-US-NancyNeural'; then
-    VOICE='en-US-NancyNeural'
-  elif "$EDGE" --list-voices 2>/dev/null | grep -q 'en-GB-SoniaNeural'; then
-    VOICE='en-GB-SoniaNeural'
-  else
-    VOICE='en-US-MichelleNeural'
-  fi
-fi
-RATE="${TTS_RATE:--10%}"
-PITCH="${TTS_PITCH:--2Hz}"
+# One voice everywhere — must match api/tts.ts defaults (deep male Odin).
+VOICE="${TTS_VOICE:-en-US-EricNeural}"
+RATE="${TTS_RATE:--18%}"
+PITCH="${TTS_PITCH:--10Hz}"
 mkdir -p "$OUT"
 echo "Pregen voice=$VOICE rate=$RATE pitch=$PITCH"
 gen() { "$EDGE" --voice "$VOICE" --rate="$RATE" --pitch="$PITCH" --text "$2" --write-media "$OUT/$1"; }
