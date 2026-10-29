@@ -31,10 +31,14 @@ async function sha256(text: string): Promise<string> {
 
 const memoryCache = new Map<string, string>();
 
+/** Bump this whenever the voice changes so stale audio is abandoned. */
+const VOICE_TAG = 'eric|-18|-10';
+const CACHE_NAME = 'oracle-tts-v2-eric';
+
 async function cacheGet(key: string): Promise<Blob | null> {
   if (typeof caches === 'undefined') return null;
   try {
-    const c = await caches.open('oracle-tts-v1');
+    const c = await caches.open(CACHE_NAME);
     const res = await c.match(`tts://${key}`);
     return res ? await res.blob() : null;
   } catch {
@@ -45,7 +49,7 @@ async function cacheGet(key: string): Promise<Blob | null> {
 async function cachePut(key: string, blob: Blob) {
   if (typeof caches === 'undefined') return;
   try {
-    const c = await caches.open('oracle-tts-v1');
+    const c = await caches.open(CACHE_NAME);
     await c.put(
       `tts://${key}`,
       new Response(blob, { headers: { 'Content-Type': 'audio/mpeg' } }),
@@ -56,12 +60,15 @@ async function cachePut(key: string, blob: Blob) {
 }
 
 async function fetchNeuralAudio(text: string): Promise<string | null> {
-  const staticPath = STATIC_VOICE[text];
+  // Static clips disabled until they are regenerated in the unified voice —
+  // the old clips are a different (female) voice and break consistency.
+  const STATIC_ENABLED = false;
+  const staticPath = STATIC_ENABLED ? STATIC_VOICE[text] : undefined;
   if (staticPath) {
     return `${import.meta.env.BASE_URL}${staticPath}`;
   }
 
-  const key = await sha256(text);
+  const key = await sha256(`${VOICE_TAG}|${text}`);
   if (memoryCache.has(key)) return memoryCache.get(key)!;
 
   const cached = await cacheGet(key);
@@ -109,6 +116,13 @@ export function useSpeech() {
   }, []);
 
   useEffect(() => () => stop(), [stop]);
+
+  // Drop the pre-voice-change audio cache so old lines replay in the new voice.
+  useEffect(() => {
+    if (typeof caches !== 'undefined') {
+      void caches.delete('oracle-tts-v1');
+    }
+  }, []);
 
   const speak = useCallback(
     (text: string, onEnd?: () => void) => {
