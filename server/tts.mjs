@@ -3,9 +3,9 @@ import http from 'node:http';
 import { createHash } from 'node:crypto';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
-const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-ChristopherNeural';
-const EDGE_RATE = process.env.EDGE_TTS_RATE || '-15%';
-const EDGE_PITCH = process.env.EDGE_TTS_PITCH || '-6Hz';
+const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-EricNeural';
+const EDGE_RATE = process.env.EDGE_TTS_RATE || '-18%';
+const EDGE_PITCH = process.env.EDGE_TTS_PITCH || '-10Hz';
 const PORT = Number(process.env.PORT || 8787);
 const cache = new Map();
 
