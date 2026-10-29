@@ -2,9 +2,9 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createHash } from 'node:crypto';
 
 /** Free deep male stand-in for Odin (no ElevenLabs credits). */
-const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-ChristopherNeural';
-const EDGE_RATE = process.env.EDGE_TTS_RATE || '-15%';
-const EDGE_PITCH = process.env.EDGE_TTS_PITCH || '-6Hz';
+const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-EricNeural';
+const EDGE_RATE = process.env.EDGE_TTS_RATE || '-18%';
+const EDGE_PITCH = process.env.EDGE_TTS_PITCH || '-10Hz';
 const mem = new Map<string, Buffer>();
 
 function hashText(text: string) {
