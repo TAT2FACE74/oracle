@@ -3,6 +3,17 @@ import http from 'node:http';
 import { createHash } from 'node:crypto';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
+/**
+ * Local dev mirror of api/tts.ts — ONE voice: Fish Audio "Odin".
+ * Needs FISH_API_KEY + FISH_VOICE_ID in env; falls back to the old Edge
+ * voice until both are set so the app never goes silent mid-switch.
+ */
+const FISH_API_KEY = process.env.FISH_API_KEY || '';
+const FISH_VOICE_ID =
+  process.env.FISH_VOICE_ID || '468ed781b03c4961b43f307055df5575'; // ODIN by 7C MAFIA YT
+const FISH_MODEL = process.env.FISH_MODEL || 's2.1-pro-free';
+const FISH_CONFIGURED = Boolean(FISH_API_KEY && FISH_VOICE_ID);
+
 const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-EricNeural';
 const EDGE_RATE = process.env.EDGE_TTS_RATE || '-18%';
 const EDGE_PITCH = process.env.EDGE_TTS_PITCH || '-10Hz';
@@ -10,14 +21,38 @@ const PORT = Number(process.env.PORT || 8787);
 const cache = new Map();
 
 function hashText(text) {
-  return createHash('sha256')
-    .update(`msedge|${EDGE_VOICE}|${EDGE_RATE}|${EDGE_PITCH}|${text}`)
-    .digest('hex');
+  const tag = FISH_CONFIGURED
+    ? `fish|${FISH_VOICE_ID}|${FISH_MODEL}`
+    : `msedge|${EDGE_VOICE}|${EDGE_RATE}|${EDGE_PITCH}`;
+  return createHash('sha256').update(`${tag}|${text}`).digest('hex');
 }
 
-async function synthesize(text) {
-  const key = hashText(text);
-  if (cache.has(key)) return cache.get(key);
+async function synthesizeFish(text) {
+  const res = await fetch('https://api.fish.audio/v1/tts', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${FISH_API_KEY}`,
+      'Content-Type': 'application/json',
+      model: FISH_MODEL,
+    },
+    body: JSON.stringify({
+      text,
+      reference_id: FISH_VOICE_ID,
+      format: 'mp3',
+      latency: 'balanced',
+      normalize: true,
+    }),
+  });
+  if (!res.ok) {
+    const detail = await res.text().catch(() => '');
+    throw new Error(`Fish Audio TTS ${res.status}: ${detail.slice(0, 300)}`);
+  }
+  const buf = Buffer.from(await res.arrayBuffer());
+  if (!buf.length) throw new Error('Fish Audio returned empty audio');
+  return buf;
+}
+
+async function synthesizeEdge(text) {
   const tts = new MsEdgeTTS();
   await tts.setMetadata(EDGE_VOICE, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
   const { audioStream } = tts.toStream(text, { rate: EDGE_RATE, pitch: EDGE_PITCH });
@@ -27,6 +62,13 @@ async function synthesize(text) {
   }
   const buf = Buffer.concat(chunks);
   if (!buf.length) throw new Error('Edge TTS returned empty audio');
+  return buf;
+}
+
+async function synthesize(text) {
+  const key = hashText(text);
+  if (cache.has(key)) return cache.get(key);
+  const buf = FISH_CONFIGURED ? await synthesizeFish(text) : await synthesizeEdge(text);
   if (cache.size > 200) cache.delete(cache.keys().next().value);
   cache.set(key, buf);
   return buf;
@@ -50,12 +92,13 @@ const server = http.createServer(async (req, res) => {
     res.end(
       JSON.stringify({
         ok: true,
-        provider: 'msedge',
-        voice_id: EDGE_VOICE,
-        rate: EDGE_RATE,
-        pitch: EDGE_PITCH,
+        provider: FISH_CONFIGURED ? 'fish' : 'msedge',
+        voice_id: FISH_CONFIGURED ? FISH_VOICE_ID : EDGE_VOICE,
+        voice_name: FISH_CONFIGURED ? 'Odin (Fish Audio)' : EDGE_VOICE,
+        model: FISH_CONFIGURED ? FISH_MODEL : undefined,
         configured: true,
-        persona: 'Odin (free) — Oracle of the Ash Realms',
+        fish_configured: FISH_CONFIGURED,
+        persona: 'Odin — Oracle of the Ash Realms',
       }),
     );
     return;
@@ -80,8 +123,8 @@ const server = http.createServer(async (req, res) => {
       'Content-Type': 'audio/mpeg',
       'Cache-Control': 'public, max-age=86400',
       'Content-Length': audio.length,
-      'X-TTS-Provider': 'msedge',
-      'X-TTS-Voice': EDGE_VOICE,
+      'X-TTS-Provider': FISH_CONFIGURED ? 'fish' : 'msedge',
+      'X-TTS-Voice': FISH_CONFIGURED ? FISH_VOICE_ID : EDGE_VOICE,
     });
     res.end(audio);
   } catch (e) {
@@ -93,6 +136,8 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log(
-    `Oracle TTS on :${PORT} provider=msedge voice=${EDGE_VOICE} rate=${EDGE_RATE} pitch=${EDGE_PITCH}`,
+    FISH_CONFIGURED
+      ? `Oracle TTS on :${PORT} provider=fish voice=${FISH_VOICE_ID} model=${FISH_MODEL}`
+      : `Oracle TTS on :${PORT} provider=msedge (Fish not configured) voice=${EDGE_VOICE} rate=${EDGE_RATE} pitch=${EDGE_PITCH}`,
   );
 });
