@@ -10,8 +10,9 @@ import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
  */
 const FISH_API_KEY = process.env.FISH_API_KEY || '';
 const FISH_VOICE_ID =
-  process.env.FISH_VOICE_ID || '468ed781b03c4961b43f307055df5575'; // ODIN by 7C MAFIA YT
+  process.env.FISH_VOICE_ID || '3d9fca75027f4a86a677dd7044996a87'; // GOD VOICE by khankaif96141
 const FISH_MODEL = process.env.FISH_MODEL || 's2.1-pro-free';
+const FISH_SPEED = Number(process.env.FISH_SPEED || 0.82);
 const FISH_CONFIGURED = Boolean(FISH_API_KEY && FISH_VOICE_ID);
 
 const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-EricNeural';
@@ -22,7 +23,7 @@ const cache = new Map();
 
 function hashText(text) {
   const tag = FISH_CONFIGURED
-    ? `fish|${FISH_VOICE_ID}|${FISH_MODEL}`
+    ? `fish|${FISH_VOICE_ID}|${FISH_MODEL}|spd${FISH_SPEED}`
     : `msedge|${EDGE_VOICE}|${EDGE_RATE}|${EDGE_PITCH}`;
   return createHash('sha256').update(`${tag}|${text}`).digest('hex');
 }
@@ -41,6 +42,7 @@ async function synthesizeFish(text) {
       format: 'mp3',
       latency: 'balanced',
       normalize: true,
+      prosody: { speed: FISH_SPEED, volume: 0, normalize_loudness: true },
     }),
   });
   if (!res.ok) {
