@@ -13,8 +13,10 @@ import { createHash } from 'node:crypto';
  */
 const FISH_API_KEY = process.env.FISH_API_KEY || '';
 const FISH_VOICE_ID =
-  process.env.FISH_VOICE_ID || '468ed781b03c4961b43f307055df5575'; // ODIN by 7C MAFIA YT
+  process.env.FISH_VOICE_ID || '3d9fca75027f4a86a677dd7044996a87'; // GOD VOICE by khankaif96141 — slow, deep, all-knowing (Chad rejected the 207 wpm 7C MAFIA ODIN as too fast/unintelligible, 2026-11-08)
 const FISH_MODEL = process.env.FISH_MODEL || 's2.1-pro-free';
+/** Chad's bar (2026-11-08): slow, clear, godlike. 1.0 was far too fast. */
+const FISH_SPEED = Number(process.env.FISH_SPEED || 0.82);
 const FISH_CONFIGURED = Boolean(FISH_API_KEY && FISH_VOICE_ID);
 
 const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-EricNeural';
@@ -25,7 +27,7 @@ const mem = new Map<string, Buffer>();
 
 function hashText(text: string) {
   const tag = FISH_CONFIGURED
-    ? `fish|${FISH_VOICE_ID}|${FISH_MODEL}`
+    ? `fish|${FISH_VOICE_ID}|${FISH_MODEL}|spd${FISH_SPEED}`
     : `msedge|${EDGE_VOICE}|${EDGE_RATE}|${EDGE_PITCH}`;
   return createHash('sha256').update(`${tag}|${text}`).digest('hex');
 }
@@ -44,6 +46,7 @@ async function synthesizeFish(text: string): Promise<Buffer> {
       format: 'mp3',
       latency: 'balanced',
       normalize: true,
+      prosody: { speed: FISH_SPEED, volume: 0, normalize_loudness: true },
     }),
   });
   if (!res.ok) {
@@ -95,11 +98,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       configured: true,
       fish_configured: FISH_CONFIGURED,
       fish_voice_id: FISH_VOICE_ID,
-      fish_voice_name: 'ODIN by 7C MAFIA YT (Oracle Odin)',
+      fish_voice_name: 'GOD VOICE by khankaif96141 (Oracle Odin)',
       persona: 'Odin — Oracle of the Ash Realms',
       note: FISH_CONFIGURED
         ? 'Single voice: Fish Audio Odin, used for every line.'
-        : 'Fish Audio voice selected (ODIN, 468ed781b03c4961b43f307055df5575) but FISH_API_KEY is not set yet — temporary Edge fallback voice.',
+        : 'Fish Audio voice selected (GOD VOICE, 3d9fca75027f4a86a677dd7044996a87) but FISH_API_KEY is not set yet — temporary Edge fallback voice.',
     });
   }
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
