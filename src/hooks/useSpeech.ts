@@ -31,9 +31,39 @@ async function sha256(text: string): Promise<string> {
 
 const memoryCache = new Map<string, string>();
 
-/** Bump this whenever the voice changes so stale audio is abandoned. */
-const VOICE_TAG = 'eric|-18|-10';
-const CACHE_NAME = 'oracle-tts-v2-eric';
+/**
+ * Single-voice era (2026-11-08): Fish Audio "Odin" for every line.
+ * The cache key is tagged with the voice the SERVER reports (provider +
+ * voice_id + model), so any voice change automatically abandons stale
+ * audio instead of replaying the previous voice from the phone's cache.
+ */
+const CACHE_NAME = 'oracle-tts-v3';
+
+let voiceTagPromise: Promise<string> | null = null;
+
+function resolveVoiceTag(): Promise<string> {
+  if (!voiceTagPromise) {
+    voiceTagPromise = (async () => {
+      const endpoint = ttsEndpoint();
+      if (!endpoint) return 'fish-odin';
+      try {
+        const res = await fetch(`${endpoint}/api/tts`);
+        if (!res.ok) return 'fish-odin';
+        const cfg = (await res.json()) as {
+          provider?: string;
+          voice_id?: string;
+          model?: string;
+        };
+        return [cfg.provider || 'fish', cfg.voice_id || 'odin', cfg.model || '']
+          .filter(Boolean)
+          .join('|');
+      } catch {
+        return 'fish-odin';
+      }
+    })();
+  }
+  return voiceTagPromise;
+}
 
 async function cacheGet(key: string): Promise<Blob | null> {
   if (typeof caches === 'undefined') return null;
@@ -60,15 +90,16 @@ async function cachePut(key: string, blob: Blob) {
 }
 
 async function fetchNeuralAudio(text: string): Promise<string | null> {
-  // Static clips disabled until they are regenerated in the unified voice —
-  // the old clips are a different (female) voice and break consistency.
+  // Static clips disabled until they are regenerated in the Odin voice —
+  // the old clips are older voices and break the one-voice rule.
   const STATIC_ENABLED = false;
   const staticPath = STATIC_ENABLED ? STATIC_VOICE[text] : undefined;
   if (staticPath) {
     return `${import.meta.env.BASE_URL}${staticPath}`;
   }
 
-  const key = await sha256(`${VOICE_TAG}|${text}`);
+  const voiceTag = await resolveVoiceTag();
+  const key = await sha256(`${voiceTag}|${text}`);
   if (memoryCache.has(key)) return memoryCache.get(key)!;
 
   const cached = await cacheGet(key);
@@ -117,10 +148,11 @@ export function useSpeech() {
 
   useEffect(() => () => stop(), [stop]);
 
-  // Drop the pre-voice-change audio cache so old lines replay in the new voice.
+  // Drop every pre-Odin audio cache so old voices can never replay.
   useEffect(() => {
     if (typeof caches !== 'undefined') {
       void caches.delete('oracle-tts-v1');
+      void caches.delete('oracle-tts-v2-eric');
     }
   }, []);
 
