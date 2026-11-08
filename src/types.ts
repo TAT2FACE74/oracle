@@ -60,11 +60,11 @@ export const SPREAD_POSITIONS: SpreadPosition[] = [
 ];
 
 export const POSITION_DESCRIPTIONS: Record<SpreadPosition, string> = {
-  Shadow: 'What stalks beneath — the force you have not yet named.',
-  Crossroads: 'The blade of choice — tension between irreversible paths.',
-  'Hidden Thread': 'The unseen cord binding your fate to another.',
-  'Near Timeline': 'What approaches on the immediate, merciless horizon.',
-  'Ascension Path': 'The harder trajectory — how you rise without lying.',
+  Shadow: 'What moves beneath — the weight you feel before you can name it.',
+  Crossroads: 'The choice itself — two real roads, and the honest cost of each.',
+  'Hidden Thread': 'The unseen connection — how your days are tied to another person, habit, or promise.',
+  'Near Timeline': 'What is close — the next days and weeks, arriving whether you prepare or not.',
+  'Ascension Path': 'The honest road up — harder than the others, and the only one that holds.',
 };
 
 export const DECK_META: Record<
