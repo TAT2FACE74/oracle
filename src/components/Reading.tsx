@@ -30,18 +30,18 @@ function buildSynthesis(drawn: DrawnCard[]): string {
 
   const tone =
     revCount >= 3
-      ? 'The messengers lean into shadow — inverted forces demand honesty before any rise.'
+      ? 'Shadow falls across most of this spread — not as punishment, but as inventory. What stands inverted here is what you have been carrying unnamed.'
       : revCount === 0
-        ? 'The messengers stand upright; the current favors deliberate, costly alignment.'
-        : 'Upright and shadow braid together; neither will be bargained away.';
+        ? 'Every messenger stands upright. The current favors the one who finally acts on what they already know.'
+        : 'Light and shadow are braided through this spread, the way they are in every real life. Neither side is lying to you.';
 
   return `${tone} Your Shadow (${shadow.card.name}${
     shadow.reversed ? ', in shadow' : ''
-  }) stains the field, while the Ascension Path (${ascension.card.name}${
+  }) is the weight under the floorboards — the thing you feel before you can say it. Your Ascension Path (${ascension.card.name}${
     ascension.reversed ? ', in shadow' : ''
-  }) names the harder trajectory. Between them — ${names[1]}, ${names[2]}, and ${
+  }) is not the easy road; it is the honest one. Between them — ${names[1]}, ${names[2]}, and ${
     names[3]
-  } — the near work is mercilessly clear: name what stalks you, choose at the crossroads, follow the hidden thread, and walk the timeline without soft lies. The Fortune Teller does not rescue you. She reveals the current. You steer — or you are steered.`;
+  } — the near work is plain: name what stalks you, choose at the crossroads without bargaining, follow the thread you keep pretending not to see, and walk your coming days without soft lies. The Oracle does not carry you out of your life. It shows you the current. You steer — or you are steered.`;
 }
 
 export function Reading({
