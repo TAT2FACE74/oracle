@@ -37,7 +37,7 @@ const memoryCache = new Map<string, string>();
  * voice_id + model), so any voice change automatically abandons stale
  * audio instead of replaying the previous voice from the phone's cache.
  */
-const CACHE_NAME = 'oracle-tts-v3';
+const CACHE_NAME = 'oracle-tts-v4';
 
 let voiceTagPromise: Promise<string> | null = null;
 
@@ -153,6 +153,7 @@ export function useSpeech() {
     if (typeof caches !== 'undefined') {
       void caches.delete('oracle-tts-v1');
       void caches.delete('oracle-tts-v2-eric');
+      void caches.delete('oracle-tts-v3');
     }
   }, []);
 
