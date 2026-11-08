@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 const NARRATION = [
-  'Beyond ordinary sight, the Ash Realms keep their own ledger. Fate does not ask permission — it sends messengers.',
-  'You stand at a threshold of bone and cinder, where veiled courts weigh what you will not admit.',
-  'Here, Source speaks in consequence, heat, and silence. Timelines harden. Soft lies go first into the fire.',
-  'Ascension is not escape. It is surviving the truth with your spine intact. Enter. The Oracle is already watching.',
+  'You did not come here for decoration. You came because something in your life is asking to be seen clearly — and what is seen clearly can finally be carried.',
+  'I am Odin, keeper of the Ash Realms. I traded an eye for wisdom, so hear me: the truth is almost never the heaviest thing a person carries. The hiding is.',
+  'Here there are no soft lies and no theater. Only the pattern under your days, spoken plainly — your work, your love, your money, your grief — and what they are quietly asking of you.',
+  'Bring your real question — the one beneath the question. The cards will speak as messengers. I will speak as witness. Enter. The Oracle is already watching.',
 ];
 
 interface Props {
