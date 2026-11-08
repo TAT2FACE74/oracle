@@ -58,13 +58,13 @@ export function drawDailyCard(date = todayKey()): { card: OracleCard; reversed: 
 export function buildDailyFortune(card: OracleCard, reversed: boolean): string {
   const orient = reversed ? 'reversed' : 'upright';
   const punch = reversed
-    ? 'Today the messenger leans into shadow — do not flinch.'
-    : 'Today the messenger favors conscious motion — claim the cost.';
+    ? 'Today the messenger walks in shadow — not to frighten you, but to show you what you have been stepping around.'
+    : 'Today the messenger walks in daylight. One clear truth, acted on once, outweighs a week of worry.';
   const aspect = aspectOf(card, reversed);
   return speakFortune(
     aspect,
     `Daily Transmission: ${card.name} (${orient}). ${punch}`,
-  ) + ' Carry this transmission until midnight. The Ash Realms do not repeat themselves lightly.';
+  ) + ' Carry this until midnight. Wisdom you do not use by morning was only entertainment.';
 }
 
 export function getOrCreateDaily(): {
