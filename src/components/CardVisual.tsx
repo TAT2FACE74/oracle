@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import type { DeckId, OracleCard } from '../types';
 import { cardNumeral } from '../data/deck';
 
@@ -23,6 +24,24 @@ export function CardVisual({
   const sizeClass =
     size === 'mini' ? 'mini' : size === 'reading' ? 'reading-size' : '';
 
+  // Mount face-down, then flip on the next frames — a card that mounts already
+  // wearing .flipped never animates, which reads as "the cards don't flip."
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    if (!flipped) {
+      setShown(false);
+      return;
+    }
+    let inner = 0;
+    const outer = requestAnimationFrame(() => {
+      inner = requestAnimationFrame(() => setShown(true));
+    });
+    return () => {
+      cancelAnimationFrame(outer);
+      if (inner) cancelAnimationFrame(inner);
+    };
+  }, [flipped]);
+
   const artSrc = card
     ? `${import.meta.env.BASE_URL}${card.image.replace(/^\//, '')}`
     : '';
@@ -30,8 +49,8 @@ export function CardVisual({
   return (
     <div
       className={`card deck-${deckId} ${premiumArt ? 'premium-art' : ''} ${sizeClass} ${
-        flipped ? 'flipped' : ''
-      } ${reversed && flipped ? 'reversed-face' : ''} ${className}`}
+        shown ? 'flipped' : ''
+      } ${reversed && shown ? 'reversed-face' : ''} ${className}`}
     >
       <div className="card-back">
         <div className="card-border" />

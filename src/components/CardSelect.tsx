@@ -11,18 +11,16 @@ interface Props {
 
 const MAX = 5;
 /** Hold revealed face before tucking into the selected row (cinematic). */
-const REVEAL_HOLD_MS = 3500;
-const SWIPE_THRESHOLD = 45;
-const TAP_THRESHOLD = 12;
+const REVEAL_HOLD_MS = 3200;
+/** Release past this distance (px) and the swipe turns the card. */
+const SWIPE_THRESHOLD = 55;
+/** Movement under this (px) counts as a tap, not a drag. */
+const TAP_THRESHOLD = 10;
 
-type DragState = {
-  x: number;
-  y: number;
-  active: boolean;
-  /** 'touch' | 'pointer' — ignore the other modality while one is active */
-  mode: 'touch' | 'pointer' | null;
-  pointerId: number | null;
-};
+function stepForViewport(): number {
+  if (typeof window === 'undefined') return 190;
+  return Math.round(Math.min(215, Math.max(150, window.innerWidth * 0.52)));
+}
 
 export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: Props) {
   const deck = useMemo(() => shuffleDeck(), []);
@@ -31,23 +29,24 @@ export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: 
   const [pending, setPending] = useState<{ card: OracleCard; reversed: boolean } | null>(
     null,
   );
-  const dragRef = useRef<DragState>({
-    x: 0,
-    y: 0,
-    active: false,
-    mode: null,
-    pointerId: null,
-  });
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
+  const [step, setStep] = useState(stepForViewport);
   const wrapRef = useRef<HTMLDivElement>(null);
 
-  // Keep latest callbacks/values for native listeners without rebinding mid-gesture
+  const dragRef = useRef<{
+    active: boolean;
+    pointerId: number | null;
+    startX: number;
+    startY: number;
+    startT: number;
+    startOffset: number;
+  }>({ active: false, pointerId: null, startX: 0, startY: 0, startT: 0, startOffset: 0 });
+
   const pendingRef = useRef(pending);
-  const availableRef = useRef<OracleCard[]>([]);
-  const indexRef = useRef(index);
-  const goRef = useRef<(dir: number) => void>(() => {});
-  const selectCurrentRef = useRef<() => void>(() => {});
+  pendingRef.current = pending;
+  const selectedCountRef = useRef(selected.length);
+  selectedCountRef.current = selected.length;
 
   const available = useMemo(() => {
     const ids = new Set(selected.map((s) => s.card.id));
@@ -55,22 +54,23 @@ export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: 
     return deck.filter((c) => !ids.has(c.id));
   }, [deck, selected, pending]);
 
-  pendingRef.current = pending;
+  const availableRef = useRef(available);
   availableRef.current = available;
-  indexRef.current = index;
 
-  // Clamp index after removals only — never fight go() mid-drag
   useEffect(() => {
-    if (pending) return;
-    if (dragRef.current.active) return;
+    const onResize = () => setStep(stepForViewport());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Clamp index after removals only — never fight a drag in progress
+  useEffect(() => {
+    if (pending || dragRef.current.active) return;
     if (!available.length) {
       setIndex(0);
       return;
     }
-    setIndex((i) => {
-      if (i >= 0 && i < available.length) return i;
-      return ((i % available.length) + available.length) % available.length;
-    });
+    setIndex((i) => ((i % available.length) + available.length) % available.length);
   }, [available.length, pending]);
 
   const carouselCards = useMemo(() => {
@@ -84,23 +84,20 @@ export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: 
       : ((index % carouselCards.length) + carouselCards.length) % carouselCards.length
     : 0;
 
-  const go = useCallback(
-    (dir: number) => {
-      if (pendingRef.current || !availableRef.current.length) return;
-      const len = availableRef.current.length;
-      setIndex((i) => ((i + dir) % len + len) % len);
-      setDragX(0);
-      setDragging(false);
-    },
-    [],
-  );
+  const go = useCallback((dir: number) => {
+    if (pendingRef.current || !availableRef.current.length) return;
+    const len = availableRef.current.length;
+    setIndex((i) => (((i + dir) % len) + len) % len);
+  }, []);
 
   const selectAt = useCallback(
     (cardIndex: number) => {
-      if (pending || selected.length >= MAX || !available.length) return;
-      const len = available.length;
+      if (pendingRef.current || selectedCountRef.current >= MAX) return;
+      const avail = availableRef.current;
+      if (!avail.length) return;
+      const len = avail.length;
       const i = ((cardIndex % len) + len) % len;
-      const card = available[i];
+      const card = avail[i];
       if (!card) return;
       const reversed = Math.random() < 0.3;
       setPending({ card, reversed });
@@ -123,152 +120,83 @@ export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: 
         setDragX(0);
       }, REVEAL_HOLD_MS);
     },
-    [available, onComplete, pending, selected.length],
+    [onComplete],
   );
 
   const selectCurrent = useCallback(() => {
-    selectAt(safeIndex);
-  }, [safeIndex, selectAt]);
+    if (pendingRef.current) return;
+    const avail = availableRef.current;
+    if (!avail.length) return;
+    const idx =
+      ((index % avail.length) + avail.length) % avail.length;
+    selectAt(idx);
+  }, [index, selectAt]);
 
-  goRef.current = go;
+  const selectCurrentRef = useRef(selectCurrent);
   selectCurrentRef.current = selectCurrent;
+  const goRef = useRef(go);
+  goRef.current = go;
 
-  const finishDrag = useCallback((clientX: number, clientY: number) => {
-    const d = dragRef.current;
-    if (!d.active) return;
-    const dx = clientX - d.x;
-    const dy = clientY - d.y;
-    d.active = false;
-    d.mode = null;
-    d.pointerId = null;
-    setDragging(false);
+  /* ——— One gesture system: Pointer Events (touch + mouse), capture on the wrap ——— */
 
-    if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy) * 0.6) {
-      // Swipe only changes index — never selects
-      goRef.current(dx < 0 ? 1 : -1);
-    } else if (Math.abs(dx) < TAP_THRESHOLD && Math.abs(dy) < TAP_THRESHOLD) {
-      selectCurrentRef.current();
-    } else {
-      setDragX(0);
-    }
-  }, []);
-
-  const cancelDrag = useCallback(() => {
-    if (!dragRef.current.active) return;
-    dragRef.current.active = false;
-    dragRef.current.mode = null;
-    dragRef.current.pointerId = null;
-    setDragging(false);
-    setDragX(0);
-  }, []);
-
-  // Native touch listeners — mobile-proof (passive: false so preventDefault works)
-  useEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-
-    const onTouchStart = (e: TouchEvent) => {
-      if (pendingRef.current) return;
-      if (e.touches.length !== 1) return;
-      const t = e.touches[0];
-      dragRef.current = {
-        x: t.clientX,
-        y: t.clientY,
-        active: true,
-        mode: 'touch',
-        pointerId: null,
-      };
-      setDragging(true);
-      setDragX(0);
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      const d = dragRef.current;
-      if (!d.active || d.mode !== 'touch') return;
-      if (e.touches.length !== 1) return;
-      const t = e.touches[0];
-      const dx = t.clientX - d.x;
-      const dy = t.clientY - d.y;
-      // Lock horizontal carousel; stop page scroll while dragging sideways
-      if (Math.abs(dx) > Math.abs(dy) || Math.abs(dx) > 8) {
-        e.preventDefault();
-      }
-      setDragX(dx);
-    };
-
-    const onTouchEnd = (e: TouchEvent) => {
-      const d = dragRef.current;
-      if (!d.active || d.mode !== 'touch') return;
-      const t = e.changedTouches[0];
-      if (!t) {
-        cancelDrag();
-        return;
-      }
-      finishDrag(t.clientX, t.clientY);
-    };
-
-    const onTouchCancel = () => {
-      if (dragRef.current.mode === 'touch') cancelDrag();
-    };
-
-    el.addEventListener('touchstart', onTouchStart, { passive: true });
-    el.addEventListener('touchmove', onTouchMove, { passive: false });
-    el.addEventListener('touchend', onTouchEnd, { passive: true });
-    el.addEventListener('touchcancel', onTouchCancel, { passive: true });
-
-    return () => {
-      el.removeEventListener('touchstart', onTouchStart);
-      el.removeEventListener('touchmove', onTouchMove);
-      el.removeEventListener('touchend', onTouchEnd);
-      el.removeEventListener('touchcancel', onTouchCancel);
-    };
-  }, [cancelDrag, finishDrag]);
-
-  // Pointer fallback (mouse / pen / desktop)
   const onPointerDown = (e: React.PointerEvent) => {
-    if (pending) return;
-    if (e.pointerType === 'touch') return; // native touch handlers own this
+    if (pendingRef.current) return;
     if (e.button !== undefined && e.button !== 0) return;
+    const slot = (e.target as HTMLElement).closest('[data-offset]');
+    const startOffset = slot ? Number(slot.getAttribute('data-offset')) || 0 : 0;
     dragRef.current = {
-      x: e.clientX,
-      y: e.clientY,
       active: true,
-      mode: 'pointer',
       pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      startT: performance.now(),
+      startOffset,
     };
-    setDragging(true);
-    setDragX(0);
     try {
       (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     } catch {
       /* ignore */
     }
+    setDragging(true);
+    setDragX(0);
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
     const d = dragRef.current;
-    if (!d.active || d.mode !== 'pointer') return;
-    setDragX(e.clientX - d.x);
+    if (!d.active || d.pointerId !== e.pointerId) return;
+    setDragX(e.clientX - d.startX);
   };
 
-  const endPointer = (e: React.PointerEvent) => {
+  const endDrag = (e: React.PointerEvent, cancelled: boolean) => {
     const d = dragRef.current;
-    if (!d.active || d.mode !== 'pointer') return;
+    if (!d.active || d.pointerId !== e.pointerId) return;
+    d.active = false;
+    d.pointerId = null;
     try {
       (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
     } catch {
       /* ignore */
     }
-    finishDrag(e.clientX, e.clientY);
-  };
+    setDragging(false);
 
-  const onSideClick = (offset: number) => {
-    if (pending) return;
-    if (offset === 0) {
-      selectCurrent();
+    const dx = e.clientX - d.startX;
+    const dy = e.clientY - d.startY;
+    const dt = performance.now() - d.startT;
+    setDragX(0);
+    if (cancelled || pendingRef.current) return;
+
+    if (Math.abs(dx) >= SWIPE_THRESHOLD && Math.abs(dx) >= Math.abs(dy)) {
+      goRef.current(dx < 0 ? 1 : -1);
       return;
     }
-    go(offset > 0 ? 1 : -1);
+    if (Math.abs(dx) < TAP_THRESHOLD && Math.abs(dy) < TAP_THRESHOLD && dt < 600) {
+      // A tap: center card selects; a side card slides to center
+      if (d.startOffset === 0) {
+        selectCurrentRef.current();
+      } else {
+        goRef.current(d.startOffset > 0 ? 1 : -1);
+      }
+    }
   };
 
   const visible: { card: OracleCard; offset: number }[] = [];
@@ -288,55 +216,31 @@ export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: 
       </div>
 
       <div className="carousel-controls">
-        <button
-          type="button"
-          className="carousel-nav"
-          aria-label="Previous card"
-          disabled={!!pending || available.length < 2}
-          onClick={() => go(-1)}
-        >
-          ‹
-        </button>
-
         <div
           ref={wrapRef}
           className={`carousel-wrap${dragging ? ' is-dragging' : ''}`}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
-          onPointerUp={endPointer}
-          onPointerCancel={(e) => {
-            if (dragRef.current.mode !== 'pointer') return;
-            try {
-              (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
-            } catch {
-              /* ignore */
-            }
-            cancelDrag();
-          }}
+          onPointerUp={(e) => endDrag(e, false)}
+          onPointerCancel={(e) => endDrag(e, true)}
         >
           <div className="carousel-track">
             {visible.map(({ card, offset }) => {
               const isPending = pending?.card.id === card.id && offset === 0;
-              const x = offset * 118 + (offset === 0 ? dragX * 0.45 : 0);
-              const scale = offset === 0 ? 1 : 0.78 - Math.abs(offset) * 0.06;
-              const opacity = offset === 0 ? 1 : 0.45 - Math.abs(offset) * 0.1;
-              const rot = offset * 6;
+              const x = offset * step + dragX;
+              const scale = offset === 0 ? 1 : 0.8 - Math.abs(offset) * 0.07;
+              const opacity = offset === 0 ? 1 : 0.5 - Math.abs(offset) * 0.12;
+              const rot = offset * 5;
               return (
                 <div
                   key={`${card.id}-${offset}`}
+                  data-offset={offset}
                   className={`card-slot ${offset === 0 ? 'center' : ''}`}
                   style={{
                     transform: `translateX(${x}px) scale(${scale}) rotate(${rot}deg)`,
-                    opacity: Math.max(0.15, opacity),
+                    opacity: Math.max(0.12, opacity),
                     zIndex: 5 - Math.abs(offset),
-                    pointerEvents: dragging ? 'none' : 'auto',
-                    transition: dragging && offset === 0 ? 'none' : undefined,
-                  }}
-                  onClick={(ev) => {
-                    if (offset === 0) return;
-                    ev.stopPropagation();
-                    if (pending || dragging) return;
-                    onSideClick(offset);
+                    transition: dragging ? 'none' : undefined,
                   }}
                 >
                   <CardVisual
@@ -351,19 +255,9 @@ export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: 
             })}
           </div>
         </div>
-
-        <button
-          type="button"
-          className="carousel-nav"
-          aria-label="Next card"
-          disabled={!!pending || available.length < 2}
-          onClick={() => go(1)}
-        >
-          ›
-        </button>
       </div>
 
-      <p className="hint-swipe">Swipe or use arrows · Tap center to select</p>
+      <p className="hint-swipe">Swipe to browse · Tap the card to choose it</p>
 
       <button
         type="button"
