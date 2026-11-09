@@ -32,12 +32,12 @@ async function sha256(text: string): Promise<string> {
 const memoryCache = new Map<string, string>();
 
 /**
- * Single-voice era (2026-11-08): Fish Audio "Odin" for every line.
+ * Single-voice era (2026-11-08): Fish Audio "Tat2face Oracle" for every line.
  * The cache key is tagged with the voice the SERVER reports (provider +
  * voice_id + model), so any voice change automatically abandons stale
  * audio instead of replaying the previous voice from the phone's cache.
  */
-const CACHE_NAME = 'oracle-tts-v4';
+const CACHE_NAME = 'oracle-tts-v5';
 
 let voiceTagPromise: Promise<string> | null = null;
 
@@ -45,20 +45,20 @@ function resolveVoiceTag(): Promise<string> {
   if (!voiceTagPromise) {
     voiceTagPromise = (async () => {
       const endpoint = ttsEndpoint();
-      if (!endpoint) return 'fish-odin';
+      if (!endpoint) return 'fish-tat2face-oracle';
       try {
         const res = await fetch(`${endpoint}/api/tts`);
-        if (!res.ok) return 'fish-odin';
+        if (!res.ok) return 'fish-tat2face-oracle';
         const cfg = (await res.json()) as {
           provider?: string;
           voice_id?: string;
           model?: string;
         };
-        return [cfg.provider || 'fish', cfg.voice_id || 'odin', cfg.model || '']
+        return [cfg.provider || 'fish', cfg.voice_id || 'tat2face-oracle', cfg.model || '']
           .filter(Boolean)
           .join('|');
       } catch {
-        return 'fish-odin';
+        return 'fish-tat2face-oracle';
       }
     })();
   }
@@ -90,8 +90,8 @@ async function cachePut(key: string, blob: Blob) {
 }
 
 async function fetchNeuralAudio(text: string): Promise<string | null> {
-  // Static clips disabled until they are regenerated in the Odin voice —
-  // the old clips are older voices and break the one-voice rule.
+  // Static clips disabled until they are regenerated in the Tat2face
+  // Oracle voice — the old clips are older voices and break the rule.
   const STATIC_ENABLED = false;
   const staticPath = STATIC_ENABLED ? STATIC_VOICE[text] : undefined;
   if (staticPath) {
@@ -148,12 +148,13 @@ export function useSpeech() {
 
   useEffect(() => () => stop(), [stop]);
 
-  // Drop every pre-Odin audio cache so old voices can never replay.
+  // Drop every older audio cache so old voices/speeds can never replay.
   useEffect(() => {
     if (typeof caches !== 'undefined') {
       void caches.delete('oracle-tts-v1');
       void caches.delete('oracle-tts-v2-eric');
       void caches.delete('oracle-tts-v3');
+      void caches.delete('oracle-tts-v4');
     }
   }, []);
 
@@ -222,5 +223,17 @@ export function useSpeech() {
     });
   }, []);
 
-  return { speak, stop, muted, toggleMute, speaking, caption, voicesReady: true };
+  // Warm the audio cache for a line without playing it, so when the user
+  // actually asks for it (tap a card, next narration line) it starts
+  // instantly instead of after a generation delay (Chad, 2026-11-08:
+  // "it should start when I touch the cards").
+  const prefetch = useCallback(
+    (text: string) => {
+      if (muted) return;
+      void fetchNeuralAudio(text).catch(() => undefined);
+    },
+    [muted],
+  );
+
+  return { speak, stop, muted, toggleMute, speaking, caption, voicesReady: true, prefetch };
 }
