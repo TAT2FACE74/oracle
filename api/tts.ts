@@ -2,10 +2,10 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createHash } from 'node:crypto';
 
 /**
- * ONE voice everywhere: the Fish Audio "Odin" voice (Chad's pick, 2026-11-08).
+ * ONE voice everywhere: "Tat2face Oracle", Chad's own Fish Audio creation (2026-11-08). The Oracle is Tat2face himself — never Odin (Chad, 2026-11-08).
  * Set in Vercel env:
  *   FISH_API_KEY   — his Fish Audio API key (secret, never in code)
- *   FISH_VOICE_ID  — the Odin voice model id (reference_id)
+ *   FISH_VOICE_ID  — the Tat2face Oracle voice model id (reference_id)
  *   FISH_MODEL     — optional, defaults to s2.1-pro-free (same engine, no API
  *                    balance needed; set s2.1-pro later for production SLAs)
  * Until FISH_API_KEY + FISH_VOICE_ID exist, the endpoint falls back to the
@@ -16,7 +16,7 @@ const FISH_VOICE_ID =
   process.env.FISH_VOICE_ID || '106415fb288745b0ba1a196f95672ded'; // "Tat2face Oracle" — Chad's OWN Voice Design creation (2026-11-08): extremely deep, bass-heavy, godlike, slow deliberate. He rejected both library picks (7C MAFIA ODIN, GOD VOICE) and made this one himself; it is the final voice unless he says otherwise.
 const FISH_MODEL = process.env.FISH_MODEL || 's2.1-pro-free';
 /** Chad's bar (2026-11-08): slow, clear, godlike. 1.0 was far too fast. */
-const FISH_SPEED = Number(process.env.FISH_SPEED || 0.82);
+const FISH_SPEED = Number(process.env.FISH_SPEED || 0.95);
 const FISH_CONFIGURED = Boolean(FISH_API_KEY && FISH_VOICE_ID);
 
 const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-EricNeural';
@@ -91,7 +91,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ok: true,
       provider: FISH_CONFIGURED ? 'fish' : 'msedge',
       voice_id: FISH_CONFIGURED ? FISH_VOICE_ID : EDGE_VOICE,
-      voice_name: FISH_CONFIGURED ? 'Odin (Fish Audio)' : EDGE_VOICE,
+      voice_name: FISH_CONFIGURED ? 'Tat2face Oracle (Fish Audio)' : EDGE_VOICE,
       model: FISH_CONFIGURED ? FISH_MODEL : undefined,
       rate: FISH_CONFIGURED ? undefined : EDGE_RATE,
       pitch: FISH_CONFIGURED ? undefined : EDGE_PITCH,
@@ -99,9 +99,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       fish_configured: FISH_CONFIGURED,
       fish_voice_id: FISH_VOICE_ID,
       fish_voice_name: 'Tat2face Oracle (created by Chad Kerns)',
-      persona: 'Odin — Oracle of the Ash Realms',
+      persona: 'Tat2face — Oracle of the Ash Realms',
       note: FISH_CONFIGURED
-        ? 'Single voice: Fish Audio Odin, used for every line.'
+        ? 'Single voice: Tat2face Oracle, used for every line.'
         : 'Fish Audio voice selected (Tat2face Oracle, 106415fb288745b0ba1a196f95672ded) but FISH_API_KEY is not set yet — temporary Edge fallback voice.',
     });
   }
