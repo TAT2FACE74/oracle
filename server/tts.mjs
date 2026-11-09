@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
 /**
- * Local dev mirror of api/tts.ts — ONE voice: Fish Audio "Odin".
+ * Local dev mirror of api/tts.ts — ONE voice: "Tat2face Oracle".
  * Needs FISH_API_KEY + FISH_VOICE_ID in env; falls back to the old Edge
  * voice until both are set so the app never goes silent mid-switch.
  */
@@ -12,7 +12,7 @@ const FISH_API_KEY = process.env.FISH_API_KEY || '';
 const FISH_VOICE_ID =
   process.env.FISH_VOICE_ID || '106415fb288745b0ba1a196f95672ded'; // Tat2face Oracle — Chad's own creation
 const FISH_MODEL = process.env.FISH_MODEL || 's2.1-pro-free';
-const FISH_SPEED = Number(process.env.FISH_SPEED || 0.82);
+const FISH_SPEED = Number(process.env.FISH_SPEED || 0.95);
 const FISH_CONFIGURED = Boolean(FISH_API_KEY && FISH_VOICE_ID);
 
 const EDGE_VOICE = process.env.EDGE_TTS_VOICE || 'en-US-EricNeural';
@@ -96,11 +96,11 @@ const server = http.createServer(async (req, res) => {
         ok: true,
         provider: FISH_CONFIGURED ? 'fish' : 'msedge',
         voice_id: FISH_CONFIGURED ? FISH_VOICE_ID : EDGE_VOICE,
-        voice_name: FISH_CONFIGURED ? 'Odin (Fish Audio)' : EDGE_VOICE,
+        voice_name: FISH_CONFIGURED ? 'Tat2face Oracle (Fish Audio)' : EDGE_VOICE,
         model: FISH_CONFIGURED ? FISH_MODEL : undefined,
         configured: true,
         fish_configured: FISH_CONFIGURED,
-        persona: 'Odin — Oracle of the Ash Realms',
+        persona: 'Tat2face — Oracle of the Ash Realms',
       }),
     );
     return;
