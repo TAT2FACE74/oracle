@@ -25,7 +25,7 @@ export default function App() {
   const [drawn, setDrawn] = useState<DrawnCard[]>([]);
   const [upsellBack, setUpsellBack] = useState<Stage>('hub');
   const [checkoutNotice, setCheckoutNotice] = useState<string | null>(null);
-  const { speak, stop, muted, toggleMute } = useSpeech();
+  const { speak, stop, muted, toggleMute, prefetch } = useSpeech();
   const {
     unlocked,
     entitlements,
@@ -112,7 +112,12 @@ export default function App() {
         />
       )}
       {stage === 'intro' && (
-        <Intro onComplete={() => go('incantation')} speak={speak} stop={stop} />
+        <Intro
+          onComplete={() => go('incantation')}
+          speak={speak}
+          stop={stop}
+          prefetch={prefetch}
+        />
       )}
       {stage === 'incantation' && (
         <Incantation onComplete={() => go('ritual')} />
@@ -136,6 +141,7 @@ export default function App() {
           drawn={drawn}
           speak={speak}
           stop={stop}
+          prefetch={prefetch}
           onDrawAgain={drawAgain}
           onUpsell={() => openUpsell('reading')}
           plusUnlocked={unlocked}
