@@ -5,13 +5,14 @@ interface Props {
   onRitual: () => void;
   onDaily: () => void;
   onPlus: () => void;
+  onDeck: () => void;
   plusUnlocked: boolean;
   speak?: (text: string, onEnd?: () => void) => void;
 }
 
 const TAGLINE = 'The Ash Realms do not flatter. Choose your path through the veil.';
 
-export function Hub({ onRitual, onDaily, onPlus, plusUnlocked, speak }: Props) {
+export function Hub({ onRitual, onDaily, onPlus, onDeck, plusUnlocked, speak }: Props) {
   useEffect(() => {
     speak?.(TAGLINE);
   }, [speak]);
@@ -30,6 +31,9 @@ export function Hub({ onRitual, onDaily, onPlus, plusUnlocked, speak }: Props) {
       <div className="hub-actions">
         <button type="button" className="btn-primary" onClick={onRitual}>
           Begin Ritual
+        </button>
+        <button type="button" className="btn-ghost" onClick={onDeck}>
+          Full Deck
         </button>
         <button type="button" className="btn-ghost" onClick={onDaily}>
           Daily Transmission
