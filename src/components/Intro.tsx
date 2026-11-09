@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const NARRATION = [
   'You did not come here for decoration. You came because something in your life is asking to be seen clearly — and what is seen clearly can finally be carried.',
@@ -13,67 +13,77 @@ interface Props {
   stop: () => void;
 }
 
+// Chad's direction (2026-11-08): the intro must be READ ALOUD in the
+// Tat2face Oracle voice — it "wasn't doing that before" because narration
+// sat behind a second "Tap to enter" gate nobody expected. Now the chain
+// starts on its own the moment this screen appears (the BEGIN RITUAL tap
+// just before it is the user gesture phone audio rules need). Tapping the
+// screen restarts the narration if it was interrupted.
+
 export function Intro({ onComplete, speak, stop }: Props) {
-  const [entered, setEntered] = useState(false);
   const [captionIdx, setCaptionIdx] = useState(0);
   const [canSkip, setCanSkip] = useState(false);
+  const startedRef = useRef(false);
+  const cancelledRef = useRef(false);
 
   const finish = useCallback(() => {
+    cancelledRef.current = true;
     stop();
     onComplete();
   }, [onComplete, stop]);
 
-  useEffect(() => {
-    if (!entered) return;
-    const t = window.setTimeout(() => setCanSkip(true), 3000);
-    return () => clearTimeout(t);
-  }, [entered]);
-
-  useEffect(() => {
-    if (!entered) return;
-    let cancelled = false;
-
+  const startNarration = useCallback(() => {
+    cancelledRef.current = false;
     const speakNext = (i: number) => {
-      if (cancelled || i >= NARRATION.length) {
-        if (!cancelled) finish();
+      if (cancelledRef.current) return;
+      if (i >= NARRATION.length) {
+        finish();
         return;
       }
       setCaptionIdx(i);
-      speak(NARRATION[i], () => {
-        if (!cancelled) speakNext(i + 1);
-      });
+      speak(NARRATION[i], () => speakNext(i + 1));
     };
-
     speakNext(0);
-    return () => {
-      cancelled = true;
-    };
-  }, [entered, speak, finish]);
+  }, [speak, finish]);
 
-  const handleEnter = () => {
-    if (entered) return;
-    setEntered(true);
+  useEffect(() => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    const skipT = window.setTimeout(() => setCanSkip(true), 3000);
+    startNarration();
+    return () => {
+      clearTimeout(skipT);
+      cancelledRef.current = true;
+    };
+  }, [startNarration]);
+
+  const handleTap = () => {
+    // A tap while captions are up restarts the spoken narration from the
+    // top — the recovery if a browser swallowed the first attempt.
+    stop();
+    startNarration();
   };
 
   return (
-    <div className="stage intro" onClick={entered ? undefined : handleEnter}>
+    <div className="stage intro" onClick={handleTap}>
       <div className="intro-orb" aria-hidden />
       <h1 className="title-oracle">Oracle</h1>
       <p className="deck-subtitle">Veil of the Ash Realms</p>
       <p className="teller-credit">The Fortune Teller · Elder of the Crossroads</p>
-      {!entered ? (
-        <p className="tap-enter">Tap to enter</p>
-      ) : (
-        <>
-          <div className="caption-box fade-in">
-            <p className="caption">{NARRATION[captionIdx]}</p>
-          </div>
-          {canSkip && (
-            <button type="button" className="skip-hint btn-ghost" onClick={finish}>
-              Skip
-            </button>
-          )}
-        </>
+      <div className="caption-box fade-in">
+        <p className="caption">{NARRATION[captionIdx]}</p>
+      </div>
+      {canSkip && (
+        <button
+          type="button"
+          className="skip-hint btn-ghost"
+          onClick={(e) => {
+            e.stopPropagation();
+            finish();
+          }}
+        >
+          Skip
+        </button>
       )}
     </div>
   );

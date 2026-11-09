@@ -49,8 +49,8 @@ export function Cinematic({ onComplete }: Props) {
       <video
         ref={videoRef}
         className="cinematic-video"
-        src={`${import.meta.env.BASE_URL}oracle-intro.mp4`}
-        poster={`${import.meta.env.BASE_URL}oracle-intro-poster.jpg`}
+        src={`${import.meta.env.BASE_URL}oracle-opener.mp4`}
+        poster={`${import.meta.env.BASE_URL}oracle-opener-poster.jpg`}
         autoPlay
         muted
         playsInline
