@@ -13,7 +13,7 @@ import { createHash } from 'node:crypto';
  */
 const FISH_API_KEY = process.env.FISH_API_KEY || '';
 const FISH_VOICE_ID =
-  process.env.FISH_VOICE_ID || '3d9fca75027f4a86a677dd7044996a87'; // GOD VOICE by khankaif96141 — slow, deep, all-knowing (Chad rejected the 207 wpm 7C MAFIA ODIN as too fast/unintelligible, 2026-11-08)
+  process.env.FISH_VOICE_ID || '106415fb288745b0ba1a196f95672ded'; // "Tat2face Oracle" — Chad's OWN Voice Design creation (2026-11-08): extremely deep, bass-heavy, godlike, slow deliberate. He rejected both library picks (7C MAFIA ODIN, GOD VOICE) and made this one himself; it is the final voice unless he says otherwise.
 const FISH_MODEL = process.env.FISH_MODEL || 's2.1-pro-free';
 /** Chad's bar (2026-11-08): slow, clear, godlike. 1.0 was far too fast. */
 const FISH_SPEED = Number(process.env.FISH_SPEED || 0.82);
@@ -98,11 +98,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       configured: true,
       fish_configured: FISH_CONFIGURED,
       fish_voice_id: FISH_VOICE_ID,
-      fish_voice_name: 'GOD VOICE by khankaif96141 (Oracle Odin)',
+      fish_voice_name: 'Tat2face Oracle (created by Chad Kerns)',
       persona: 'Odin — Oracle of the Ash Realms',
       note: FISH_CONFIGURED
         ? 'Single voice: Fish Audio Odin, used for every line.'
-        : 'Fish Audio voice selected (GOD VOICE, 3d9fca75027f4a86a677dd7044996a87) but FISH_API_KEY is not set yet — temporary Edge fallback voice.',
+        : 'Fish Audio voice selected (Tat2face Oracle, 106415fb288745b0ba1a196f95672ded) but FISH_API_KEY is not set yet — temporary Edge fallback voice.',
     });
   }
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
