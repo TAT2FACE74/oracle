@@ -10,7 +10,7 @@ import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
  */
 const FISH_API_KEY = process.env.FISH_API_KEY || '';
 const FISH_VOICE_ID =
-  process.env.FISH_VOICE_ID || '3d9fca75027f4a86a677dd7044996a87'; // GOD VOICE by khankaif96141
+  process.env.FISH_VOICE_ID || '106415fb288745b0ba1a196f95672ded'; // Tat2face Oracle — Chad's own creation
 const FISH_MODEL = process.env.FISH_MODEL || 's2.1-pro-free';
 const FISH_SPEED = Number(process.env.FISH_SPEED || 0.82);
 const FISH_CONFIGURED = Boolean(FISH_API_KEY && FISH_VOICE_ID);
