@@ -10,201 +10,138 @@ interface Props {
 }
 
 const MAX = 5;
-/** Hold revealed face before tucking into the selected row (cinematic). */
+/** Hold the revealed face before it flips back (time to actually read it). */
 const REVEAL_HOLD_MS = 3200;
-/** Release past this distance (px) and the swipe turns the card. */
-const SWIPE_THRESHOLD = 55;
-/** Movement under this (px) counts as a tap, not a drag. */
-const TAP_THRESHOLD = 10;
+/** Time for the flip-back animation before the river resumes. */
+const FLIP_BACK_MS = 780;
+/** Seconds for one card-width of travel — brisk, but tappable. */
+const SECONDS_PER_CARD = 0.85;
 
-function stepForViewport(): number {
-  if (typeof window === 'undefined') return 190;
-  return Math.round(Math.min(215, Math.max(150, window.innerWidth * 0.52)));
+function pitchForViewport(): number {
+  if (typeof window === 'undefined') return 326;
+  return Math.round(Math.min(310, window.innerWidth * 0.76)) + 16;
 }
 
+type Phase = 'flowing' | 'settling' | 'revealed' | 'returning';
+
+/**
+ * The River (Chad's design, 2026-11-08): card backs fly right → left on
+ * their own, almost full-screen. The user taps TAP TO CHOOSE (or the river
+ * itself) — the stream settles the nearest card dead-center, a shimmer ring
+ * runs around its edges, it flips and shows its face, holds, flips back,
+ * tucks into the chosen row, and the river runs again. No swiping, no
+ * arrows — his phone never liked the swipe, so the river replaced it.
+ */
 export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: Props) {
   const deck = useMemo(() => shuffleDeck(), []);
-  const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<DrawnCard[]>([]);
-  const [pending, setPending] = useState<{ card: OracleCard; reversed: boolean } | null>(
-    null,
-  );
-  const [dragX, setDragX] = useState(0);
-  const [dragging, setDragging] = useState(false);
-  const [step, setStep] = useState(stepForViewport);
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const [phase, setPhase] = useState<Phase>('flowing');
+  const [scroll, setScroll] = useState(0);
+  const [pitch, setPitch] = useState(pitchForViewport);
+  const [caught, setCaught] = useState<{
+    abs: number;
+    card: OracleCard;
+    reversed: boolean;
+  } | null>(null);
 
-  const dragRef = useRef<{
-    active: boolean;
-    pointerId: number | null;
-    startX: number;
-    startY: number;
-    startT: number;
-    startOffset: number;
-  }>({ active: false, pointerId: null, startX: 0, startY: 0, startT: 0, startOffset: 0 });
+  const scrollRef = useRef(0);
+  const phaseRef = useRef<Phase>('flowing');
+  phaseRef.current = phase;
+  const targetRef = useRef<number | null>(null);
+  const timersRef = useRef<number[]>([]);
 
-  const pendingRef = useRef(pending);
-  pendingRef.current = pending;
-  const selectedCountRef = useRef(selected.length);
-  selectedCountRef.current = selected.length;
+  const selectedRef = useRef(selected);
+  selectedRef.current = selected;
 
   const available = useMemo(() => {
     const ids = new Set(selected.map((s) => s.card.id));
-    if (pending) ids.add(pending.card.id);
     return deck.filter((c) => !ids.has(c.id));
-  }, [deck, selected, pending]);
-
+  }, [deck, selected]);
   const availableRef = useRef(available);
   availableRef.current = available;
 
   useEffect(() => {
-    const onResize = () => setStep(stepForViewport());
+    const onResize = () => setPitch(pitchForViewport());
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Clamp index after removals only — never fight a drag in progress
-  useEffect(() => {
-    if (pending || dragRef.current.active) return;
-    if (!available.length) {
-      setIndex(0);
-      return;
-    }
-    setIndex((i) => ((i % available.length) + available.length) % available.length);
-  }, [available.length, pending]);
-
-  const carouselCards = useMemo(() => {
-    if (pending) return [pending.card, ...available];
-    return available;
-  }, [available, pending]);
-
-  const safeIndex = carouselCards.length
-    ? pending
-      ? 0
-      : ((index % carouselCards.length) + carouselCards.length) % carouselCards.length
-    : 0;
-
-  const go = useCallback((dir: number) => {
-    if (pendingRef.current || !availableRef.current.length) return;
-    const len = availableRef.current.length;
-    setIndex((i) => (((i + dir) % len) + len) % len);
-  }, []);
-
-  const selectAt = useCallback(
-    (cardIndex: number) => {
-      if (pendingRef.current || selectedCountRef.current >= MAX) return;
-      const avail = availableRef.current;
-      if (!avail.length) return;
-      const len = avail.length;
-      const i = ((cardIndex % len) + len) % len;
-      const card = avail[i];
-      if (!card) return;
-      const reversed = Math.random() < 0.3;
-      setPending({ card, reversed });
-      setDragX(0);
-      setDragging(false);
-
-      window.setTimeout(() => {
-        setSelected((prev) => {
-          const next: DrawnCard[] = [
-            ...prev,
-            { card, reversed, position: prev.length },
-          ];
-          if (next.length >= MAX) {
-            window.setTimeout(() => onComplete(next), 450);
-          }
-          return next;
-        });
-        setPending(null);
-        setIndex(0);
-        setDragX(0);
-      }, REVEAL_HOLD_MS);
+  useEffect(
+    () => () => {
+      timersRef.current.forEach((t) => window.clearTimeout(t));
     },
-    [onComplete],
+    [],
   );
 
-  const selectCurrent = useCallback(() => {
-    if (pendingRef.current) return;
+  // The river engine: one rAF loop drives flow and the settle tween.
+  useEffect(() => {
+    let raf = 0;
+    let last = performance.now();
+    const tick = (now: number) => {
+      const dt = Math.min(64, now - last);
+      last = now;
+      const p = phaseRef.current;
+      if (p === 'flowing') {
+        scrollRef.current += (pitch / SECONDS_PER_CARD) * (dt / 1000);
+        setScroll(scrollRef.current);
+      } else if (p === 'settling' && targetRef.current != null) {
+        const target = targetRef.current;
+        const diff = target - scrollRef.current;
+        const step = diff * Math.min(1, dt / 70);
+        scrollRef.current = Math.abs(diff) < 0.7 ? target : scrollRef.current + step;
+        setScroll(scrollRef.current);
+        if (scrollRef.current === target) {
+          targetRef.current = null;
+          setPhase('revealed');
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [pitch]);
+
+  // Revealed → flip back → commit the catch → river runs again.
+  useEffect(() => {
+    if (phase !== 'revealed' || !caught) return;
+    const hold = window.setTimeout(() => setPhase('returning'), REVEAL_HOLD_MS);
+    timersRef.current.push(hold);
+    return () => window.clearTimeout(hold);
+  }, [phase, caught]);
+
+  useEffect(() => {
+    if (phase !== 'returning' || !caught) return;
+    const t = window.setTimeout(() => {
+      const next: DrawnCard[] = [
+        ...selectedRef.current,
+        { card: caught.card, reversed: caught.reversed, position: selectedRef.current.length },
+      ];
+      setSelected(next);
+      setCaught(null);
+      if (next.length >= MAX) {
+        window.setTimeout(() => onComplete(next), 450);
+      } else {
+        setPhase('flowing');
+      }
+    }, FLIP_BACK_MS);
+    timersRef.current.push(t);
+    return () => window.clearTimeout(t);
+  }, [phase, caught, onComplete]);
+
+  const beginStop = useCallback(() => {
+    if (phaseRef.current !== 'flowing') return;
     const avail = availableRef.current;
     if (!avail.length) return;
-    const idx =
-      ((index % avail.length) + avail.length) % avail.length;
-    selectAt(idx);
-  }, [index, selectAt]);
+    const abs = Math.round(scrollRef.current / pitch);
+    targetRef.current = abs * pitch;
+    const card = avail[((abs % avail.length) + avail.length) % avail.length];
+    setCaught({ abs, card, reversed: Math.random() < 0.3 });
+    setPhase('settling');
+  }, [pitch]);
 
-  const selectCurrentRef = useRef(selectCurrent);
-  selectCurrentRef.current = selectCurrent;
-  const goRef = useRef(go);
-  goRef.current = go;
-
-  /* ——— One gesture system: Pointer Events (touch + mouse), capture on the wrap ——— */
-
-  const onPointerDown = (e: React.PointerEvent) => {
-    if (pendingRef.current) return;
-    if (e.button !== undefined && e.button !== 0) return;
-    const slot = (e.target as HTMLElement).closest('[data-offset]');
-    const startOffset = slot ? Number(slot.getAttribute('data-offset')) || 0 : 0;
-    dragRef.current = {
-      active: true,
-      pointerId: e.pointerId,
-      startX: e.clientX,
-      startY: e.clientY,
-      startT: performance.now(),
-      startOffset,
-    };
-    try {
-      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    } catch {
-      /* ignore */
-    }
-    setDragging(true);
-    setDragX(0);
-  };
-
-  const onPointerMove = (e: React.PointerEvent) => {
-    const d = dragRef.current;
-    if (!d.active || d.pointerId !== e.pointerId) return;
-    setDragX(e.clientX - d.startX);
-  };
-
-  const endDrag = (e: React.PointerEvent, cancelled: boolean) => {
-    const d = dragRef.current;
-    if (!d.active || d.pointerId !== e.pointerId) return;
-    d.active = false;
-    d.pointerId = null;
-    try {
-      (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
-    } catch {
-      /* ignore */
-    }
-    setDragging(false);
-
-    const dx = e.clientX - d.startX;
-    const dy = e.clientY - d.startY;
-    const dt = performance.now() - d.startT;
-    setDragX(0);
-    if (cancelled || pendingRef.current) return;
-
-    if (Math.abs(dx) >= SWIPE_THRESHOLD && Math.abs(dx) >= Math.abs(dy)) {
-      goRef.current(dx < 0 ? 1 : -1);
-      return;
-    }
-    if (Math.abs(dx) < TAP_THRESHOLD && Math.abs(dy) < TAP_THRESHOLD && dt < 600) {
-      // A tap: center card selects; a side card slides to center
-      if (d.startOffset === 0) {
-        selectCurrentRef.current();
-      } else {
-        goRef.current(d.startOffset > 0 ? 1 : -1);
-      }
-    }
-  };
-
-  const visible: { card: OracleCard; offset: number }[] = [];
-  for (let o = -2; o <= 2; o++) {
-    if (!carouselCards.length) break;
-    const i = (safeIndex + o + carouselCards.length * 10) % carouselCards.length;
-    visible.push({ card: carouselCards[i], offset: o });
-  }
+  const centerAbs = Math.round(scroll / pitch);
+  const slots: number[] = [];
+  for (let a = centerAbs - 2; a <= centerAbs + 2; a++) slots.push(a);
 
   return (
     <div className="stage select-stage fade-in">
@@ -215,58 +152,45 @@ export function CardSelect({ onComplete, deckId = 'veil', premiumArt = false }: 
         </div>
       </div>
 
-      <div className="carousel-controls">
-        <div
-          ref={wrapRef}
-          className={`carousel-wrap${dragging ? ' is-dragging' : ''}`}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={(e) => endDrag(e, false)}
-          onPointerCancel={(e) => endDrag(e, true)}
-        >
-          <div className="carousel-track">
-            {visible.map(({ card, offset }) => {
-              const isPending = pending?.card.id === card.id && offset === 0;
-              const x = offset * step + dragX;
-              const scale = offset === 0 ? 1 : 0.8 - Math.abs(offset) * 0.07;
-              const opacity = offset === 0 ? 1 : 0.5 - Math.abs(offset) * 0.12;
-              const rot = offset * 5;
-              return (
-                <div
-                  key={`${card.id}-${offset}`}
-                  data-offset={offset}
-                  className={`card-slot ${offset === 0 ? 'center' : ''}`}
-                  style={{
-                    transform: `translateX(${x}px) scale(${scale}) rotate(${rot}deg)`,
-                    opacity: Math.max(0.12, opacity),
-                    zIndex: 5 - Math.abs(offset),
-                    transition: dragging ? 'none' : undefined,
-                  }}
-                >
-                  <CardVisual
-                    card={isPending ? card : undefined}
-                    flipped={!!isPending}
-                    reversed={isPending ? pending!.reversed : false}
-                    deckId={deckId}
-                    premiumArt={premiumArt}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
+      <div className="stream-wrap" onClick={beginStop}>
+        {slots.map((a) => {
+          const isCaught = caught?.abs === a;
+          const x = a * pitch - scroll;
+          const dist = Math.abs(x) / pitch;
+          const scale = Math.max(0.78, 1 - dist * 0.09);
+          const opacity = Math.max(0.25, 1 - dist * 0.28);
+          return (
+            <div
+              key={`s${a}`}
+              className={`card-slot${isCaught ? ' slot-chosen' : ''}`}
+              style={{
+                transform: `translateX(${x}px) scale(${scale})`,
+                opacity: isCaught ? 1 : opacity,
+                zIndex: isCaught ? 9 : 5 - Math.min(4, Math.round(dist)),
+                transition: 'none',
+              }}
+            >
+              <CardVisual
+                card={isCaught ? caught!.card : undefined}
+                flipped={isCaught && phase === 'revealed'}
+                reversed={isCaught ? caught!.reversed : false}
+                deckId={deckId}
+                premiumArt={premiumArt}
+              />
+            </div>
+          );
+        })}
       </div>
-
-      <p className="hint-swipe">Swipe to browse · Tap the card to choose it</p>
 
       <button
         type="button"
-        className="btn-primary select-confirm"
-        disabled={!!pending || selected.length >= MAX || !available.length}
-        onClick={selectCurrent}
+        className="btn-primary tap-choose"
+        disabled={phase !== 'flowing' || selected.length >= MAX || !available.length}
+        onClick={beginStop}
       >
-        Select this card
+        Tap to choose
       </button>
+      <p className="hint-swipe">The river runs — tap when it feels right</p>
 
       <div className="selected-row">
         {selected.map((s) => (
