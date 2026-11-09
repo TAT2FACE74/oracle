@@ -7,11 +7,11 @@ interface Props {
 // Chad's ritual sequence (his direction, 2026-11-08): after the incantation
 // the screen goes BLACK, then his second video plays (it replaces the old
 // stare-orb and fire screens), then the screen holds BLACK for a full three
-// seconds, then the card draw opens. The video is landscape, so it plays
-// full-frame on the black stage (contain — nothing cropped).
+// seconds, then the card draw opens. He remade the video in PORTRAIT after
+// the first landscape cut, specifically so it fills the whole screen.
 // Phones force muted autoplay: starts muted with a tap-for-sound chip.
 
-const BLACK_IN_MS = 1200;
+const BLACK_IN_MS = 1500;
 const BLACK_OUT_MS = 3000;
 const HARD_CAP_MS = 24000;
 
@@ -58,8 +58,8 @@ export function RitualGate({ onComplete }: Props) {
           <video
             ref={videoRef}
             className="ritual-video"
-            src={`${import.meta.env.BASE_URL}oracle-ritual.mp4`}
-            poster={`${import.meta.env.BASE_URL}oracle-ritual-poster.jpg`}
+            src={`${import.meta.env.BASE_URL}oracle-ritual2.mp4`}
+            poster={`${import.meta.env.BASE_URL}oracle-ritual2-poster.jpg`}
             autoPlay
             muted
             playsInline
