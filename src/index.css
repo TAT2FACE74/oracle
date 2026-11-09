@@ -1319,6 +1319,98 @@ button {
   right: 18px;
 }
 
+/* —— The River: card backs fly right → left; tap catches one (Chad) —— */
+.stream-wrap {
+  --cw: min(76vw, 310px);
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: calc(var(--cw) * 1.6667 + 24px);
+  max-width: 620px;
+  margin: 0 auto;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+/* The caught card: a gold shimmer ring runs around its edges + a soft glow. */
+@property --ring-a {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.card-slot.slot-chosen {
+  box-shadow: 0 0 38px rgba(212, 175, 55, 0.5);
+  border-radius: 14px;
+}
+
+.card-slot.slot-chosen::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 18px;
+  padding: 3px;
+  background: conic-gradient(
+    from var(--ring-a),
+    transparent 0deg,
+    rgba(252, 246, 186, 0.98) 55deg,
+    rgba(212, 175, 55, 0.9) 90deg,
+    transparent 150deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: ring-spin 1.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes ring-spin {
+  to {
+    --ring-a: 360deg;
+  }
+}
+
+.tap-choose {
+  margin-top: 0.9rem;
+  width: min(300px, 90%);
+  align-self: center;
+}
+
+/* —— Reading: touch a card, hear its message —— */
+.spread-item {
+  cursor: pointer;
+  position: relative;
+}
+
+.spread-item .tap-play-hint {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  font-size: 10px;
+  color: var(--pale, #fcf6ba);
+  background: rgba(10, 4, 6, 0.72);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 999px;
+  padding: 2px 6px;
+  pointer-events: none;
+}
+
+.spread-item.speaking .card {
+  box-shadow:
+    0 0 0 2px rgba(212, 175, 55, 0.85),
+    0 0 30px rgba(212, 175, 55, 0.5);
+}
+
+.hear-synthesis {
+  margin-top: 0.85rem;
+}
+
 /* —— Ritual gate: black → Chad's second video → black 3s → cards —— */
 .ritual-stage {
   background: #000 !important;
