@@ -1331,8 +1331,9 @@ button {
   inset: 0;
   width: 100%;
   height: 100%;
-  /* Landscape video on a black stage: full frame, nothing cropped. */
-  object-fit: contain;
+  /* Chad, 2026-11-08: FULL SCREEN — the landscape video fills the whole
+     portrait stage (cover crops the sides) rather than letterboxing. */
+  object-fit: cover;
   background: #000;
 }
 
