@@ -618,8 +618,21 @@ button {
 
 .card-slot {
   position: absolute;
+  /* Deterministic centering (2026-11-08 fix): anchor at the track's true
+     center with negative margins. The old version set no top/left and relied
+     on the flex static-position of abspos children — desktop Chrome centers
+     that, Android Chrome does not, so the cards sat off-center on Chad's
+     phone. The JS transform now purely offsets from true center. */
+  left: 50%;
+  top: 50%;
+  margin-left: calc(var(--cw) / -2);
+  margin-top: calc(var(--cw) * -0.83335);
   width: var(--cw);
   height: calc(var(--cw) * 1.6667);
+  /* The flip's 3D perspective must come from the card's direct parent —
+     perspective on the track never reached the .card grandchildren, which
+     flattened the flip on mobile. */
+  perspective: 1200px;
   transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s;
   cursor: grab;
   touch-action: none;
