@@ -10,7 +10,8 @@ export type Stage =
   | 'reveal'
   | 'reading'
   | 'upsell'
-  | 'daily';
+  | 'daily'
+  | 'deck';
 
 /** Visual skin / unlock tier — free deck is Veil of the Ash Realms. */
 export type DeckId = 'veil' | 'shadow' | 'gilded' | 'abyss';

@@ -1411,6 +1411,163 @@ button {
   margin-top: 0.85rem;
 }
 
+/* —— Full Deck gallery: a real card — art front, meanings on the back —— */
+.deck-stage {
+  justify-content: flex-start;
+  padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
+  gap: 0.6rem;
+}
+
+.deck-topbar {
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.deck-back-btn {
+  padding: 6px 14px;
+}
+
+.deck-counter {
+  font-family: var(--font-display);
+  letter-spacing: 0.25em;
+  font-size: 0.8rem;
+  color: var(--gold);
+}
+
+.gallery-cardwrap {
+  width: min(86vw, 380px, calc((100dvh - 265px) * 0.6));
+  aspect-ratio: 3 / 5;
+  perspective: 1400px;
+  cursor: pointer;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
+}
+
+.gallery-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.gallery-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.gallery-front,
+.gallery-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(201, 168, 76, 0.35);
+}
+
+.gallery-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-back {
+  transform: rotateY(180deg);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(126, 18, 32, 0.25), transparent 55%),
+    linear-gradient(165deg, #171019, #0a080c);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 18px 14px;
+}
+
+.gallery-back-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--gold);
+}
+
+.gallery-back-glyph {
+  font-size: 1.1rem;
+}
+
+.gallery-back-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  color: var(--bone);
+  margin-top: 0.35rem;
+}
+
+.gallery-back-kw {
+  color: var(--crimson-bright);
+  font-style: italic;
+  margin: 0.15rem 0 0.6rem;
+}
+
+.gallery-back-text {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-right: 4px;
+}
+
+.gallery-back-text h4 {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin: 0.7rem 0 0.3rem;
+}
+
+.gallery-back-text h4:first-child {
+  margin-top: 0;
+}
+
+.gallery-back-text p {
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: var(--bone);
+}
+
+.deck-namebar {
+  text-align: center;
+}
+
+.deck-card-name {
+  font-family: var(--font-display);
+  letter-spacing: 0.18em;
+  font-size: 0.95rem;
+  color: var(--bone);
+}
+
+.deck-card-kw {
+  color: var(--bone-dim);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  margin-top: 0.15rem;
+}
+
+.deck-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 0.15rem;
+}
+
+.deck-flip-btn {
+  min-width: 210px;
+}
+
 /* —— Ritual gate: black → Chad's second video → black 3s → cards —— */
 .ritual-stage {
   background: #000 !important;

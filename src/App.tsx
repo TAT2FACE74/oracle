@@ -10,6 +10,7 @@ import { CardSelect } from './components/CardSelect';
 import { Reading } from './components/Reading';
 import { Upsell } from './components/Upsell';
 import { DailyTransmission } from './components/DailyTransmission';
+import { DeckGallery } from './components/DeckGallery';
 import { MuteToggle } from './components/MuteToggle';
 import { useSpeech } from './hooks/useSpeech';
 import { useOraclePlus } from './hooks/useOraclePlus';
@@ -106,6 +107,7 @@ export default function App() {
         <Hub
           onRitual={() => go('intro')}
           onDaily={() => go('daily')}
+          onDeck={() => go('deck')}
           onPlus={() => openUpsell('hub')}
           plusUnlocked={unlocked}
           speak={speak}
@@ -150,6 +152,7 @@ export default function App() {
           onHome={() => go('hub')}
         />
       )}
+      {stage === 'deck' && <DeckGallery onBack={() => go('hub')} />}
       {stage === 'daily' && (
         <DailyTransmission
           speak={speak}
