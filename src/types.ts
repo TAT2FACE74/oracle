@@ -3,6 +3,7 @@ export type Stage =
   | 'hub'
   | 'intro'
   | 'incantation'
+  | 'ritual'
   | 'eyes'
   | 'fire'
   | 'select'

@@ -4,9 +4,11 @@
   --obsidian: #07060a;
   --obsidian-2: #0e0c12;
   --obsidian-3: #16131c;
-  --crimson: #9b1b2e;
-  --crimson-bright: #c42b42;
-  --crimson-glow: #ff3a5a;
+  /* Dark blood red (Chad, 2026-11-08): the old bright/glow reds read PINK on
+     his phone — every red shifted darker and truer, blue channel pulled down. */
+  --crimson: #7e1220;
+  --crimson-bright: #a41623;
+  --crimson-glow: #e01a2b;
   --gold: #c9a84c;
   --gold-dim: #8a7340;
   --bone: #e8dcc8;
@@ -201,7 +203,7 @@ button {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #e05060, var(--crimson) 45%, #3a0a12 80%);
+  background: radial-gradient(circle at 35% 35%, #c22033, var(--crimson) 45%, #3a0a12 80%);
   box-shadow:
     0 0 40px rgba(196, 43, 66, 0.6),
     0 0 80px rgba(155, 27, 46, 0.4),
@@ -323,7 +325,7 @@ button {
 }
 
 .eyes-orb.red {
-  background: radial-gradient(circle at 40% 35%, #ff6b7a, #c42b42 50%, #4a0810);
+  background: radial-gradient(circle at 40% 35%, #d90429, #a41623 50%, #4a0810);
   box-shadow:
     0 0 30px rgba(255, 58, 90, 0.7),
     0 0 70px rgba(196, 43, 66, 0.5);
@@ -1315,6 +1317,23 @@ button {
 
 .skip-chip {
   right: 18px;
+}
+
+/* —— Ritual gate: black → Chad's second video → black 3s → cards —— */
+.ritual-stage {
+  background: #000 !important;
+  overflow: hidden;
+  padding: 0;
+}
+
+.ritual-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Landscape video on a black stage: full frame, nothing cropped. */
+  object-fit: contain;
+  background: #000;
 }
 
 .cinematic-logo {

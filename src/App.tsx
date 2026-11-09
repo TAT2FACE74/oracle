@@ -3,6 +3,7 @@ import { Cinematic } from './components/Cinematic';
 import { Hub } from './components/Hub';
 import { Intro } from './components/Intro';
 import { Incantation } from './components/Incantation';
+import { RitualGate } from './components/RitualGate';
 import { EyesGate } from './components/EyesGate';
 import { FireTransition } from './components/FireTransition';
 import { CardSelect } from './components/CardSelect';
@@ -91,7 +92,10 @@ export default function App() {
   );
 
   const hideMute =
-    stage === 'eyes' || stage === 'fire' || stage === 'cinematic';
+    stage === 'eyes' ||
+    stage === 'fire' ||
+    stage === 'cinematic' ||
+    stage === 'ritual';
 
   return (
     <div className={`app deck-theme-${deckId}${premiumArt ? ' premium-art-on' : ''}`}>
@@ -111,7 +115,10 @@ export default function App() {
         <Intro onComplete={() => go('incantation')} speak={speak} stop={stop} />
       )}
       {stage === 'incantation' && (
-        <Incantation onComplete={() => go('eyes')} />
+        <Incantation onComplete={() => go('ritual')} />
+      )}
+      {stage === 'ritual' && (
+        <RitualGate onComplete={() => go('select')} />
       )}
       {stage === 'eyes' && <EyesGate onComplete={() => go('fire')} />}
       {stage === 'fire' && (
