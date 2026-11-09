@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   POSITION_DESCRIPTIONS,
   SPREAD_POSITIONS,
@@ -14,6 +14,7 @@ interface Props {
   drawn: DrawnCard[];
   speak: (text: string, onEnd?: () => void) => void;
   stop: () => void;
+  prefetch: (text: string) => void;
   onDrawAgain: () => void;
   onUpsell: () => void;
   plusUnlocked: boolean;
@@ -44,10 +45,17 @@ function buildSynthesis(drawn: DrawnCard[]): string {
   } — the near work is plain: name what stalks you, choose at the crossroads without bargaining, follow the thread you keep pretending not to see, and walk your coming days without soft lies. The Oracle does not carry you out of your life. It shows you the current. You steer — or you are steered.`;
 }
 
+// Chad's control (2026-11-08): the reading does NOT auto-play anymore.
+// The cards lie on the table; when the user touches one, ITS message
+// starts playing in the Tat2face Oracle voice. Every message is
+// prefetched silently when the table opens, so a touch starts the voice
+// instantly — no generation delay. The synthesis has its own button.
+
 export function Reading({
   drawn,
   speak,
   stop,
+  prefetch,
   onDrawAgain,
   onUpsell,
   plusUnlocked,
@@ -56,7 +64,21 @@ export function Reading({
   onHome,
 }: Props) {
   const synthesis = useMemo(() => buildSynthesis(drawn), [drawn]);
-  const spokenRef = useRef(false);
+  const [active, setActive] = useState<number | 'synthesis' | null>(null);
+  const activeRef = useRef<typeof active>(null);
+  activeRef.current = active;
+
+  const lines = useMemo(
+    () =>
+      drawn.map((d, i) => {
+        const pos = SPREAD_POSITIONS[i] as SpreadPosition;
+        const orient = d.reversed ? 'in shadow aspect' : 'upright';
+        const a = aspectOfDrawn(d);
+        return speakFortune(a, `${pos}. ${d.card.name}, ${orient}.`);
+      }),
+    [drawn],
+  );
+  const synthesisLine = useMemo(() => `Synthesis. ${synthesis}`, [synthesis]);
 
   useEffect(() => {
     saveReading({
@@ -74,38 +96,41 @@ export function Reading({
     });
   }, [drawn, synthesis]);
 
+  // Silent warm-up: fetch every message's audio in the background so a
+  // touch plays instantly.
   useEffect(() => {
     let cancelled = false;
-    // Reset so Strict Mode remount / speak identity churn can speak again
-    spokenRef.current = false;
-
-    const lines: string[] = [];
-    drawn.forEach((d, i) => {
-      const pos = SPREAD_POSITIONS[i] as SpreadPosition;
-      const orient = d.reversed ? 'in shadow aspect' : 'upright';
-      const a = aspectOfDrawn(d);
-      lines.push(speakFortune(a, `${pos}. ${d.card.name}, ${orient}.`));
-    });
-    lines.push(`Synthesis. ${synthesis}`);
-
-    // Defer one tick so cleanup from Strict Mode double-invoke doesn't kill the real run
-    const timer = window.setTimeout(() => {
-      if (cancelled || spokenRef.current) return;
-      spokenRef.current = true;
-      const speakNext = (i: number) => {
-        if (cancelled || i >= lines.length) return;
-        speak(lines[i], () => speakNext(i + 1));
-      };
-      speakNext(0);
-    }, 50);
-
+    (async () => {
+      for (const line of [...lines, synthesisLine]) {
+        if (cancelled) return;
+        prefetch(line);
+        // Small stagger so the warm-up never floods the TTS endpoint.
+        await new Promise((r) => window.setTimeout(r, 350));
+      }
+    })();
     return () => {
       cancelled = true;
-      window.clearTimeout(timer);
-      stop();
-      spokenRef.current = false;
     };
-  }, [drawn, synthesis, speak, stop]);
+  }, [lines, synthesisLine, prefetch]);
+
+  // Leaving the table silences the Oracle.
+  useEffect(() => () => stop(), [stop]);
+
+  const playCard = (i: number) => {
+    stop();
+    setActive(i);
+    speak(lines[i], () => {
+      if (activeRef.current === i) setActive(null);
+    });
+  };
+
+  const playSynthesis = () => {
+    stop();
+    setActive('synthesis');
+    speak(synthesisLine, () => {
+      if (activeRef.current === 'synthesis') setActive(null);
+    });
+  };
 
   return (
     <div className="stage reading-stage fade-in">
@@ -116,10 +141,26 @@ export function Reading({
         The Reading
       </h2>
       <p className="teller-credit">The Fortune Teller · Elder of the Crossroads</p>
+      <p className="hint-swipe" style={{ marginBottom: '0.75rem' }}>
+        Touch a card to hear its message
+      </p>
 
       <div className="spread-grid">
         {drawn.map((d, i) => (
-          <div key={d.card.id} className="spread-item">
+          <div
+            key={d.card.id}
+            className={`spread-item${active === i ? ' speaking' : ''}`}
+            role="button"
+            tabIndex={0}
+            aria-label={`Hear the message of ${d.card.name}`}
+            onClick={() => playCard(i)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                playCard(i);
+              }
+            }}
+          >
             <span className="pos-label">{SPREAD_POSITIONS[i]}</span>
             <CardVisual
               card={d.card}
@@ -129,6 +170,9 @@ export function Reading({
               deckId={deckId}
               premiumArt={premiumArt}
             />
+            <span className="tap-play-hint" aria-hidden>
+              {active === i ? '🔊' : '▶'}
+            </span>
           </div>
         ))}
       </div>
@@ -156,6 +200,13 @@ export function Reading({
       <div className="synthesis">
         <h3>Synthesis</h3>
         <p>{synthesis}</p>
+        <button
+          type="button"
+          className="btn-ghost hear-synthesis"
+          onClick={playSynthesis}
+        >
+          {active === 'synthesis' ? '🔊 Speaking…' : '🔊 Hear the Synthesis'}
+        </button>
       </div>
 
       <div className="reading-actions">
